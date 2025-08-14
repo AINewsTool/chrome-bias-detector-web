@@ -3,35 +3,21 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login - Bias Detector</title>
+  <title>Login</title>
   <link rel="stylesheet" href="../globals.css">
 </head>
 <body>
-
   <div class="card">
-    <h2 style="font-size: 1.5rem; margin-bottom: 1rem;">Login</h2>
-
-    <div id="login-error" style="color: var(--destructive); font-size: 0.85rem; margin-bottom: 1rem;"></div>
-
-    <!-- Email Login -->
+    <h2>Login</h2>
     <input type="email" id="emailInput" placeholder="Email">
     <input type="password" id="passwordInput" placeholder="Password">
-    <button id="loginEmailBtn" class="primary">Login with Email</button>
-
-    <div style="margin: 1rem 0; font-size: 0.9rem; color: var(--muted-foreground);">or</div>
-
-    <!-- Google Login -->
-    <button id="loginGoogleBtn" class="google">Login with Google</button>
-
-    <p style="margin-top: 1rem; font-size: 0.85rem; color: var(--muted-foreground);">
-      Don't have an account? 
-      <a href="../signup" style="color: var(--primary); text-decoration: underline;">Sign up</a>
-    </p>
+    <button id="loginBtn" class="primary">Login</button>
+    <button id="googleLoginBtn" class="google">Login with Google</button>
+    <p>Don't have an account? <a href="/chrome-bias-detector-web/signup">Sign up</a></p>
   </div>
 
-  <script type="module" src="/chrome-bias-detector-web/firebase-init.js"></script>
-  <script type="module" src="/chrome-bias-detector-web/login.js"></script>
-
-
+  <!-- Scripts at end of body -->
+  <script type="module" src="../firebase-init.js"></script>
+  <script type="module" src="./login.js"></script>
 </body>
 </html>
