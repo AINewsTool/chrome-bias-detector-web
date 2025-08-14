@@ -1,43 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Signup</title>
-  <link rel="stylesheet" href="globals.css">
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
-  <script src="firebase-init.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - Bias Detector</title>
+    <link rel="stylesheet" href="globals.css">
 </head>
-<body>
-  <div class="card">
-    <h2>Signup</h2>
-    <input type="email" id="email" placeholder="Email">
-    <input type="password" id="password" placeholder="Password">
-    <button class="primary" onclick="emailSignup()">Signup</button>
-    <button class="google" onclick="googleSignup()">Signup with Google</button>
-  </div>
+<body class="bg-white text-slate-800 flex items-center justify-center h-screen">
 
-  <script>
-    function emailSignup() {
-      const email = document.getElementById('email').value;
-      const password = document.getElementById('password').value;
-      auth.createUserWithEmailAndPassword(email, password)
-        .then(userCredential => {
-          localStorage.setItem('token', userCredential.user.za);
-          window.location.href = 'success.html';
-        })
-        .catch(error => alert(error.message));
-    }
+    <div class="w-full max-w-md p-6 bg-white shadow-md rounded-lg">
+        <h2 class="text-2xl font-bold mb-4 text-center">Sign Up</h2>
 
-    function googleSignup() {
-      const provider = new firebase.auth.GoogleAuthProvider();
-      auth.signInWithPopup(provider)
-        .then(result => {
-          localStorage.setItem('token', result.user.za);
-          window.location.href = 'success.html';
-        })
-        .catch(error => alert(error.message));
-    }
-  </script>
+        <div id="signup-error" class="text-red-600 text-sm mb-4"></div>
+
+        <!-- Email Signup -->
+        <div class="space-y-3 mb-4">
+            <input type="email" id="emailInput" placeholder="Email" class="w-full p-2 border rounded-md">
+            <input type="password" id="passwordInput" placeholder="Password" class="w-full p-2 border rounded-md">
+            <button id="signupEmailBtn" class="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-500">Sign Up with Email</button>
+        </div>
+
+        <!-- Google Signup -->
+        <div class="text-center mb-4">or</div>
+        <button id="signupGoogleBtn" class="w-full bg-red-500 text-white py-2 rounded-md hover:bg-red-400">Sign Up with Google</button>
+
+        <p class="text-center text-sm mt-4">
+            Already have an account? <a href="login.html" class="text-blue-600 hover:underline">Log in</a>
+        </p>
+    </div>
+
+    <script type="module" src="firebase-init.js"></script>
+    <script type="module" src="signup.js"></script>
 </body>
 </html>
