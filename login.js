@@ -1,48 +1,55 @@
 // login.js
-import { auth, provider } from "firebase-init.js";
+import { auth, provider } from './firebase-init.js';
+import { signInWithEmailAndPassword, signInWithPopup } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
 
 document.addEventListener('DOMContentLoaded', () => {
-  const emailInput = document.getElementById('emailInput');
-  const passwordInput = document.getElementById('passwordInput');
-  const loginBtn = document.getElementById('loginBtn');
-  const googleBtn = document.getElementById('googleBtn');
-  const errorDiv = document.getElementById('authError');
+    const loginEmailBtn = document.getElementById('loginEmailBtn');
+    const loginGoogleBtn = document.getElementById('loginGoogleBtn');
+    const emailInput = document.getElementById('emailInput');
+    const passwordInput = document.getElementById('passwordInput');
+    const errorDiv = document.getElementById('login-error');
 
-  if (!emailInput || !passwordInput || !loginBtn || !googleBtn || !errorDiv) {
-    console.error("One or more elements are missing in the DOM!");
-    return;
-  }
+    async function storeToken(user) {
+        const token = await user.getIdToken();
+        // Save in localStorage so your extension can read it
+        localStorage.setItem('firebaseToken', token);
 
-  loginBtn.addEventListener('click', async () => {
-    const email = emailInput.value;
-    const password = passwordInput.value;
-    errorDiv.textContent = "";
-
-    if (!email || !password) {
-      errorDiv.textContent = "Email and password cannot be empty.";
-      return;
+        // Optional: send token to extension automatically
+        if (window.chrome && chrome.runtime && chrome.runtime.sendMessage) {
+            chrome.runtime.sendMessage({ token });
+        }
     }
 
-    try {
-      const userCredential = await auth.signInWithEmailAndPassword(email, password);
-      const token = await userCredential.user.getIdToken();
-      console.log("Firebase Token:", token);
-      // Send token to extension via localStorage
-      localStorage.setItem('firebaseToken', token);
-      window.location.href = "success.html";
-    } catch (error) {
-      errorDiv.textContent = `Login failed: ${error.message}`;
-    }
-  });
+    // Email/Password Login
+    loginEmailBtn.addEventListener('click', async () => {
+        const email = emailInput.value.trim();
+        const password = passwordInput.value;
 
-  googleBtn.addEventListener('click', async () => {
-    try {
-      const result = await auth.signInWithPopup(provider);
-      const token = await result.user.getIdToken();
-      localStorage.setItem('firebaseToken', token);
-      window.location.href = "success.html";
-    } catch (error) {
-      errorDiv.textContent = `Google sign-in failed: ${error.message}`;
-    }
-  });
+        errorDiv.textContent = '';
+        if (!email || !password) {
+            errorDiv.textContent = "Email and password cannot be empty.";
+            return;
+        }
+
+        try {
+            const userCredential = await signInWithEmailAndPassword(auth, email, password);
+            await storeToken(userCredential.user);
+            window.location.href = 'success.html';
+        } catch (err) {
+            console.error(err);
+            errorDiv.textContent = err.message;
+        }
+    });
+
+    // Google Login
+    loginGoogleBtn.addEventListener('click', async () => {
+        try {
+            const userCredential = await signInWithPopup(auth, provider);
+            await storeToken(userCredential.user);
+            window.location.href = 'success.html';
+        } catch (err) {
+            console.error(err);
+            errorDiv.textContent = err.message;
+        }
+    });
 });

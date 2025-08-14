@@ -2,7 +2,8 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
 import { getAuth, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
 
-export const firebaseConfig = {
+// Your Firebase config
+const firebaseConfig = {
   apiKey: "AIzaSyB07avalIpRbiwFjOqSguaoxS4lRswNl_U",
   authDomain: "biasdetectorextension.firebaseapp.com",
   projectId: "biasdetectorextension",
@@ -12,6 +13,9 @@ export const firebaseConfig = {
   measurementId: "G-L7JM0N01MM"
 };
 
-export const app = initializeApp(firebaseConfig);
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+
+// Auth instance
 export const auth = getAuth(app);
 export const provider = new GoogleAuthProvider();
