@@ -17,7 +17,7 @@ if (!signupBtn || !googleSignupBtn || !emailInput || !passwordInput) {
 
     try {
       await auth.createUserWithEmailAndPassword(email, password);
-      window.location.href = '/chrome-bias-detector-web/success';
+      window.location.href = 'https://ainewstool.github.io/chrome-bias-detector-web/success';
     } catch (error) {
       alert(error.message);
     }
@@ -26,7 +26,7 @@ if (!signupBtn || !googleSignupBtn || !emailInput || !passwordInput) {
   googleSignupBtn.addEventListener('click', async () => {
     try {
       await auth.signInWithPopup(provider);
-      window.location.href = '/chrome-bias-detector-web/success';
+      window.location.href = 'https://ainewstool.github.io/chrome-bias-detector-web/success';
     } catch (error) {
       alert(error.message);
     }
