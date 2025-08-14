@@ -1,33 +1,48 @@
+// login.js
 import { auth, provider } from "../firebase-init.js";
 
-const loginBtn = document.getElementById('loginBtn');
-const googleLoginBtn = document.getElementById('googleLoginBtn');
-const emailInput = document.getElementById('emailInput');
-const passwordInput = document.getElementById('passwordInput');
+document.addEventListener('DOMContentLoaded', () => {
+  const emailInput = document.getElementById('emailInput');
+  const passwordInput = document.getElementById('passwordInput');
+  const loginBtn = document.getElementById('loginBtn');
+  const googleBtn = document.getElementById('googleBtn');
+  const errorDiv = document.getElementById('authError');
 
-if (!loginBtn || !googleLoginBtn || !emailInput || !passwordInput) {
-  console.error("One or more elements are missing in the DOM!");
-} else {
+  if (!emailInput || !passwordInput || !loginBtn || !googleBtn || !errorDiv) {
+    console.error("One or more elements are missing in the DOM!");
+    return;
+  }
+
   loginBtn.addEventListener('click', async () => {
     const email = emailInput.value;
     const password = passwordInput.value;
+    errorDiv.textContent = "";
 
-    if (!email || !password) return alert("Email and password required!");
+    if (!email || !password) {
+      errorDiv.textContent = "Email and password cannot be empty.";
+      return;
+    }
 
     try {
-      await auth.signInWithEmailAndPassword(email, password);
-      window.location.href = 'https://ainewstool.github.io/chrome-bias-detector-web/success';
+      const userCredential = await auth.signInWithEmailAndPassword(email, password);
+      const token = await userCredential.user.getIdToken();
+      console.log("Firebase Token:", token);
+      // Send token to extension via localStorage
+      localStorage.setItem('firebaseToken', token);
+      window.location.href = "../success/";
     } catch (error) {
-      alert(error.message);
+      errorDiv.textContent = `Login failed: ${error.message}`;
     }
   });
 
-  googleLoginBtn.addEventListener('click', async () => {
+  googleBtn.addEventListener('click', async () => {
     try {
-      await auth.signInWithPopup(provider);
-      window.location.href = 'https://ainewstool.github.io/chrome-bias-detector-web/success';
+      const result = await auth.signInWithPopup(provider);
+      const token = await result.user.getIdToken();
+      localStorage.setItem('firebaseToken', token);
+      window.location.href = "../success/";
     } catch (error) {
-      alert(error.message);
+      errorDiv.textContent = `Google sign-in failed: ${error.message}`;
     }
   });
-}
+});

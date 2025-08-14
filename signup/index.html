@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sign Up</title>
   <link rel="stylesheet" href="../globals.css">
 </head>
@@ -11,12 +10,11 @@
     <h2>Sign Up</h2>
     <input type="email" id="emailInput" placeholder="Email">
     <input type="password" id="passwordInput" placeholder="Password">
-    <button id="signupBtn" class="secondary">Sign Up</button>
-    <button id="googleSignupBtn" class="google">Sign Up with Google</button>
-    <p>Already have an account? <a href="/chrome-bias-detector-web/login">Login</a></p>
+    <div id="authError" style="color: red; font-size: 0.9rem;"></div>
+    <button class="secondary" id="signupBtn">Sign Up</button>
+    <button class="google" id="googleBtn">Sign Up with Google</button>
+    <p>Already have an account? <a href="../login/" style="color: var(--primary); text-decoration: underline;">Login</a></p>
   </div>
-
-  <script type="module" src="https://ainewstool.github.io/chrome-bias-detector-web/firebase-init.js"></script>
-  <script type="module" src="https://ainewstool.github.io/chrome-bias-detector-web/signup.js"></script>
+  <script type="module" src="../../signup.js"></script>
 </body>
 </html>

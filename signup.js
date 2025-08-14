@@ -1,34 +1,51 @@
+// signup.js
 import { auth, provider } from "../firebase-init.js";
 
-const signupBtn = document.getElementById('signupBtn');
-const googleSignupBtn = document.getElementById('googleSignupBtn');
-const emailInput = document.getElementById('emailInput');
-const passwordInput = document.getElementById('passwordInput');
+document.addEventListener('DOMContentLoaded', () => {
+  const emailInput = document.getElementById('emailInput');
+  const passwordInput = document.getElementById('passwordInput');
+  const signupBtn = document.getElementById('signupBtn');
+  const googleBtn = document.getElementById('googleBtn');
+  const errorDiv = document.getElementById('authError');
 
-if (!signupBtn || !googleSignupBtn || !emailInput || !passwordInput) {
-  console.error("One or more elements are missing in the DOM!");
-} else {
+  if (!emailInput || !passwordInput || !signupBtn || !googleBtn || !errorDiv) {
+    console.error("One or more elements are missing in the DOM!");
+    return;
+  }
+
   signupBtn.addEventListener('click', async () => {
     const email = emailInput.value;
     const password = passwordInput.value;
+    errorDiv.textContent = "";
 
-    if (!email || !password) return alert("Email and password required!");
-    if (password.length < 6) return alert("Password must be at least 6 characters");
+    if (!email || !password) {
+      errorDiv.textContent = "Email and password cannot be empty.";
+      return;
+    }
+
+    if (password.length < 6) {
+      errorDiv.textContent = "Password must be at least 6 characters.";
+      return;
+    }
 
     try {
-      await auth.createUserWithEmailAndPassword(email, password);
-      window.location.href = 'https://ainewstool.github.io/chrome-bias-detector-web/success';
+      const userCredential = await auth.createUserWithEmailAndPassword(email, password);
+      const token = await userCredential.user.getIdToken();
+      localStorage.setItem('firebaseToken', token);
+      window.location.href = "../success/";
     } catch (error) {
-      alert(error.message);
+      errorDiv.textContent = `Sign-up failed: ${error.message}`;
     }
   });
 
-  googleSignupBtn.addEventListener('click', async () => {
+  googleBtn.addEventListener('click', async () => {
     try {
-      await auth.signInWithPopup(provider);
-      window.location.href = 'https://ainewstool.github.io/chrome-bias-detector-web/success';
+      const result = await auth.signInWithPopup(provider);
+      const token = await result.user.getIdToken();
+      localStorage.setItem('firebaseToken', token);
+      window.location.href = "../success/";
     } catch (error) {
-      alert(error.message);
+      errorDiv.textContent = `Google sign-in failed: ${error.message}`;
     }
   });
-}
+});
