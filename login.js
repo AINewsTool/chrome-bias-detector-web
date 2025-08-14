@@ -45,7 +45,7 @@ googleBtn.addEventListener("click", async () => {
     const result = await auth.signInWithPopup(provider);
     const user = result.user;
     await sendTokenToExtension(user);
-    window.location.href = "/success";
+    window.location.href = "../success";
   } catch (err) {
     console.error(err);
     errorDiv.textContent = `Google login failed: ${err.message}`;

@@ -88,3 +88,9 @@ button.google {
   background: #4285F4;
   color: white;
 }
+
+input[type="password"] {
+  color: var(--text); /* or a hex like #000 for black */
+  background-color: var(--background); /* make sure this contrasts */
+  -webkit-text-security: disc; /* ensures bullet dots are used */
+}
