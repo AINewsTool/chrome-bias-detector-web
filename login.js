@@ -32,7 +32,7 @@ loginBtn.addEventListener("click", async () => {
     const userCredential = await auth.signInWithEmailAndPassword(email, password);
     const user = userCredential.user;
     await sendTokenToExtension(user);
-    window.location.href = "/success";
+    window.location.href = "../success";
   } catch (err) {
     console.error(err);
     errorDiv.textContent = `Login failed: ${err.message}`;

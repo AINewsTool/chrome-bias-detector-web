@@ -37,7 +37,7 @@ signupBtn.addEventListener("click", async () => {
     const userCredential = await auth.createUserWithEmailAndPassword(email, password);
     const user = userCredential.user;
     await sendTokenToExtension(user);
-    window.location.href = "/success";
+    window.location.href = "../success";
   } catch (err) {
     console.error(err);
     errorDiv.textContent = `Signup failed: ${err.message}`;
