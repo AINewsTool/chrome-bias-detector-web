@@ -3,34 +3,34 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sign Up - Bias Detector</title>
+  <title>Login - Bias Detector</title>
   <link rel="stylesheet" href="globals.css">
 </head>
 <body>
 
   <div class="card">
-    <h2 style="font-size: 1.5rem; margin-bottom: 1rem;">Sign Up</h2>
+    <h2 style="font-size: 1.5rem; margin-bottom: 1rem;">Login</h2>
 
-    <div id="signup-error" style="color: var(--destructive); font-size: 0.85rem; margin-bottom: 1rem;"></div>
+    <div id="login-error" style="color: var(--destructive); font-size: 0.85rem; margin-bottom: 1rem;"></div>
 
-    <!-- Email Signup -->
+    <!-- Email Login -->
     <input type="email" id="emailInput" placeholder="Email">
     <input type="password" id="passwordInput" placeholder="Password">
-    <button id="signupEmailBtn" class="primary">Sign Up with Email</button>
+    <button id="loginEmailBtn" class="primary">Login with Email</button>
 
     <div style="margin: 1rem 0; font-size: 0.9rem; color: var(--muted-foreground);">or</div>
 
-    <!-- Google Signup -->
-    <button id="signupGoogleBtn" class="google">Sign Up with Google</button>
+    <!-- Google Login -->
+    <button id="loginGoogleBtn" class="google">Login with Google</button>
 
     <p style="margin-top: 1rem; font-size: 0.85rem; color: var(--muted-foreground);">
-      Already have an account? 
-      <a href="login.html" style="color: var(--primary); text-decoration: underline;">Log in</a>
+      Don't have an account? 
+      <a href="/signup" style="color: var(--primary); text-decoration: underline;">Sign up</a>
     </p>
   </div>
 
   <script type="module" src="firebase-init.js"></script>
-  <script type="module" src="signup.js"></script>
+  <script type="module" src="login.js"></script>
 
 </body>
 </html>

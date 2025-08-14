@@ -1,42 +1,53 @@
-// login.js
-import { auth, provider } from './firebase-init.js';
-import { signInWithEmailAndPassword, signInWithPopup } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
+import { auth, provider } from "./firebase-init.js";
 
-document.addEventListener('DOMContentLoaded', () => {
-    const loginEmailBtn = document.getElementById('loginEmailBtn');
-    const loginGoogleBtn = document.getElementById('loginGoogleBtn');
-    const emailInput = document.getElementById('emailInput');
-    const passwordInput = document.getElementById('passwordInput');
-    const errorDiv = document.getElementById('login-error');
+// --- Elements ---
+const emailInput = document.getElementById("email");
+const passwordInput = document.getElementById("password");
+const loginBtn = document.getElementById("loginBtn");
+const googleBtn = document.getElementById("googleLoginBtn");
+const errorDiv = document.getElementById("loginError");
 
-    // Email/Password Login
-    loginEmailBtn.addEventListener('click', async () => {
-        const email = emailInput.value.trim();
-        const password = passwordInput.value;
+// --- Helpers ---
+async function sendTokenToExtension(user) {
+  try {
+    const idToken = await user.getIdToken();
+    chrome.runtime.sendMessage({ action: "setUserToken", token: idToken });
+  } catch (err) {
+    console.error("Error sending token to extension:", err);
+  }
+}
 
-        errorDiv.textContent = '';
-        if (!email || !password) {
-            errorDiv.textContent = "Email and password cannot be empty.";
-            return;
-        }
+// --- Email/Password Login ---
+loginBtn.addEventListener("click", async () => {
+  errorDiv.textContent = "";
+  const email = emailInput.value;
+  const password = passwordInput.value;
 
-        try {
-            await signInWithEmailAndPassword(auth, email, password);
-            window.location.href = 'success.html';
-        } catch (err) {
-            console.error(err);
-            errorDiv.textContent = err.message;
-        }
-    });
+  if (!email || !password) {
+    errorDiv.textContent = "Email and password are required.";
+    return;
+  }
 
-    // Google Login
-    loginGoogleBtn.addEventListener('click', async () => {
-        try {
-            await signInWithPopup(auth, provider);
-            window.location.href = 'success.html';
-        } catch (err) {
-            console.error(err);
-            errorDiv.textContent = err.message;
-        }
-    });
+  try {
+    const userCredential = await auth.signInWithEmailAndPassword(email, password);
+    const user = userCredential.user;
+    await sendTokenToExtension(user);
+    window.location.href = "/success";
+  } catch (err) {
+    console.error(err);
+    errorDiv.textContent = `Login failed: ${err.message}`;
+  }
+});
+
+// --- Google Login ---
+googleBtn.addEventListener("click", async () => {
+  try {
+    const result = await auth.signInWithPopup(provider);
+    const user = result.user;
+    await sendTokenToExtension(user);
+    window.location.href = "/success";
+  } catch (err) {
+    console.error(err);
+    errorDiv.textContent = `Google login failed: ${err.message}`;
+  }
 });
