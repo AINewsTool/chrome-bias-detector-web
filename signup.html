@@ -1,35 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign Up - Bias Detector</title>
-    <link rel="stylesheet" href="globals.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign Up - Bias Detector</title>
+  <link rel="stylesheet" href="globals.css">
 </head>
-<body class="bg-white text-slate-800 flex items-center justify-center h-screen">
+<body>
 
-    <div class="w-full max-w-md p-6 bg-white shadow-md rounded-lg">
-        <h2 class="text-2xl font-bold mb-4 text-center">Sign Up</h2>
+  <div class="card">
+    <h2 style="font-size: 1.5rem; margin-bottom: 1rem;">Sign Up</h2>
 
-        <div id="signup-error" class="text-red-600 text-sm mb-4"></div>
+    <div id="signup-error" style="color: var(--destructive); font-size: 0.85rem; margin-bottom: 1rem;"></div>
 
-        <!-- Email Signup -->
-        <div class="space-y-3 mb-4">
-            <input type="email" id="emailInput" placeholder="Email" class="w-full p-2 border rounded-md">
-            <input type="password" id="passwordInput" placeholder="Password" class="w-full p-2 border rounded-md">
-            <button id="signupEmailBtn" class="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-500">Sign Up with Email</button>
-        </div>
+    <!-- Email Signup -->
+    <input type="email" id="emailInput" placeholder="Email">
+    <input type="password" id="passwordInput" placeholder="Password">
+    <button id="signupEmailBtn" class="primary">Sign Up with Email</button>
 
-        <!-- Google Signup -->
-        <div class="text-center mb-4">or</div>
-        <button id="signupGoogleBtn" class="w-full bg-red-500 text-white py-2 rounded-md hover:bg-red-400">Sign Up with Google</button>
+    <div style="margin: 1rem 0; font-size: 0.9rem; color: var(--muted-foreground);">or</div>
 
-        <p class="text-center text-sm mt-4">
-            Already have an account? <a href="login.html" class="text-blue-600 hover:underline">Log in</a>
-        </p>
-    </div>
+    <!-- Google Signup -->
+    <button id="signupGoogleBtn" class="google">Sign Up with Google</button>
 
-    <script type="module" src="firebase-init.js"></script>
-    <script type="module" src="signup.js"></script>
+    <p style="margin-top: 1rem; font-size: 0.85rem; color: var(--muted-foreground);">
+      Already have an account? 
+      <a href="login.html" style="color: var(--primary); text-decoration: underline;">Log in</a>
+    </p>
+  </div>
+
+  <script type="module" src="firebase-init.js"></script>
+  <script type="module" src="signup.js"></script>
+
 </body>
 </html>
