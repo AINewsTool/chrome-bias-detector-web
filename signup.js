@@ -1,5 +1,5 @@
 // signup.js
-import { auth, provider } from "./firebase-init.js";
+import { auth, provider } from "firebase-init.js";
 
 document.addEventListener('DOMContentLoaded', () => {
   const emailInput = document.getElementById('emailInput');
@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const userCredential = await auth.createUserWithEmailAndPassword(email, password);
       const token = await userCredential.user.getIdToken();
       localStorage.setItem('firebaseToken', token);
-      window.location.href = "../success/";
+      window.location.href = "success.html";
     } catch (error) {
       errorDiv.textContent = `Sign-up failed: ${error.message}`;
     }
@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const result = await auth.signInWithPopup(provider);
       const token = await result.user.getIdToken();
       localStorage.setItem('firebaseToken', token);
-      window.location.href = "../success/";
+      window.location.href = "success.html";
     } catch (error) {
       errorDiv.textContent = `Google sign-in failed: ${error.message}`;
     }
