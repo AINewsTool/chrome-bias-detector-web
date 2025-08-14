@@ -1,5 +1,5 @@
 // login.js
-import { auth, provider } from "../firebase-init.js";
+import { auth, provider } from "./firebase-init.js";
 
 document.addEventListener('DOMContentLoaded', () => {
   const emailInput = document.getElementById('emailInput');
