@@ -89,8 +89,13 @@ button.google {
   color: white;
 }
 
+input[type="email"],
 input[type="password"] {
-  color: var(--text); /* or a hex like #000 for black */
-  background-color: var(--background); /* make sure this contrasts */
-  -webkit-text-security: disc; /* ensures bullet dots are used */
+  color: var(--text); /* readable text color */
+  background-color: var(--background); /* contrasting background */
+}
+
+input[type="email"]::placeholder,
+input[type="password"]::placeholder {
+  color: var(--placeholder, #888); /* optional placeholder color */
 }
