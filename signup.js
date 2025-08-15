@@ -9,12 +9,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const passwordInput = document.getElementById('passwordInput');
     const errorDiv = document.getElementById('signup-error');
 
-    async function storeToken(user) {
-        const token = await user.getIdToken();
-        localStorage.setItem('firebaseToken', token);
-
-        if (window.chrome && chrome.runtime && chrome.runtime.sendMessage) {
-            chrome.runtime.sendMessage({ token });
+    // Helper: send token to extension
+    async function sendTokenToExtension() {
+        const user = auth.currentUser;
+        if (user) {
+            const token = await user.getIdToken();
+            // Post message to extension
+            window.postMessage({ type: "FROM_WEB_APP", token }, "*");
         }
     }
 
@@ -34,8 +35,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         try {
-            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-            await storeToken(userCredential.user);
+            await createUserWithEmailAndPassword(auth, email, password);
+            await sendTokenToExtension();
             window.location.href = 'success.html';
         } catch (err) {
             console.error(err);
@@ -46,8 +47,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // Google Sign Up
     signupGoogleBtn.addEventListener('click', async () => {
         try {
-            const userCredential = await signInWithPopup(auth, provider);
-            await storeToken(userCredential.user);
+            await signInWithPopup(auth, provider);
+            await sendTokenToExtension();
             window.location.href = 'success.html';
         } catch (err) {
             console.error(err);
