@@ -3,7 +3,7 @@ import { auth, provider } from './firebase-init.js';
 import { createUserWithEmailAndPassword, getAdditionalUserInfo, signInWithPopup } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
 
 // IMPORTANT: Replace this with your actual extension ID!
-const EXTENSION_ID = "YOUR_EXTENSION_ID";
+const EXTENSION_ID = "hajgbjgbdejejppmmikigepdcjdngamn";
 
 document.addEventListener('DOMContentLoaded', () => {
     const signupEmailBtn = document.getElementById('signupEmailBtn');
