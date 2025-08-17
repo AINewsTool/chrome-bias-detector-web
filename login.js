@@ -1,9 +1,6 @@
 // login.js
 import { auth, provider } from './firebase-init.js';
-import { getAdditionalUserInfo, signInWithEmailAndPassword, signInWithPopup } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
-
-// IMPORTANT: Replace this with your actual extension ID!
-const EXTENSION_ID = "hajgbjgbdejejppmmikigepdcjdngamn";
+import { signInWithEmailAndPassword, signInWithPopup } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
 
 document.addEventListener('DOMContentLoaded', () => {
     const loginEmailBtn = document.getElementById('loginEmailBtn');
@@ -16,46 +13,45 @@ document.addEventListener('DOMContentLoaded', () => {
         let message = "An unknown error occurred. Please try again.";
         if (error.code) {
             switch (error.code) {
+                // This code is triggered for incorrect passwords or non-existent users.
                 case 'auth/invalid-credential':
                     message = "Account not found or password incorrect. Please sign up if you don't have an account.";
                     break;
                 case 'auth/too-many-requests':
-                    message = "Access to this account has been temporarily disabled due to many failed login attempts.";
+                    message = "Access to this account has been temporarily disabled due to many failed login attempts. You can reset your password or try again later.";
+                    break;
+                case 'auth/network-request-failed':
+                    message = "Network error. Please check your internet connection.";
                     break;
                 default:
                     message = "An error occurred during login. Please try again.";
+                    console.error("Firebase Auth Error:", error.message);
             }
         }
         errorContainer.textContent = message;
         errorContainer.style.display = 'block';
     }
 
-    function handleSuccessfulLogin(isNewUser = false) {
-        // Try to send a message to the extension to close the tab
-        if (chrome && chrome.runtime) {
-            chrome.runtime.sendMessage(EXTENSION_ID, { type: "LOGIN_SUCCESS" }, (response) => {
-                if (chrome.runtime.lastError) {
-                    // Fallback if extension isn't listening: show a message on the page
-                    console.warn("Could not connect to extension: ", chrome.runtime.lastError.message);
-                    const message = isNewUser ? "Account Created!" : "Login Successful!";
-                    document.body.innerHTML = `<div class="card"><h2>${message}</h2><p>You can now close this tab.</p></div>`;
-                } else {
-                    console.log("Message sent to extension:", response);
-                }
-            });
-        } else {
-            // Fallback for when not in an extension context
-            const message = isNewUser ? "Account Created!" : "Login Successful!";
-            document.body.innerHTML = `<div class="card"><h2>${message}</h2><p>You can now close this tab.</p></div>`;
-        }
+    function handleSuccessfulLogin() {
+        console.log("Login successful!");
+        document.body.innerHTML = `<div class="card"><h2>Login Successful!</h2><p>You can now close this tab.</p></div>`;
     }
 
     // Email/Password Login
     loginEmailBtn.addEventListener('click', async () => {
+        const email = emailInput.value.trim();
+        const password = passwordInput.value;
+
         errorContainer.style.display = 'none';
+        if (!email || !password) {
+            errorContainer.textContent = "Email and password cannot be empty.";
+            errorContainer.style.display = 'block';
+            return;
+        }
+
         try {
-            await signInWithEmailAndPassword(auth, emailInput.value.trim(), passwordInput.value);
-            handleSuccessfulLogin(false); // Email login is never a new user in this context
+            await signInWithEmailAndPassword(auth, email, password);
+            handleSuccessfulLogin();
         } catch (err) {
             showUserFriendlyError(err);
         }
@@ -65,9 +61,8 @@ document.addEventListener('DOMContentLoaded', () => {
     loginGoogleBtn.addEventListener('click', async () => {
         errorContainer.style.display = 'none';
         try {
-            const result = await signInWithPopup(auth, provider);
-            const additionalUserInfo = getAdditionalUserInfo(result);
-            handleSuccessfulLogin(additionalUserInfo.isNewUser);
+            await signInWithPopup(auth, provider);
+            handleSuccessfulLogin();
         } catch (err) {
             showUserFriendlyError(err);
         }
