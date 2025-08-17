@@ -2,9 +2,6 @@
 import { auth, provider } from './firebase-init.js';
 import { createUserWithEmailAndPassword, getAdditionalUserInfo, signInWithPopup } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
 
-// IMPORTANT: Replace this with your actual extension ID!
-const EXTENSION_ID = "hajgbjgbdejejppmmikigepdcjdngamn";
-
 document.addEventListener('DOMContentLoaded', () => {
     const signupEmailBtn = document.getElementById('signupEmailBtn');
     const signupGoogleBtn = document.getElementById('signupGoogleBtn');
@@ -30,24 +27,10 @@ document.addEventListener('DOMContentLoaded', () => {
         errorContainer.style.display = 'block';
     }
 
+    // This function now simply shows a success message on the page.
     function handleSuccessfulSignup(isNewUser = true) {
-        // Try to send a message to the extension to close the tab
-        if (chrome && chrome.runtime) {
-            chrome.runtime.sendMessage(EXTENSION_ID, { type: "LOGIN_SUCCESS" }, (response) => {
-                if (chrome.runtime.lastError) {
-                    // Fallback if extension isn't listening: show a message on the page
-                    console.warn("Could not connect to extension: ", chrome.runtime.lastError.message);
-                    const message = isNewUser ? "Account Created!" : "Login Successful!";
-                    document.body.innerHTML = `<div class="card"><h2>${message}</h2><p>You can now close this tab.</p></div>`;
-                } else {
-                    console.log("Message sent to extension:", response);
-                }
-            });
-        } else {
-            // Fallback for when not in an extension context
-            const message = isNewUser ? "Account Created!" : "Login Successful!";
-            document.body.innerHTML = `<div class="card"><h2>${message}</h2><p>You can now close this tab.</p></div>`;
-        }
+        const message = isNewUser ? "Account Created!" : "Login Successful!";
+        document.body.innerHTML = `<div class="card"><h2>${message}</h2><p>You can now close this tab.</p></div>`;
     }
 
     // Email/Password Sign Up
@@ -55,7 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
         errorContainer.style.display = 'none';
         try {
             await createUserWithEmailAndPassword(auth, emailInput.value.trim(), passwordInput.value);
-            handleSuccessfulSignup(true); // Email signup is always a new user
+            handleSuccessfulSignup(true);
         } catch (err) {
             showUserFriendlyError(err);
         }
