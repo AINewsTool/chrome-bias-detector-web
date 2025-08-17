@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - Bias Detector</title>
+  <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+  <link rel="stylesheet" href="../globals.css">
+</head>
+<body>
+  <div class="card">
+    <div class="card-header">
+      <h2>Welcome Back!</h2>
+      <p>Enter your credentials to continue.</p>
+    </div>
+
+    <div id="error-container" class="error-message"></div>
+
+    <input type="email" id="emailInput" placeholder="Email" required>
+    <input type="password" id="passwordInput" placeholder="Password" required>
+    <button id="loginEmailBtn" class="primary">Login with Email</button>
+
+    <div class="divider">or</div>
+
+    <button id="loginGoogleBtn" class="google">
+      <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 488 512"><path fill="currentColor" d="M488 261.8C488 403.3 391.1 504 248 504 110.8 504 0 393.2 0 256S110.8 8 248 8c66.8 0 126 23.4 172.9 61.9l-76.2 74.7C309 93.5 280.7 80 248 80c-82.6 0-150 67.4-150 150s67.4 150 150 150c94.5 0 135.7-77.6 140.8-112.2H248v-85.3h236.1c2.3 12.7 3.9 24.9 3.9 41.4z"/></svg>
+      Continue with Google
+    </button>
+
+    <p class="footer-link">
+      Don't have an account? 
+      <a href="../signup/">Sign up</a>
+    </p>
+  </div>
+
+  <script type="module" src="../firebase-init.js"></script>
+  <script type="module" src="../login.js"></script>
+
+</body>
+</html>
