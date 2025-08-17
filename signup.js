@@ -13,8 +13,9 @@ document.addEventListener('DOMContentLoaded', () => {
         let message = "An unknown error occurred. Please try again.";
         if (error.code) {
             switch (error.code) {
+                // This is the key change to handle existing accounts.
                 case 'auth/email-already-in-use':
-                    message = "This email is already in use. Please log in or use a different email.";
+                    message = "An account with this email already exists. Please log in.";
                     break;
                 case 'auth/invalid-email':
                     message = "Please enter a valid email address.";
@@ -36,9 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function handleSuccessfulSignup() {
         console.log("Signup successful!");
-        // We are not connecting to the extension yet.
-        // For now, we just show a success message on the page.
-        document.body.innerHTML = `<div class="card"><h2>Account Created!</h2><p>You have successfully signed up. You can now close this tab and log in from the extension.</p></div>`;
+        document.body.innerHTML = `<div class="card"><h2>Account Created!</h2><p>You have successfully signed up. You can now close this tab and log in.</p></div>`;
     }
 
     // Email/Password Sign Up
@@ -65,6 +64,8 @@ document.addEventListener('DOMContentLoaded', () => {
     signupGoogleBtn.addEventListener('click', async () => {
         errorContainer.style.display = 'none';
         try {
+            // Note: signInWithPopup will log in an existing user automatically.
+            // This is standard behavior for OAuth.
             await signInWithPopup(auth, provider);
             handleSuccessfulSignup();
         } catch (err) {

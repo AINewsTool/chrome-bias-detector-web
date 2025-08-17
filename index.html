@@ -2,15 +2,22 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Bias Detector</title>
+  <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
   <link rel="stylesheet" href="globals.css">
 </head>
 <body>
   <div class="card">
-    <h2>Welcome to Bias Detector</h2>
-    <p>Please login or signup to continue.</p>
-    <button class="primary" onclick="location.href='login.html'">Log In</button>
-    <button class="secondary" onclick="window.location.href='signup.html'">Sign Up</button>
+    <div class="card-header">
+      <h2>Bias Detector</h2>
+      <p>Please log in or create an account to continue.</p>
+    </div>
+
+    <div style="margin-top: 2rem; display: flex; flex-direction: column; gap: 0.75rem;">
+        <button class="primary" onclick="window.location.href='./login/'">Log In</button>
+        <button class="google" onclick="window.location.href='./signup/'">Sign Up</button>
+    </div>
   </div>
 </body>
 </html>
