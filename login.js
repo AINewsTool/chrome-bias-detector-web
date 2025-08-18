@@ -2,6 +2,9 @@
 import { auth, provider } from './firebase-init.js';
 import { getAdditionalUserInfo, signInWithEmailAndPassword, signInWithPopup } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
 
+// IMPORTANT: You must replace this with your actual extension ID.
+const EXTENSION_ID = "hajgbjgbdejejppmmikigepdcjdngamn";
+
 document.addEventListener('DOMContentLoaded', () => {
     const loginEmailBtn = document.getElementById('loginEmailBtn');
     const loginGoogleBtn = document.getElementById('loginGoogleBtn');
@@ -27,17 +30,19 @@ document.addEventListener('DOMContentLoaded', () => {
         errorContainer.style.display = 'block';
     }
 
-    // This function simply shows a success message on the page.
     function handleSuccessfulLogin(isNewUser = false) {
+        // This sends a "wakeup" message to the background script.
+        // The empty callback function prevents an error from appearing in the console.
+        if (chrome && chrome.runtime) {
+            chrome.runtime.sendMessage(EXTENSION_ID, { type: "LOGIN_SUCCESS" }, () => {});
+        }
+
         const message = isNewUser ? "Account Created!" : "Login Successful!";
         document.body.innerHTML = `<div class="card"><h2>${message}</h2><p>You can now close this tab.</p></div>`;
     }
 
     // Email/Password Login
     loginEmailBtn.addEventListener('click', async () => {
-        // --- ADD THIS LOG ---
-        console.log("Login with Email button clicked on the webpage.");
-
         errorContainer.style.display = 'none';
         try {
             await signInWithEmailAndPassword(auth, emailInput.value.trim(), passwordInput.value);
@@ -49,9 +54,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Google Login
     loginGoogleBtn.addEventListener('click', async () => {
-        // --- ADD THIS LOG ---
-        console.log("Login with Google button clicked on the webpage.");
-        
         errorContainer.style.display = 'none';
         try {
             const result = await signInWithPopup(auth, provider);
