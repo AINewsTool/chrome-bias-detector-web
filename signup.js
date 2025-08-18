@@ -30,11 +30,20 @@ document.addEventListener('DOMContentLoaded', () => {
         errorContainer.style.display = 'block';
     }
 
-    function handleSuccessfulSignup(isNewUser = true) {
-        // This sends a "wakeup" message to the background script.
-        // The empty callback function prevents an error from appearing in the console.
-        if (chrome && chrome.runtime) {
-            chrome.runtime.sendMessage(EXTENSION_ID, { type: "LOGIN_SUCCESS" }, () => {});
+    async function handleSuccessfulSignup(isNewUser = true) {
+        const user = auth.currentUser;
+        if (user) {
+            const token = await user.getIdToken();
+            const email = user.email;
+
+            // Send the actual user data to the background script
+            if (chrome && chrome.runtime) {
+                chrome.runtime.sendMessage(
+                    EXTENSION_ID, 
+                    { type: "LOGIN_SUCCESS", token: token, email: email }, 
+                    () => {} // Empty callback to prevent console errors
+                );
+            }
         }
 
         const message = isNewUser ? "Account Created!" : "Login Successful!";
@@ -46,7 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
         errorContainer.style.display = 'none';
         try {
             await createUserWithEmailAndPassword(auth, emailInput.value.trim(), passwordInput.value);
-            handleSuccessfulSignup(true);
+            await handleSuccessfulSignup(true);
         } catch (err) {
             showUserFriendlyError(err);
         }
@@ -58,7 +67,7 @@ document.addEventListener('DOMContentLoaded', () => {
         try {
             const result = await signInWithPopup(auth, provider);
             const additionalUserInfo = getAdditionalUserInfo(result);
-            handleSuccessfulSignup(additionalUserInfo.isNewUser);
+            await handleSuccessfulSignup(additionalUserInfo.isNewUser);
         } catch (err) {
             showUserFriendlyError(err);
         }
