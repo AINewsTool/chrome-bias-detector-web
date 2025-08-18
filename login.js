@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
         errorContainer.style.display = 'block';
     }
 
-    // This function now simply shows a success message on the page.
+    // This function simply shows a success message on the page.
     function handleSuccessfulLogin(isNewUser = false) {
         const message = isNewUser ? "Account Created!" : "Login Successful!";
         document.body.innerHTML = `<div class="card"><h2>${message}</h2><p>You can now close this tab.</p></div>`;
@@ -35,6 +35,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Email/Password Login
     loginEmailBtn.addEventListener('click', async () => {
+        // --- ADD THIS LOG ---
+        console.log("Login with Email button clicked on the webpage.");
+
         errorContainer.style.display = 'none';
         try {
             await signInWithEmailAndPassword(auth, emailInput.value.trim(), passwordInput.value);
@@ -46,6 +49,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Google Login
     loginGoogleBtn.addEventListener('click', async () => {
+        // --- ADD THIS LOG ---
+        console.log("Login with Google button clicked on the webpage.");
+        
         errorContainer.style.display = 'none';
         try {
             const result = await signInWithPopup(auth, provider);
