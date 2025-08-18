@@ -2,6 +2,9 @@
 import { auth, provider } from './firebase-init.js';
 import { createUserWithEmailAndPassword, getAdditionalUserInfo, signInWithPopup } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
 
+// IMPORTANT: You must replace this with your actual extension ID.
+const EXTENSION_ID = "hajgbjgbdejejppmmikigepdcjdngamn";
+
 document.addEventListener('DOMContentLoaded', () => {
     const signupEmailBtn = document.getElementById('signupEmailBtn');
     const signupGoogleBtn = document.getElementById('signupGoogleBtn');
@@ -27,8 +30,13 @@ document.addEventListener('DOMContentLoaded', () => {
         errorContainer.style.display = 'block';
     }
 
-    // This function now simply shows a success message on the page.
     function handleSuccessfulSignup(isNewUser = true) {
+        // This sends a "wakeup" message to the background script.
+        // The empty callback function prevents an error from appearing in the console.
+        if (chrome && chrome.runtime) {
+            chrome.runtime.sendMessage(EXTENSION_ID, { type: "LOGIN_SUCCESS" }, () => {});
+        }
+
         const message = isNewUser ? "Account Created!" : "Login Successful!";
         document.body.innerHTML = `<div class="card"><h2>${message}</h2><p>You can now close this tab.</p></div>`;
     }
