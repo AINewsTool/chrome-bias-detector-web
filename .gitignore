@@ -1,0 +1,53 @@
+# macOS System Files
+# ------------------
+# These are invisible files that macOS creates in folders. They don't belong in a shared repository.
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Icon?
+Icon
+
+# Thumbnails
+._*
+
+# Files that might appear on external disk drives
+.Spotlight-V100
+.Trashes
+
+# Dependency Directories
+# ----------------------
+# This is the most important one for web development. The node_modules folder can contain
+# thousands of files and should always be installed fresh from package.json, not stored in git.
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+
+# Build output
+# ------------
+# If you ever use a build tool (like Vite, Webpack, etc.), you'll want to ignore the output directory.
+dist
+build
+out
+
+# Environment Variables
+# ---------------------
+# Never commit your environment variables, as they might contain secret API keys.
+.env
+.env.local
+.env.*.local
+
+# Editor and IDE Directories
+# --------------------------
+# These folders store your personal editor settings and should not be shared.
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Log files
+# ---------
+# Ignore any log files that your application might generate.
+*.log

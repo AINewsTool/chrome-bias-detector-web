@@ -12,6 +12,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const subheading = document.getElementById('subheading');
     const lengthReq = document.getElementById('length-req');
     const numberReq = document.getElementById('number-req');
+    const specialReq = document.getElementById('special-req');
 
     function showMessage(message, isError = false) {
         messageContainer.textContent = message;
@@ -39,30 +40,29 @@ document.addEventListener('DOMContentLoaded', async () => {
         return;
     }
 
-    // --- Corrected Password strength checker logic ---
     newPasswordInput.addEventListener('input', () => {
         const password = newPasswordInput.value;
+        // Updated criteria checks
         const meetsLength = password.length >= 6;
         const meetsNumber = /\d/.test(password);
+        const meetsSpecial = /[!@#$%^&*]/.test(password);
 
-        // Toggle the 'valid' class based on whether criteria are met
         lengthReq.classList.toggle('valid', meetsLength);
         numberReq.classList.toggle('valid', meetsNumber);
+        specialReq.classList.toggle('valid', meetsSpecial); // Toggle the new requirement
     });
 
-    // --- Corrected Password update logic ---
     savePasswordBtn.addEventListener('click', async () => {
         const newPassword = newPasswordInput.value;
         const confirmPassword = confirmPasswordInput.value;
-
-        // --- Stricter Validation ---
-        // Checks if the checklist items have the 'valid' class.
+        
         const isLengthValid = lengthReq.classList.contains('valid');
         const isNumberValid = numberReq.classList.contains('valid');
+        const isSpecialValid = specialReq.classList.contains('valid'); // Check the new requirement
 
-        if (!isLengthValid || !isNumberValid) {
+        if (!isLengthValid || !isNumberValid || !isSpecialValid) {
             showMessage("Password does not meet all requirements.", true);
-            return; // This now correctly stops the submission
+            return;
         }
         if (newPassword !== confirmPassword) {
             showMessage("Passwords do not match.", true);
@@ -88,7 +88,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             loginLink.style.textAlign = 'center';
             loginLink.style.marginTop = '1rem';
             messageContainer.appendChild(loginLink);
-
         } catch (error) {
             let friendlyMessage = "An error occurred. Please try again.";
             if (error.code === 'auth/weak-password') {

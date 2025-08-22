@@ -12,23 +12,29 @@ document.addEventListener('DOMContentLoaded', () => {
     const passwordInput = document.getElementById('passwordInput');
     const errorContainer = document.getElementById('error-container');
 
-    function showUserFriendlyError(error) {
-        let message = "An unknown error occurred. Please try again.";
-        if (error.code) {
-            switch (error.code) {
-                case 'auth/email-already-in-use':
-                    message = "An account with this email already exists. Please log in.";
-                    break;
-                case 'auth/weak-password':
-                    message = "Password is too weak. It must be at least 6 characters long.";
-                    break;
-                default:
-                    message = "An error occurred during sign up. Please try again.";
-            }
-        }
+    // Get strength checker elements
+    const lengthReq = document.getElementById('length-req');
+    const numberReq = document.getElementById('number-req');
+    const specialReq = document.getElementById('special-req');
+
+    function showUserFriendlyError(message) {
+        // The function now just takes a string to be more flexible
         errorContainer.textContent = message;
         errorContainer.style.display = 'block';
     }
+
+    // Password strength checker logic
+    passwordInput.addEventListener('input', () => {
+        const password = passwordInput.value;
+        const meetsLength = password.length >= 6;
+        const meetsNumber = /\d/.test(password);
+        const meetsSpecial = /[!@#$%^&*]/.test(password);
+
+        lengthReq.classList.toggle('valid', meetsLength);
+        numberReq.classList.toggle('valid', meetsNumber);
+        specialReq.classList.toggle('valid', meetsSpecial);
+    });
+
 
     async function handleSuccessfulSignup(isNewUser = true) {
         const user = auth.currentUser;
@@ -36,12 +42,11 @@ document.addEventListener('DOMContentLoaded', () => {
             const token = await user.getIdToken();
             const email = user.email;
 
-            // Send the actual user data to the background script
             if (chrome && chrome.runtime) {
                 chrome.runtime.sendMessage(
                     EXTENSION_ID, 
                     { type: "LOGIN_SUCCESS", token: token, email: email }, 
-                    () => {} // Empty callback to prevent console errors
+                    () => {}
                 );
             }
         }
@@ -53,11 +58,29 @@ document.addEventListener('DOMContentLoaded', () => {
     // Email/Password Sign Up
     signupEmailBtn.addEventListener('click', async () => {
         errorContainer.style.display = 'none';
+
+        // Enforce password requirements before trying to create an account
+        const isLengthValid = lengthReq.classList.contains('valid');
+        const isNumberValid = numberReq.classList.contains('valid');
+        const isSpecialValid = specialReq.classList.contains('valid');
+
+        if (!isLengthValid || !isNumberValid || !isSpecialValid) {
+            showUserFriendlyError("Your password does not meet all the requirements.");
+            return;
+        }
+
         try {
             await createUserWithEmailAndPassword(auth, emailInput.value.trim(), passwordInput.value);
             await handleSuccessfulSignup(true);
         } catch (err) {
-            showUserFriendlyError(err);
+            // Handle Firebase-specific errors
+            let message = "An error occurred during sign up. Please try again.";
+            if (err.code === 'auth/email-already-in-use') {
+                message = "An account with this email already exists. Please log in.";
+            } else if (err.code === 'auth/weak-password') {
+                message = "Password is too weak. Please meet all the requirements.";
+            }
+            showUserFriendlyError(message);
         }
     });
 
@@ -69,7 +92,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const additionalUserInfo = getAdditionalUserInfo(result);
             await handleSuccessfulSignup(additionalUserInfo.isNewUser);
         } catch (err) {
-            showUserFriendlyError(err);
+            showUserFriendlyError("An error occurred with Google Sign-Up. Please try again.");
         }
     });
 });
