@@ -4,119 +4,269 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bias Detector - Chrome Extension</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        primary: '#2563eb',
-                        secondary: '#1e40af',
-                    }
-                }
-            }
+    <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+    <link rel="stylesheet" href="globals.css">
+    <style>
+        /* Additional styles and animations for the homepage */
+        body {
+            display: block; /* Override flex display for a standard page layout */
+            background: var(--background);
+            color: var(--foreground);
+            font-family: var(--font-sans);
+            margin: 0;
+            padding: 0;
         }
-    </script>
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        /* Header */
+        .header {
+            background: var(--card);
+            border-bottom: 1px solid var(--card-border);
+            padding: 1rem 0;
+        }
+
+        .header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--primary);
+            border-radius: var(--radius);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-foreground);
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--foreground);
+        }
+        
+        .nav-buttons button {
+            width: auto;
+            margin-top: 0;
+            padding: 0.6rem 1.2rem;
+            font-weight: 500;
+            border: 1px solid transparent;
+        }
+        
+        .nav-buttons .login-btn {
+            background: transparent;
+            color: var(--foreground);
+        }
+
+        .nav-buttons .login-btn:hover {
+             background: var(--input-background);
+        }
+
+
+        /* Main Content - Hero Section */
+        .hero {
+            text-align: center;
+            padding: 5rem 0;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        .hero h2 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--muted-foreground);
+            max-width: 700px;
+            margin: 0 auto 2.5rem;
+        }
+
+        .hero .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1rem 2.5rem;
+            font-size: 1.2rem;
+            font-weight: 600;
+            width: auto;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .hero .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+        
+        /* Features Section */
+        .features {
+            padding: 4rem 0;
+            animation: fadeIn 1.5s ease-in-out;
+        }
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        .feature-card {
+            background: var(--card);
+            padding: 2rem;
+            border-radius: var(--radius);
+            border: 1px solid var(--card-border);
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px -15px rgba(0,0,0,0.1);
+        }
+        .feature-icon {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            background-color: oklch(from var(--primary) l / 10%);
+        }
+
+        .feature-card h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .feature-card p {
+            color: var(--muted-foreground);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--card);
+            border-top: 1px solid var(--card-border);
+            padding: 3rem 0;
+            margin-top: 4rem;
+        }
+
+        .footer .container {
+            text-align: center;
+        }
+
+        .footer-links a {
+            color: var(--muted-foreground);
+            text-decoration: none;
+            margin: 0 1rem;
+            transition: color 0.2s ease;
+        }
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+        .footer p {
+            margin-top: 2rem;
+            color: var(--muted-foreground);
+            font-size: 0.9rem;
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+    </style>
 </head>
-<body class="bg-gradient-to-br from-slate-50 to-blue-50 min-h-screen font-sans">
-    <header class="bg-white shadow-sm border-b border-gray-100">
-        <div class="max-w-6xl mx-auto px-6 py-4">
-            <div class="flex items-center justify-between">
-                <div class="flex items-center space-x-3">
-                    <div class="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
-                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                        </svg>
-                    </div>
-                    <h1 class="text-2xl font-bold text-gray-900">Bias Detector</h1>
+<body>
+    <header class="header">
+        <div class="container">
+            <a href="/" class="logo">
+                <div class="logo-icon">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 24px; height: 24px;">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
                 </div>
-                <div class="flex items-center space-x-4">
-                    <button class="px-4 py-2 text-gray-700 hover:text-primary transition-colors font-medium" onclick="window.location.href='./login/'">
-                        Login
-                    </button>
-                    <button class="px-6 py-2 bg-primary text-white rounded-lg hover:bg-secondary transition-colors font-medium" onclick="window.location.href='./signup/'">
-                        Sign Up
-                    </button>
-                </div>
+                <h1 class="logo-text">Bias Detector</h1>
+            </a>
+            <div class="nav-buttons">
+                <button class="login-btn" onclick="window.location.href='./login/'">Login</button>
+                <button class="primary" onclick="window.location.href='./signup/'">Sign Up</button>
             </div>
         </div>
     </header>
 
-    <main class="max-w-6xl mx-auto px-6 py-16">
-        <div class="text-center mb-16">
-            <h2 class="text-5xl font-bold text-gray-900 mb-6 leading-tight">
-                Detect Bias in Real-Time
-            </h2>
-            <p class="text-xl text-gray-600 mb-12 max-w-3xl mx-auto leading-relaxed">
+    <main>
+        <section class="hero container">
+            <h2>Detect Bias in Real-Time</h2>
+            <p>
                 Our AI-powered Chrome extension helps you identify potential bias in articles, social media posts, and web content as you browse. Stay informed and think critically about the information you consume.
             </p>
-            
-            <button class="inline-flex items-center px-12 py-6 bg-gradient-to-r from-primary to-secondary text-white text-xl font-semibold rounded-full hover:shadow-lg transform hover:scale-105 transition-all duration-200 mb-8">
-                <svg class="w-8 h-8 mr-4" viewBox="0 0 24 24" fill="currentColor">
+            <button class="primary cta-button">
+                <svg style="width: 28px; height: 28px;" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
                 </svg>
                 Add to Chrome
             </button>
-        </div>
+        </section>
 
-        <div class="grid md:grid-cols-3 gap-8 mb-16">
-            <div class="bg-white p-8 rounded-xl shadow-sm border border-gray-100 text-center">
-                <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                    <svg class="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-                    </svg>
-                </div>
-                <h3 class="text-xl font-semibold text-gray-900 mb-4">Real-Time Analysis</h3>
-                <p class="text-gray-600">Instantly analyze web content for potential bias as you browse</p>
-            </div>
-            
-            <div class="bg-white p-8 rounded-xl shadow-sm border border-gray-100 text-center">
-                <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                    <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                    </svg>
-                </div>
-                <h3 class="text-xl font-semibold text-gray-900 mb-4">AI-Powered</h3>
-                <p class="text-gray-600">Advanced machine learning algorithms trained on diverse datasets</p>
-            </div>
-            
-            <div class="bg-white p-8 rounded-xl shadow-sm border border-gray-100 text-center">
-                <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                    <svg class="w-8 h-8 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
-                    </svg>
-                </div>
-                <h3 class="text-xl font-semibold text-gray-900 mb-4">Privacy First</h3>
-                <p class="text-gray-600">Your browsing data stays private and secure on your device</p>
-            </div>
-        </div>
-    </main>
-
-    <footer class="bg-white border-t border-gray-100 mt-20">
-        <div class="max-w-6xl mx-auto px-6 py-12">
-            <div class="flex flex-col md:flex-row items-center justify-between">
-                <div class="flex items-center space-x-3 mb-6 md:mb-0">
-                    <div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+        <section class="features container">
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                         <svg style="width: 32px; height: 32px; color: var(--primary);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
                         </svg>
                     </div>
-                    <span class="text-lg font-semibold text-gray-900">Bias Detector</span>
+                    <h3>Real-Time Analysis</h3>
+                    <p>Instantly analyze web content for potential bias as you browse.</p>
                 </div>
                 
-                <div class="flex items-center space-x-8">
-                    <button class="text-gray-600 hover:text-primary transition-colors font-medium">
-                        Privacy Policy
-                    </button>
-                    <button class="text-gray-600 hover:text-primary transition-colors font-medium">
-                        Terms of Service
-                    </button>
+                <div class="feature-card">
+                    <div class="feature-icon" style="background-color: oklch(0.8 0.1 145 / 20%)">
+                        <svg style="width: 32px; height: 32px; color: oklch(0.6 0.1 145);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </div>
+                    <h3>AI-Powered</h3>
+                    <p>Advanced machine learning algorithms trained on diverse datasets.</p>
+                </div>
+                
+                <div class="feature-card">
+                     <div class="feature-icon" style="background-color: oklch(0.8 0.1 290 / 20%)">
+                        <svg style="width: 32px; height: 32px; color: oklch(0.6 0.1 290);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                        </svg>
+                    </div>
+                    <h3>Privacy First</h3>
+                    <p>Your browsing data stays private and secure on your device.</p>
                 </div>
             </div>
-            
-            <div class="border-t border-gray-100 mt-8 pt-8 text-center">
-                <p class="text-gray-500">© 2024 Bias Detector. All rights reserved.</p>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-links">
+                <a href="./privacy-policy/">Privacy Policy</a>
+                <a href="./terms-of-service/">Terms of Service</a>
             </div>
+            <p>© 2025 Bias Detector. All rights reserved.</p>
         </div>
     </footer>
 </body>
