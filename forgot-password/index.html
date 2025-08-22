@@ -6,16 +6,30 @@
   <title>Forgot Password - Bias Detector</title>
   <link rel="stylesheet" href="../globals.css">
   <style>
-    /* Added a dedicated style for the success message */
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
     .success-message {
-      color: oklch(0.4 0.1 145); /* A dark, readable green */
-      background-color: oklch(0.95 0.05 145); /* A very light green background */
+      color: oklch(0.4 0.1 145);
+      background-color: oklch(0.95 0.05 145);
       border: 1px solid oklch(0.9 0.05 145);
-      font-size: 0.9rem;
-      margin-bottom: 1rem;
-      padding: 0.75rem;
+      font-size: 0.9rem; margin-bottom: 1rem; padding: 0.75rem;
+      border-radius: var(--radius); text-align: left;
+    }
+    /* New style for the warning box */
+    .warning-box {
+      background-color: #fefce8; /* light yellow */
+      color: #a16207; /* dark yellow */
+      border: 1px solid #fde047; /* yellow border */
+      padding: 1rem;
       border-radius: var(--radius);
+      font-size: 0.9rem;
       text-align: left;
+      margin-bottom: 1.5rem;
+    }
+    .warning-box strong {
+      display: block;
+      margin-bottom: 0.25rem;
     }
   </style>
 </head>
@@ -24,6 +38,10 @@
     <div class="card-header">
       <h2>Forgot Password</h2>
       <p>Enter your email to receive a password reset link.</p>
+    </div>
+
+    <div class="warning-box">
+      <strong>Note:</strong> Users who signed up with Google cannot change their passwords here. You must manage your password through your Google account.
     </div>
 
     <div id="message-container" style="display: none;"></div>
