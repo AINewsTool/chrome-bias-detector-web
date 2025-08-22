@@ -82,7 +82,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     showMessage("Your password has been updated successfully! The extension will use this new password on its next startup.");
 
                 } catch (error) {
-                    let friendlyMessage = "An unexpected error occurred.";
+                    let friendlyMessage = "Your current password is incorrect or another error occurred. Please try again.";
                     if (error.code === 'auth/wrong-password') {
                         friendlyMessage = "The current password you entered is incorrect.";
                     } else if (error.code === 'auth/too-many-requests') {
