@@ -12,14 +12,16 @@ document.addEventListener('DOMContentLoaded', async () => {
     const confirmPasswordInput = document.getElementById('confirmPasswordInput');
     const subheading = document.getElementById('subheading');
 
-    // Helper function to show messages
+    // --- New: Get strength checker elements ---
+    const lengthReq = document.getElementById('length-req');
+    const numberReq = document.getElementById('number-req');
+
     function showMessage(message, isError = false) {
         messageContainer.textContent = message;
         messageContainer.className = isError ? 'error-message' : 'success-message';
         messageContainer.style.display = 'block';
     }
 
-    // Get the action code from the URL
     const params = new URLSearchParams(window.location.search);
     const actionCode = params.get('oobCode');
 
@@ -29,32 +31,45 @@ document.addEventListener('DOMContentLoaded', async () => {
         return;
     }
 
-    // --- Part 1: Verify the reset code ---
     try {
-        // Verify the code is valid. This also returns the user's email.
         const email = await verifyPasswordResetCode(auth, actionCode);
-        
-        // If successful, hide the loader and show the form
         loaderContainer.style.display = 'none';
         formContainer.style.display = 'block';
         subheading.textContent = `Enter a new password for ${email}`;
-
     } catch (error) {
-        // If the code is invalid (expired, already used, etc.)
         loaderContainer.style.display = 'none';
-        let friendlyMessage = "This password reset link is invalid or has expired. Please request a new one.";
-        showMessage(friendlyMessage, true);
-        return; // Stop execution
+        showMessage("This password reset link is invalid or has expired. Please request a new one.", true);
+        return;
     }
 
-    // --- Part 2: Handle the password update ---
+    // --- New: Password strength checker logic ---
+    newPasswordInput.addEventListener('input', () => {
+        const password = newPasswordInput.value;
+
+        // Check for length
+        if (password.length >= 6) {
+            lengthReq.classList.add('valid');
+        } else {
+            lengthReq.classList.remove('valid');
+        }
+
+        // Check for a number
+        if (/\d/.test(password)) {
+            numberReq.classList.add('valid');
+        } else {
+            numberReq.classList.remove('valid');
+        }
+    });
+
+
+    // --- Handle the password update ---
     savePasswordBtn.addEventListener('click', async () => {
         const newPassword = newPasswordInput.value;
         const confirmPassword = confirmPasswordInput.value;
 
-        // Basic validation
-        if (newPassword.length < 6) {
-            showMessage("Password must be at least 6 characters long.", true);
+        // Validation now checks the same requirements as the strength checker
+        if (newPassword.length < 6 || !/\d/.test(newPassword)) {
+            showMessage("Password does not meet all requirements.", true);
             return;
         }
         if (newPassword !== confirmPassword) {
@@ -63,23 +78,19 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
 
         try {
-            // Disable button to prevent multiple submissions
             savePasswordBtn.disabled = true;
             savePasswordBtn.textContent = 'Saving...';
             
-            // Save the new password
             await confirmPasswordReset(auth, actionCode, newPassword);
 
-            // Success! Hide the form and show a success message.
             formContainer.style.display = 'none';
             subheading.style.display = 'none';
             showMessage("Your password has been updated successfully! You can now log in with your new password.");
 
-            // Optionally, add a link to the login page
             const loginLink = document.createElement('a');
             loginLink.href = '../login/';
             loginLink.textContent = 'Go to Login';
-            loginLink.className = 'primary'; // Style it like a button
+            loginLink.className = 'primary';
             loginLink.style.textDecoration = 'none';
             loginLink.style.display = 'block';
             loginLink.style.textAlign = 'center';
@@ -87,14 +98,12 @@ document.addEventListener('DOMContentLoaded', async () => {
             messageContainer.appendChild(loginLink);
 
         } catch (error) {
-            // Handle errors, e.g., if the password is too weak
             let friendlyMessage = "An error occurred. Please try again.";
             if (error.code === 'auth/weak-password') {
-                friendlyMessage = "Password is too weak. It must be at least 6 characters long.";
+                friendlyMessage = "Password is too weak according to Firebase's standards.";
             }
             showMessage(friendlyMessage, true);
 
-            // Re-enable the button
             savePasswordBtn.disabled = false;
             savePasswordBtn.textContent = 'Save New Password';
         }
