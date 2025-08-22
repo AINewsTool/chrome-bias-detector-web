@@ -4,10 +4,28 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login - Bias Detector</title>
-  <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
   <link rel="stylesheet" href="../globals.css">
+  <style>
+    /* Added styles for the back button */
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+    .back-button {
+      display: flex; align-items: center; justify-content: center;
+      width: auto; padding: 0.5rem 1rem;
+      position: absolute; top: 1.5rem; left: 1.5rem;
+      background: transparent; border: 1px solid var(--input-border);
+      color: var(--muted-foreground);
+    }
+    .back-button:hover { background: var(--input-background); }
+  </style>
 </head>
 <body>
+  <button class="back-button" onclick="window.location.href='../'">
+    <svg style="width: 20px; height: 20px; margin-right: 0.5rem;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+    Back to Home
+  </button>
+
   <div class="card">
     <div class="card-header">
       <h2>Welcome Back!</h2>
@@ -18,9 +36,7 @@
 
     <input type="email" id="emailInput" placeholder="Email" required>
     <input type="password" id="passwordInput" placeholder="Password" required>
-
     <a href="../forgot-password/" style="text-align: right; font-size: 0.9rem; color: var(--primary); text-decoration: none; display: block; margin-bottom: 1rem;">Forgot Password?</a>
-    
     <button id="loginEmailBtn" class="primary">Login with Email</button>
 
     <div class="divider">or</div>
