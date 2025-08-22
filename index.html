@@ -4,23 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bias Detector - Chrome Extension</title>
-    <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
     <link rel="stylesheet" href="globals.css">
     <style>
-        /* Additional styles and animations for the homepage */
+        /* Reverted to a standard system font stack and adjusted spacing */
         body {
-            display: block; /* Override flex display for a standard page layout */
-            background: var(--background);
-            color: var(--foreground);
-            font-family: var(--font-sans);
+            display: block; 
+            background: #f8fafc; /* A light grey similar to the design */
+            color: #1e293b;     /* A dark slate color for text */
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
             margin: 0;
             padding: 0;
         }
 
         .container {
-            max-width: 1100px;
+            max-width: 1152px; /* max-w-6xl from Tailwind */
             margin: 0 auto;
-            padding: 0 1.5rem;
+            padding: 0 1.5rem; /* px-6 */
         }
 
         /* Header */
@@ -46,97 +45,117 @@
         .logo-icon {
             width: 40px;
             height: 40px;
-            background: var(--primary);
+            background: #2563eb; /* primary color from design */
             border-radius: var(--radius);
             display: flex;
             align-items: center;
             justify-content: center;
-            color: var(--primary-foreground);
+            color: white;
         }
 
         .logo-text {
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: var(--foreground);
+            font-size: 1.5rem; /* text-2xl */
+            font-weight: 700; /* font-bold */
+            color: #0f172a; /* text-gray-900 */
         }
         
+        .nav-buttons {
+            display: flex;
+            align-items: center;
+            gap: 1rem; /* space-x-4 */
+        }
+
         .nav-buttons button {
             width: auto;
             margin-top: 0;
-            padding: 0.6rem 1.2rem;
+            padding: 0.5rem 1rem; /* px-4 py-2 */
             font-weight: 500;
             border: 1px solid transparent;
         }
         
         .nav-buttons .login-btn {
             background: transparent;
-            color: var(--foreground);
+            color: #334155; /* text-gray-700 */
         }
 
         .nav-buttons .login-btn:hover {
-             background: var(--input-background);
+             color: #2563eb; /* hover:text-primary */
+        }
+        
+        .nav-buttons .primary {
+            background: #2563eb;
+            color: white;
+            padding: 0.5rem 1.5rem; /* px-6 py-2 */
+        }
+        
+        .nav-buttons .primary:hover {
+            background: #1e40af; /* secondary color on hover */
         }
 
 
         /* Main Content - Hero Section */
         .hero {
             text-align: center;
-            padding: 5rem 0;
+            padding: 4rem 0; /* py-16 */
             animation: fadeIn 1s ease-in-out;
         }
 
         .hero h2 {
-            font-size: 3.5rem;
-            font-weight: 700;
-            line-height: 1.2;
-            margin-bottom: 1.5rem;
+            font-size: 3.75rem; /* text-5xl */
+            font-weight: 700; /* font-bold */
+            line-height: 1.1; /* leading-tight */
+            color: #0f172a; /* text-gray-900 */
+            margin-bottom: 1.5rem; /* mb-6 */
         }
 
         .hero p {
-            font-size: 1.25rem;
-            color: var(--muted-foreground);
-            max-width: 700px;
-            margin: 0 auto 2.5rem;
+            font-size: 1.25rem; /* text-xl */
+            color: #475569; /* text-gray-600 */
+            max-width: 896px; /* max-w-3xl */
+            line-height: 1.75; /* leading-relaxed */
+            margin: 0 auto 3rem; /* mb-12 */
         }
 
         .hero .cta-button {
             display: inline-flex;
             align-items: center;
-            gap: 0.75rem;
-            padding: 1rem 2.5rem;
-            font-size: 1.2rem;
-            font-weight: 600;
+            gap: 1rem; /* mr-4 */
+            padding: 1rem 3rem; /* px-12 py-5 (adjusted for icon) */
+            font-size: 1.25rem; /* text-xl */
+            font-weight: 600; /* font-semibold */
+            border-radius: 9999px; /* rounded-full */
             width: auto;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            background: linear-gradient(to right, #2563eb, #1e40af);
+            transition: all 0.2s ease;
         }
 
         .hero .cta-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px -10px rgba(37, 99, 235, 0.5);
         }
         
         /* Features Section */
         .features {
-            padding: 4rem 0;
+            padding: 4rem 0; /* mb-16 */
             animation: fadeIn 1.5s ease-in-out;
         }
         .features-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
+            gap: 2rem; /* gap-8 */
         }
         .feature-card {
             background: var(--card);
-            padding: 2rem;
-            border-radius: var(--radius);
+            padding: 2rem; /* p-8 */
+            border-radius: 0.75rem; /* rounded-xl */
             border: 1px solid var(--card-border);
             text-align: center;
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); /* shadow-sm */
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
         .feature-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 30px -15px rgba(0,0,0,0.1);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
         }
         .feature-icon {
             width: 64px;
@@ -145,44 +164,73 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto 1.5rem;
-            background-color: oklch(from var(--primary) l / 10%);
+            margin: 0 auto 1.5rem; /* mx-auto mb-6 */
         }
 
         .feature-card h3 {
-            font-size: 1.25rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
+            font-size: 1.25rem; /* text-xl */
+            font-weight: 600; /* font-semibold */
+            margin-bottom: 1rem; /* mb-4 */
+            color: #0f172a; /* text-gray-900 */
         }
         .feature-card p {
-            color: var(--muted-foreground);
+            color: #475569; /* text-gray-600 */
         }
 
         /* Footer */
         .footer {
             background: var(--card);
             border-top: 1px solid var(--card-border);
-            padding: 3rem 0;
-            margin-top: 4rem;
+            padding: 3rem 1.5rem; /* px-6 py-12 */
+            margin-top: 5rem; /* mt-20 */
+        }
+        
+        .footer-content {
+             max-width: 1152px;
+             margin: 0 auto;
         }
 
-        .footer .container {
-            text-align: center;
+        .footer-main {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+        }
+        @media (min-width: 768px) { /* md breakpoint */
+            .footer-main {
+                flex-direction: row;
+            }
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 2rem; /* space-x-8 */
+            margin-top: 1.5rem; /* mb-6 md:mb-0 */
+        }
+        @media (min-width: 768px) {
+             .footer-links {
+                margin-top: 0;
+            }
         }
 
         .footer-links a {
-            color: var(--muted-foreground);
+            color: #475569; /* text-gray-600 */
             text-decoration: none;
-            margin: 0 1rem;
+            font-weight: 500;
             transition: color 0.2s ease;
         }
         .footer-links a:hover {
-            color: var(--primary);
+            color: #2563eb; /* hover:text-primary */
         }
-        .footer p {
-            margin-top: 2rem;
-            color: var(--muted-foreground);
-            font-size: 0.9rem;
+        .footer-bottom {
+            border-top: 1px solid var(--card-border);
+            margin-top: 2rem; /* mt-8 */
+            padding-top: 2rem; /* pt-8 */
+            text-align: center;
+        }
+        .footer-bottom p {
+            color: #64748b; /* text-gray-500 */
+            font-size: 1rem;
         }
         
         /* Animations */
@@ -198,7 +246,7 @@
         <div class="container">
             <a href="/" class="logo">
                 <div class="logo-icon">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 24px; height: 24px;">
+                    <svg style="width: 24px; height: 24px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                     </svg>
                 </div>
@@ -218,7 +266,7 @@
                 Our AI-powered Chrome extension helps you identify potential bias in articles, social media posts, and web content as you browse. Stay informed and think critically about the information you consume.
             </p>
             <button class="primary cta-button">
-                <svg style="width: 28px; height: 28px;" viewBox="0 0 24 24" fill="currentColor">
+                <svg style="width: 32px; height: 32px;" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
                 </svg>
                 Add to Chrome
@@ -228,8 +276,8 @@
         <section class="features container">
             <div class="features-grid">
                 <div class="feature-card">
-                    <div class="feature-icon">
-                         <svg style="width: 32px; height: 32px; color: var(--primary);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div class="feature-icon" style="background-color: #dbeafe;">
+                         <svg style="width: 32px; height: 32px; color: #2563eb;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
                         </svg>
                     </div>
@@ -238,8 +286,8 @@
                 </div>
                 
                 <div class="feature-card">
-                    <div class="feature-icon" style="background-color: oklch(0.8 0.1 145 / 20%)">
-                        <svg style="width: 32px; height: 32px; color: oklch(0.6 0.1 145);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div class="feature-icon" style="background-color: #dcfce7;">
+                        <svg style="width: 32px; height: 32px; color: #16a34a;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                         </svg>
                     </div>
@@ -248,8 +296,8 @@
                 </div>
                 
                 <div class="feature-card">
-                     <div class="feature-icon" style="background-color: oklch(0.8 0.1 290 / 20%)">
-                        <svg style="width: 32px; height: 32px; color: oklch(0.6 0.1 290);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                     <div class="feature-icon" style="background-color: #f3e8ff;">
+                        <svg style="width: 32px; height: 32px; color: #9333ea;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
                         </svg>
                     </div>
@@ -261,12 +309,24 @@
     </main>
 
     <footer class="footer">
-        <div class="container">
-            <div class="footer-links">
-                <a href="./privacy-policy/">Privacy Policy</a>
-                <a href="./terms-of-service/">Terms of Service</a>
+        <div class="footer-content">
+            <div class="footer-main">
+                <a href="/" class="logo">
+                     <div class="logo-icon" style="width: 32px; height: 32px;">
+                        <svg style="width: 20px; height: 20px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </div>
+                    <span class="logo-text" style="font-size: 1.125rem;">Bias Detector</span>
+                </a>
+                <div class="footer-links">
+                    <a href="./privacy-policy/">Privacy Policy</a>
+                    <a href="./terms-of-service/">Terms of Service</a>
+                </div>
             </div>
-            <p>© 2025 Bias Detector. All rights reserved.</p>
+            <div class="footer-bottom">
+                <p>© 2025 Bias Detector. All rights reserved.</p>
+            </div>
         </div>
     </footer>
 </body>
