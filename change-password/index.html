@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Change Password - Bias Detector</title>
+  <link rel="stylesheet" href="../globals.css">
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+    .strength-checker {
+      list-style: none; padding: 0; margin: -0.5rem 0 1rem 0;
+      text-align: left; font-size: 0.9rem;
+    }
+    .requirement {
+      display: flex; align-items: center; margin-bottom: 0.5rem;
+      color: var(--destructive); transition: color 0.3s ease;
+    }
+    .requirement .icon {
+      width: 16px; height: 16px; margin-right: 0.5rem; display: inline-block;
+    }
+    .requirement .icon .cross { display: block; }
+    .requirement .icon .tick { display: none; }
+    .requirement.valid { color: #16a34a; }
+    .requirement.valid .icon .cross { display: none; }
+    .requirement.valid .icon .tick { display: block; }
+    .back-button {
+      display: flex; align-items: center; justify-content: center;
+      width: auto; padding: 0.5rem 1rem;
+      position: absolute; top: 1.5rem; left: 1.5rem;
+      background: transparent; border: 1px solid var(--input-border);
+      color: var(--muted-foreground);
+    }
+    .back-button:hover { background: var(--input-background); }
+    .warning-box {
+      background-color: #fefce8; color: #a16207; border: 1px solid #fde047;
+      padding: 1rem; border-radius: var(--radius); font-size: 0.9rem;
+      text-align: left; margin-bottom: 1.5rem;
+    }
+    .warning-box strong { display: block; margin-bottom: 0.25rem; }
+    .success-message {
+      color: oklch(0.4 0.1 145); background-color: oklch(0.95 0.05 145);
+      border: 1px solid oklch(0.9 0.05 145); font-size: 0.9rem;
+      margin-bottom: 1rem; padding: 0.75rem; border-radius: var(--radius); text-align: left;
+    }
+  </style>
+</head>
+<body>
+  <button class="back-button" onclick="window.location.href='../'">
+    <svg style="width: 20px; height: 20px; margin-right: 0.5rem;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+    Back to Home
+  </button>
+
+  <div class="card">
+    <div class="card-header">
+      <h2>Change Password</h2>
+      <p id="subheading">Please enter your current and new password.</p>
+    </div>
+
+    <div class="warning-box">
+      <strong>Note:</strong> Users who signed up with Google cannot change their passwords here. You must manage your password through your Google account.
+    </div>
+
+    <div id="message-container" style="display: none;"></div>
+
+    <div id="form-container">
+      <input type="password" id="currentPasswordInput" placeholder="Current Password" required>
+      <input type="password" id="newPasswordInput" placeholder="New Password" required>
+      
+      <ul class="strength-checker">
+        <li id="length-req" class="requirement">
+          <span class="icon"><svg class="cross" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg><svg class="tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg></span>
+          At least 6 characters
+        </li>
+        <li id="number-req" class="requirement">
+          <span class="icon"><svg class="cross" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg><svg class="tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg></span>
+          Contains a number
+        </li>
+        <li id="special-req" class="requirement">
+          <span class="icon"><svg class="cross" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg><svg class="tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg></span>
+          Contains a special character (!@#$%^&*)
+        </li>
+      </ul>
+
+      <input type="password" id="confirmPasswordInput" placeholder="Confirm New Password" required>
+      <button id="changePasswordBtn" class="primary">Update Password</button>
+    </div>
+  </div>
+
+  <script type="module" src="../firebase-init.js"></script>
+  <script type="module" src="../change-password.js"></script>
+</body>
+</html>
