@@ -7,7 +7,6 @@
   <link rel="stylesheet" href="../globals.css">
   <style>
     body {
-      /* Applying a clean, standard font stack for consistency */
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     }
     .success-message {
@@ -29,8 +28,6 @@
       0% { transform: rotate(0deg); }
       100% { transform: rotate(360deg); }
     }
-
-    /* --- New Styles for Password Strength Checker --- */
     .strength-checker {
       list-style: none;
       padding: 0;
@@ -42,7 +39,7 @@
       display: flex;
       align-items: center;
       margin-bottom: 0.5rem;
-      color: var(--destructive); /* Default to red/error color */
+      color: var(--destructive);
       transition: color 0.3s ease;
     }
     .requirement .icon {
@@ -53,14 +50,11 @@
     }
     .requirement .icon .cross { display: block; }
     .requirement .icon .tick { display: none; }
-
-    /* Style for when a requirement is met */
     .requirement.valid {
-      color: #16a34a; /* A nice green for success */
+      color: #16a34a;
     }
     .requirement.valid .icon .cross { display: none; }
     .requirement.valid .icon .tick { display: block; }
-
   </style>
 </head>
 <body>

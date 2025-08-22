@@ -3,7 +3,6 @@ import { auth } from './firebase-init.js';
 import { verifyPasswordResetCode, confirmPasswordReset } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
 
 document.addEventListener('DOMContentLoaded', async () => {
-    // Get all necessary elements from the page
     const messageContainer = document.getElementById('message-container');
     const loaderContainer = document.getElementById('loader-container');
     const formContainer = document.getElementById('form-container');
@@ -11,8 +10,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     const newPasswordInput = document.getElementById('newPasswordInput');
     const confirmPasswordInput = document.getElementById('confirmPasswordInput');
     const subheading = document.getElementById('subheading');
-
-    // --- New: Get strength checker elements ---
     const lengthReq = document.getElementById('length-req');
     const numberReq = document.getElementById('number-req');
 
@@ -42,35 +39,30 @@ document.addEventListener('DOMContentLoaded', async () => {
         return;
     }
 
-    // --- New: Password strength checker logic ---
+    // --- Corrected Password strength checker logic ---
     newPasswordInput.addEventListener('input', () => {
         const password = newPasswordInput.value;
+        const meetsLength = password.length >= 6;
+        const meetsNumber = /\d/.test(password);
 
-        // Check for length
-        if (password.length >= 6) {
-            lengthReq.classList.add('valid');
-        } else {
-            lengthReq.classList.remove('valid');
-        }
-
-        // Check for a number
-        if (/\d/.test(password)) {
-            numberReq.classList.add('valid');
-        } else {
-            numberReq.classList.remove('valid');
-        }
+        // Toggle the 'valid' class based on whether criteria are met
+        lengthReq.classList.toggle('valid', meetsLength);
+        numberReq.classList.toggle('valid', meetsNumber);
     });
 
-
-    // --- Handle the password update ---
+    // --- Corrected Password update logic ---
     savePasswordBtn.addEventListener('click', async () => {
         const newPassword = newPasswordInput.value;
         const confirmPassword = confirmPasswordInput.value;
 
-        // Validation now checks the same requirements as the strength checker
-        if (newPassword.length < 6 || !/\d/.test(newPassword)) {
+        // --- Stricter Validation ---
+        // Checks if the checklist items have the 'valid' class.
+        const isLengthValid = lengthReq.classList.contains('valid');
+        const isNumberValid = numberReq.classList.contains('valid');
+
+        if (!isLengthValid || !isNumberValid) {
             showMessage("Password does not meet all requirements.", true);
-            return;
+            return; // This now correctly stops the submission
         }
         if (newPassword !== confirmPassword) {
             showMessage("Passwords do not match.", true);
