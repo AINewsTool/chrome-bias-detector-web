@@ -6,20 +6,19 @@
     <title>Bias Detector - Chrome Extension</title>
     <link rel="stylesheet" href="globals.css">
     <style>
-        /* Reverted to a standard system font stack and adjusted spacing */
         body {
             display: block; 
-            background: #f8fafc; /* A light grey similar to the design */
-            color: #1e293b;     /* A dark slate color for text */
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+            background: #f8fafc;
+            color: #1e293b;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             margin: 0;
             padding: 0;
         }
 
         .container {
-            max-width: 1152px; /* max-w-6xl from Tailwind */
+            max-width: 1152px;
             margin: 0 auto;
-            padding: 0 1.5rem; /* px-6 */
+            padding: 0 1.5rem;
         }
 
         /* Header */
@@ -45,7 +44,7 @@
         .logo-icon {
             width: 40px;
             height: 40px;
-            background: #2563eb; /* primary color from design */
+            background: #2563eb;
             border-radius: var(--radius);
             display: flex;
             align-items: center;
@@ -54,79 +53,80 @@
         }
 
         .logo-text {
-            font-size: 1.5rem; /* text-2xl */
-            font-weight: 700; /* font-bold */
-            color: #0f172a; /* text-gray-900 */
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #0f172a;
         }
         
         .nav-buttons {
             display: flex;
             align-items: center;
-            gap: 1rem; /* space-x-4 */
+            gap: 1rem;
         }
 
         .nav-buttons button {
             width: auto;
             margin-top: 0;
-            padding: 0.5rem 1rem; /* px-4 py-2 */
+            padding: 0.5rem 1rem;
             font-weight: 500;
             border: 1px solid transparent;
         }
         
         .nav-buttons .login-btn {
             background: transparent;
-            color: #334155; /* text-gray-700 */
+            color: #334155;
         }
 
         .nav-buttons .login-btn:hover {
-             color: #2563eb; /* hover:text-primary */
+             color: #2563eb;
         }
         
         .nav-buttons .primary {
             background: #2563eb;
             color: white;
-            padding: 0.5rem 1.5rem; /* px-6 py-2 */
+            padding: 0.5rem 1.5rem;
         }
         
         .nav-buttons .primary:hover {
-            background: #1e40af; /* secondary color on hover */
+            background: #1e40af;
         }
 
 
         /* Main Content - Hero Section */
         .hero {
             text-align: center;
-            padding: 4rem 0; /* py-16 */
+            padding: 4rem 0;
             animation: fadeIn 1s ease-in-out;
         }
 
         .hero h2 {
-            font-size: 3.75rem; /* text-5xl */
-            font-weight: 700; /* font-bold */
-            line-height: 1.1; /* leading-tight */
-            color: #0f172a; /* text-gray-900 */
-            margin-bottom: 1.5rem; /* mb-6 */
+            font-size: 3.75rem;
+            font-weight: 700;
+            line-height: 1.1;
+            color: #0f172a;
+            margin-bottom: 1.5rem;
         }
 
         .hero p {
-            font-size: 1.25rem; /* text-xl */
-            color: #475569; /* text-gray-600 */
-            max-width: 896px; /* max-w-3xl */
-            line-height: 1.75; /* leading-relaxed */
-            margin: 0 auto 3rem; /* mb-12 */
+            font-size: 1.25rem;
+            color: #475569;
+            max-width: 896px;
+            line-height: 1.75;
+            margin: 0 auto 3rem;
         }
 
         .hero .cta-button {
             display: inline-flex;
             align-items: center;
-            gap: 1rem; /* mr-4 */
-            padding: 1rem 3rem; /* px-12 py-5 (adjusted for icon) */
-            font-size: 1.25rem; /* text-xl */
-            font-weight: 600; /* font-semibold */
-            border-radius: 9999px; /* rounded-full */
+            gap: 1rem;
+            padding: 1rem 3rem;
+            font-size: 1.25rem;
+            font-weight: 600;
+            border-radius: 9999px;
             width: auto;
             background: linear-gradient(to right, #2563eb, #1e40af);
-            transition: all 0.2s ease;
+            /* ANIMATION FIX: Apply a smooth transition to the transform and box-shadow properties */
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
 
         .hero .cta-button:hover {
@@ -136,21 +136,21 @@
         
         /* Features Section */
         .features {
-            padding: 4rem 0; /* mb-16 */
+            padding: 4rem 0;
             animation: fadeIn 1.5s ease-in-out;
         }
         .features-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem; /* gap-8 */
+            gap: 2rem;
         }
         .feature-card {
             background: var(--card);
-            padding: 2rem; /* p-8 */
-            border-radius: 0.75rem; /* rounded-xl */
+            padding: 2rem;
+            border-radius: 0.75rem;
             border: 1px solid var(--card-border);
             text-align: center;
-            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); /* shadow-sm */
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
         .feature-card:hover {
@@ -164,25 +164,25 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto 1.5rem; /* mx-auto mb-6 */
+            margin: 0 auto 1.5rem;
         }
 
         .feature-card h3 {
-            font-size: 1.25rem; /* text-xl */
-            font-weight: 600; /* font-semibold */
-            margin-bottom: 1rem; /* mb-4 */
-            color: #0f172a; /* text-gray-900 */
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #0f172a;
         }
         .feature-card p {
-            color: #475569; /* text-gray-600 */
+            color: #475569;
         }
 
         /* Footer */
         .footer {
             background: var(--card);
             border-top: 1px solid var(--card-border);
-            padding: 3rem 1.5rem; /* px-6 py-12 */
-            margin-top: 5rem; /* mt-20 */
+            padding: 3rem 1.5rem;
+            margin-top: 5rem;
         }
         
         .footer-content {
@@ -196,7 +196,7 @@
             align-items: center;
             justify-content: space-between;
         }
-        @media (min-width: 768px) { /* md breakpoint */
+        @media (min-width: 768px) {
             .footer-main {
                 flex-direction: row;
             }
@@ -204,8 +204,8 @@
 
         .footer-links {
             display: flex;
-            gap: 2rem; /* space-x-8 */
-            margin-top: 1.5rem; /* mb-6 md:mb-0 */
+            gap: 2rem;
+            margin-top: 1.5rem;
         }
         @media (min-width: 768px) {
              .footer-links {
@@ -214,22 +214,22 @@
         }
 
         .footer-links a {
-            color: #475569; /* text-gray-600 */
+            color: #475569;
             text-decoration: none;
             font-weight: 500;
             transition: color 0.2s ease;
         }
         .footer-links a:hover {
-            color: #2563eb; /* hover:text-primary */
+            color: #2563eb;
         }
         .footer-bottom {
             border-top: 1px solid var(--card-border);
-            margin-top: 2rem; /* mt-8 */
-            padding-top: 2rem; /* pt-8 */
+            margin-top: 2rem;
+            padding-top: 2rem;
             text-align: center;
         }
         .footer-bottom p {
-            color: #64748b; /* text-gray-500 */
+            color: #64748b;
             font-size: 1rem;
         }
         
@@ -267,7 +267,7 @@
             </p>
             <button class="primary cta-button">
                 <svg style="width: 32px; height: 32px;" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                    <path fill-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zM12.75 9a.75.75 0 00-1.5 0v2.25H9a.75.75 0 000 1.5h2.25V15a.75.75 0 001.5 0v-2.25H15a.75.75 0 000-1.5h-2.25V9z" clip-rule="evenodd" />
                 </svg>
                 Add to Chrome
             </button>
@@ -325,7 +325,7 @@
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>© 2025 Bias Detector. All rights reserved.</p>
+                <p>© 2024 Bias Detector. All rights reserved.</p>
             </div>
         </div>
     </footer>
