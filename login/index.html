@@ -10,6 +10,7 @@
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     }
     .back-button {
+      /* This button is now positioned relative to the card */
       display: flex; align-items: center; justify-content: center;
       width: auto; padding: 0.5rem 1rem;
       position: absolute; top: 1.5rem; left: 1.5rem;
@@ -23,26 +24,20 @@
       text-align: left; margin-bottom: 1.5rem;
     }
     .warning-box strong { display: block; margin-bottom: 0.25rem; }
-    
-    /* NEW: Style for the green success message box */
     .success-box {
-      color: #15803d; /* dark green text */
-      background-color: #f0fdf4; /* light green background */
-      border: 1px solid #bbf7d0; /* green border */
-      padding: 1rem;
-      border-radius: var(--radius);
-      font-size: 0.9rem;
+      color: #15803d; background-color: #f0fdf4; border: 1px solid #bbf7d0;
+      padding: 1rem; border-radius: var(--radius); font-size: 0.9rem;
       text-align: center;
     }
   </style>
 </head>
 <body>
-  <button class="back-button" onclick="window.location.href='../'">
-    <svg style="width: 20px; height: 20px; margin-right: 0.5rem;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
-    Back to Home
-  </button>
-
   <div class="card">
+    <button id="back-to-home-btn" class="back-button" onclick="window.location.href='../'">
+      <svg style="width: 20px; height: 20px; margin-right: 0.5rem;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+      Back to Home
+    </button>
+
     <div class="card-header">
       <h2>Welcome Back!</h2>
       <p>Enter your credentials to continue.</p>

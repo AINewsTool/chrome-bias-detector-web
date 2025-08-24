@@ -11,14 +11,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const emailInput = document.getElementById('emailInput');
     const passwordInput = document.getElementById('passwordInput');
     const errorContainer = document.getElementById('error-container');
-    const cardElement = document.querySelector('.card'); // Get the main card element
+    const cardElement = document.querySelector('.card');
+    // Get the back button
+    const backButton = document.getElementById('back-to-home-btn');
 
     function showUserFriendlyError(error) {
         let message = "An unknown error occurred. Please try again.";
         if (error.code) {
             switch (error.code) {
                 case 'auth/invalid-credential':
-                    // This message was updated in a previous step
                     message = "The email or password incorrect, please try again.";
                     break;
                 case 'auth/too-many-requests':
@@ -32,15 +33,12 @@ document.addEventListener('DOMContentLoaded', () => {
         errorContainer.style.display = 'block';
     }
 
-    // --- CORRECTED FUNCTION ---
-    // This function now correctly shows the success message and starts the countdown.
     async function handleSuccessfulLogin(isNewUser = false) {
         const user = auth.currentUser;
         if (user) {
             const token = await user.getIdToken();
             const email = user.email;
 
-            // Send the user data to the background script
             if (chrome && chrome.runtime) {
                 chrome.runtime.sendMessage(
                     EXTENSION_ID, 
@@ -54,16 +52,21 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
+        // --- HIDE THE BACK BUTTON ---
+        if(backButton) {
+            backButton.style.display = 'none';
+        }
+
         const message = isNewUser ? "Account Created!" : "Login Successful!";
         
-        // Replace the card's content with the success message and countdown
+        // --- CORRECTED HTML STRUCTURE FOR SUCCESS MESSAGE ---
         cardElement.innerHTML = `
             <div class="card-header">
                 <h2>${message}</h2>
                 <p>You can now close this tab.</p>
-                <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--muted-foreground);">
-                    This page will now redirect to the homepage in <span id="countdown">5</span> seconds...
-                </p>
+            </div>
+            <div class="success-box">
+                This page will redirect to the homepage in <strong id="countdown">5</strong> seconds...
             </div>
         `;
 
@@ -75,7 +78,6 @@ document.addEventListener('DOMContentLoaded', () => {
             countdownElement.textContent = countdown;
             if (countdown <= 0) {
                 clearInterval(interval);
-                // Redirect to the main homepage
                 window.location.href = '../'; 
             }
         }, 1000);
