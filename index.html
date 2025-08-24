@@ -333,9 +333,9 @@
         import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
 
         document.addEventListener('DOMContentLoaded', () => {
+            // --- SCROLL ANIMATION LOGIC (UNCHANGED) ---
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
-                    // Corrected animation logic to fade out all sections
                     if (entry.isIntersecting) {
                         entry.target.classList.add('visible');
                     } else {
@@ -361,11 +361,15 @@
                 observer.observe(section);
             });
 
+            // --- AUTHENTICATION UI LOGIC (WITH FIXES) ---
             const loggedInView = document.getElementById('logged-in-view');
             const loggedOutView = document.getElementById('logged-out-view');
             const userEmailSpan = document.getElementById('user-email');
             const logoutButton = document.getElementById('logout-button');
             
+            // This is your extension's ID. You can find it at chrome://extensions.
+            const EXTENSION_ID = "hajgbjgbdejejppmmikigepdcjdngamn";
+
             onAuthStateChanged(auth, (user) => {
                 if (user) {
                     loggedInView.style.display = 'flex';
@@ -378,23 +382,33 @@
             });
 
             logoutButton.addEventListener('click', () => {
-                // This is the simplest and most reliable method.
-                // The onAuthStateChanged listener in background.js will handle the rest.
+                // **FIX START: Tell the Chrome Extension to log out**
+                // 1. Check if the extension's runtime is available.
+                if (chrome && chrome.runtime) {
+                    // 2. Send the logout message using your extension's ID.
+                    chrome.runtime.sendMessage(EXTENSION_ID, { type: 'LOGOUT_REQUEST' }, (response) => {
+                        if (chrome.runtime.lastError) {
+                            console.log("Could not connect to the extension. It might not be installed or is inactive.");
+                        } else {
+                            console.log("Extension logout initiated. Response:", response);
+                        }
+                    });
+                }
+                // **FIX END**
+
+                // This signs out the website itself.
                 signOut(auth).then(() => {
                     console.log("Firebase sign-out successful from website.");
-                    // No need to message the extension directly. onAuthStateChanged is the source of truth.
                 }).catch((error) => {
                     console.error("Website sign out error:", error);
                 });
             });
 
-            // --- New: Listen for logout messages passed from the content script ---
+            // This part is already correct. It listens for logout messages from the extension.
             window.addEventListener("message", (event) => {
-                // We only accept messages from ourselves
                 if (event.source != window) {
                     return;
                 }
-
                 if (event.data.type && (event.data.type == "LOGOUT_REQUEST_FROM_EXTENSION")) {
                     console.log("Logout message received from content script. Signing out webpage.");
                     signOut(auth); // Sign out the webpage
