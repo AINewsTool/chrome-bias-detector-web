@@ -7,7 +7,7 @@
     <style>
         /* --- Basic Reset & Font --- */
         :root {
-            --primary-color: #4F46E5; /* A modern purple/blue */
+            --primary-color: #4F46E5;
             --primary-hover: #4338CA;
             --text-dark: #111827;
             --text-light: #6B7280;
@@ -20,25 +20,29 @@
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             background-color: var(--background-light);
             color: var(--text-dark);
-            overflow-x: hidden; /* Prevents horizontal scrollbar from animations */
+            overflow-x: hidden;
         }
 
         /* --- Header & Navigation --- */
         .header {
             position: fixed;
-            top: 0;
+            top: 1rem; /* Position it down from the top */
             left: 0;
             width: 100%;
-            background-color: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid var(--border-light);
             z-index: 1000;
+            padding: 0 1rem; /* Padding on the sides */
         }
-
+        
+        /* The "Island" Nav Bar */
         .nav-container {
             max-width: 1280px;
             margin: 0 auto;
-            padding: 1rem 1.5rem;
+            padding: 0.75rem 1.5rem;
+            background-color: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border-light);
+            border-radius: 9999px; /* Fully curved edges */
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -55,7 +59,7 @@
         }
 
         .nav-links {
-            display: none; /* Hidden on mobile */
+            display: none;
             gap: 2rem;
         }
         @media (min-width: 768px) {
@@ -64,7 +68,7 @@
 
         .nav-links a {
             text-decoration: none;
-            color: var(--text-light);
+            color: var(--text-dark); /* Font color changed to black */
             font-weight: 500;
             transition: color 0.2s ease;
         }
@@ -82,7 +86,7 @@
             border-radius: 0.5rem;
             font-weight: 600;
             cursor: pointer;
-            transition: background-color 0.2s ease;
+            transition: background-color 0.2s ease, color 0.2s ease;
             text-decoration: none;
             font-size: 0.9rem;
             white-space: nowrap;
@@ -103,12 +107,23 @@
         }
         .nav-button.signup:hover { background-color: var(--primary-hover); }
 
-        .nav-button.login {
+        .nav-button.login, .nav-button.logout {
             background-color: transparent;
             color: var(--text-light);
         }
-        .nav-button.login:hover { color: var(--text-dark); }
-
+        .nav-button.login:hover, .nav-button.logout:hover { color: var(--text-dark); }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .user-email {
+            font-weight: 500;
+            color: var(--text-dark);
+            font-size: 0.9rem;
+        }
 
         /* --- Hero Section & Video Background --- */
         .hero-section {
@@ -132,7 +147,7 @@
             height: auto;
             transform: translate(-50%, -50%);
             z-index: -2;
-            background-color: white; /* Fallback */
+            background-color: white;
         }
 
         .video-overlay {
@@ -191,64 +206,37 @@
             align-items: center;
             justify-content: center;
             gap: 4rem;
-            opacity: 0; /* Initially hidden */
-            transition: opacity 1s ease, transform 1s ease;
         }
         
+        /* ANIMATION FIX: Set initial state on the children */
         .feature-section .text-content, .feature-section .image-content {
             flex: 1;
+            opacity: 0;
+            transition: opacity 0.8s ease, transform 0.8s ease;
         }
 
-        .feature-section .text-content h2 {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-        }
+        .feature-section .text-content h2 { font-size: 2.5rem; font-weight: 700; margin-bottom: 1rem; }
+        .feature-section .text-content p { font-size: 1.125rem; color: var(--text-light); line-height: 1.75; }
+        .feature-section .image-content img { max-width: 100%; border-radius: 1rem; box-shadow: 0 10px 30px -10px rgba(0,0,0,0.1); }
+
+        /* Animation Start States */
+        .slide-in-from-left { transform: translateX(-50px); }
+        .slide-in-from-right { transform: translateX(50px); }
         
-        .feature-section .text-content p {
-            font-size: 1.125rem;
-            color: var(--text-light);
-            line-height: 1.75;
-        }
-
-        .feature-section .image-content img {
-            max-width: 100%;
-            border-radius: 1rem;
-            box-shadow: 0 10px 30px -10px rgba(0,0,0,0.1);
-        }
-
-        /* Animation Styles */
-        .slide-in-from-left { transform: translateX(-100px); }
-        .slide-in-from-right { transform: translateX(100px); }
-
-        .feature-section.visible {
+        /* ANIMATION FIX: When parent gets 'visible', children animate to final state */
+        .feature-section.visible .text-content,
+        .feature-section.visible .image-content {
             opacity: 1;
             transform: translateX(0);
         }
 
-        /* Responsive adjustments for feature sections */
         @media (max-width: 768px) {
-            .feature-section {
-                flex-direction: column;
-                gap: 2rem;
-            }
-            /* Reverse the order on mobile for the second section */
-            .feature-section:nth-child(even) {
-                flex-direction: column-reverse;
-            }
+            .feature-section { flex-direction: column; gap: 2rem; }
+            .feature-section:nth-child(even) { flex-direction: column-reverse; }
         }
         
-
-        /* --- Keyframe Animations --- */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% { transform: translate(-50%, 0); }
-            40% { transform: translate(-50%, -10px); }
-            60% { transform: translate(-50%, -5px); }
-        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes bounce { 0%, 20%, 50%, 80%, 100% { transform: translate(-50%, 0); } 40% { transform: translate(-50%, -10px); } 60% { transform: translate(-50%, -5px); } }
     </style>
 </head>
 <body>
@@ -267,11 +255,19 @@
             </div>
             <div class="nav-actions">
                 <a href="#" class="nav-button add-chrome">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zM12.75 9a.75.75 0 00-1.5 0v2.25H9a.75.75 0 000 1.5h2.25V15a.75.75 0 001.5 0v-2.25H15a.75.75 0 000-1.5h-2.25V9z" /></svg>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,8A4,4 0 0,1 16,12A4,4 0 0,1 12,16A4,4 0 0,1 8,12A4,4 0 0,1 12,8M12,10A2,2 0 0,0 10,12A2,2 0 0,0 12,14A2,2 0 0,0 14,12A2,2 0 0,0 12,10Z" /></svg>
                     Add to Chrome
                 </a>
-                <a href="./login/" class="nav-button login">Login</a>
-                <a href="./signup/" class="nav-button signup">Sign Up</a>
+
+                <div id="logged-out-view">
+                    <a href="./login/" class="nav-button login">Login</a>
+                    <a href="./signup/" class="nav-button signup">Sign Up</a>
+                </div>
+
+                <div id="logged-in-view" class="user-info" style="display: none;">
+                    <span id="user-email" class="user-email"></span>
+                    <button id="logout-button" class="nav-button logout">Log Out</button>
+                </div>
             </div>
         </nav>
     </header>
@@ -281,7 +277,6 @@
             <div class="video-overlay"></div>
             <video autoplay muted loop id="bg-video">
                 <source src="background.mp4" type="video/mp4">
-                Your browser does not support the video tag.
             </video>
             <div class="hero-content">
                 <h1>Uncover Media Bias in Real-Time</h1>
@@ -297,27 +292,25 @@
             <section class="feature-section">
                 <div class="text-content slide-in-from-left">
                     <h2>Instant Analysis on Any Page</h2>
-                    <p>Activate the extension on any news article, blog, or social media post. Our AI instantly reads and analyzes the text to give you a clear, concise bias report without ever leaving the page.</p>
+                    <p>Activate the extension on any news article, blog, or social media post. Our AI instantly reads and analyzes the text to give you a clear, concise bias report.</p>
                 </div>
                 <div class="image-content slide-in-from-right">
                     <img src="https://via.placeholder.com/500x350/E5E7EB/4F46E5?text=Real-Time+Scan" alt="Illustration of a real-time scan on a webpage">
                 </div>
             </section>
-
             <section class="feature-section">
                 <div class="image-content slide-in-from-left">
                     <img src="https://via.placeholder.com/500x350/E5E7EB/4F46E5?text=AI-Powered+Insights" alt="Illustration of AI algorithms processing data">
                 </div>
                 <div class="text-content slide-in-from-right">
                     <h2>Powered by Advanced AI</h2>
-                    <p>Our model is trained on millions of diverse articles to understand the subtle nuances of language. It detects loaded words, emotional appeals, and other common indicators of bias.</p>
+                    <p>Our model is trained on millions of diverse articles to understand the subtle nuances of language, detecting loaded words, emotional appeals, and more.</p>
                 </div>
             </section>
-
             <section class="feature-section">
                 <div class="text-content slide-in-from-left">
                     <h2>Protect Your Privacy</h2>
-                    <p>Your browsing data is your own. The content is analyzed securely and is never stored or linked to your personal account. Browse with the confidence that your privacy is respected.</p>
+                    <p>The content is analyzed securely and is never stored or linked to your personal account. Browse with the confidence that your privacy is respected.</p>
                 </div>
                 <div class="image-content slide-in-from-right">
                     <img src="https://via.placeholder.com/500x350/E5E7EB/4F46E5?text=Privacy+First" alt="Illustration of a privacy shield">
@@ -325,23 +318,62 @@
             </section>
         </div>
     </main>
+    
+    <script type="module" src="./firebase-init.js"></script>
+    <script type="module">
+        // Import necessary functions from Firebase
+        import { auth } from './firebase-init.js';
+        import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
 
-    <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const featureSections = document.querySelectorAll('.feature-section');
-
+            // --- Scroll Animation Logic ---
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('visible');
                     }
                 });
-            }, {
-                threshold: 0.2 // Trigger when 20% of the element is visible
+            }, { threshold: 0.2 });
+
+            document.querySelectorAll('.feature-section').forEach(section => {
+                // Set initial animation states on children
+                section.querySelector('.text-content').classList.add('slide-in-from-left');
+                section.querySelector('.image-content').classList.add('slide-in-from-right');
+                // For flipped sections, swap the animation classes
+                if (section.querySelector('.image-content').classList.contains('slide-in-from-left')) {
+                    section.querySelector('.text-content').classList.remove('slide-in-from-left');
+                    section.querySelector('.text-content').classList.add('slide-in-from-right');
+                }
+                observer.observe(section);
             });
 
-            featureSections.forEach(section => {
-                observer.observe(section);
+            // --- Authentication State Logic ---
+            const loggedInView = document.getElementById('logged-in-view');
+            const loggedOutView = document.getElementById('logged-out-view');
+            const userEmailSpan = document.getElementById('user-email');
+            const logoutButton = document.getElementById('logout-button');
+
+            onAuthStateChanged(auth, (user) => {
+                if (user) {
+                    // User is signed in
+                    loggedInView.style.display = 'flex';
+                    loggedOutView.style.display = 'none';
+                    userEmailSpan.textContent = user.email;
+                } else {
+                    // User is signed out
+                    loggedInView.style.display = 'none';
+                    loggedOutView.style.display = 'block';
+                }
+            });
+
+            // Logout Button Functionality
+            logoutButton.addEventListener('click', () => {
+                signOut(auth).then(() => {
+                    // Sign-out successful.
+                    window.location.reload(); // Reload the page to reflect the change
+                }).catch((error) => {
+                    console.error("Sign out error:", error);
+                });
             });
         });
     </script>
