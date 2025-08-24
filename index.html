@@ -13,6 +13,7 @@
             --text-light: #6B7280;
             --background-light: #FFFFFF;
             --border-light: #E5E7EB;
+            --destructive-color: #EF4444;
         }
 
         body {
@@ -26,14 +27,13 @@
         /* --- Header & Navigation --- */
         .header {
             position: fixed;
-            top: 1rem; /* Position it down from the top */
+            top: 1rem;
             left: 0;
             width: 100%;
             z-index: 1000;
-            padding: 0 1rem; /* Padding on the sides */
+            padding: 0 1rem;
         }
         
-        /* The "Island" Nav Bar */
         .nav-container {
             max-width: 1280px;
             margin: 0 auto;
@@ -41,7 +41,7 @@
             background-color: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(10px);
             border: 1px solid var(--border-light);
-            border-radius: 9999px; /* Fully curved edges */
+            border-radius: 9999px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.05);
             display: flex;
             justify-content: space-between;
@@ -68,7 +68,7 @@
 
         .nav-links a {
             text-decoration: none;
-            color: var(--text-dark); /* Font color changed to black */
+            color: var(--text-dark);
             font-weight: 500;
             transition: color 0.2s ease;
         }
@@ -100,6 +100,11 @@
             gap: 0.5rem;
         }
         .nav-button.add-chrome:hover { background-color: #E5E7EB; }
+        /* Style for the new image icon */
+        .nav-button.add-chrome img {
+            width: 20px;
+            height: 20px;
+        }
 
         .nav-button.signup {
             background-color: var(--primary-color);
@@ -107,12 +112,22 @@
         }
         .nav-button.signup:hover { background-color: var(--primary-hover); }
 
-        .nav-button.login, .nav-button.logout {
+        .nav-button.login {
             background-color: transparent;
             color: var(--text-light);
         }
-        .nav-button.login:hover, .nav-button.logout:hover { color: var(--text-dark); }
+        .nav-button.login:hover { color: var(--text-dark); }
         
+        .nav-button.logout {
+            background-color: transparent;
+            color: var(--text-light);
+        }
+        /* New hover state for logout button */
+        .nav-button.logout:hover { 
+            color: white;
+            background-color: var(--destructive-color);
+        }
+
         .user-info {
             display: flex;
             align-items: center;
@@ -208,11 +223,11 @@
             gap: 4rem;
         }
         
-        /* ANIMATION FIX: Set initial state on the children */
         .feature-section .text-content, .feature-section .image-content {
             flex: 1;
             opacity: 0;
-            transition: opacity 0.8s ease, transform 0.8s ease;
+            /* ANIMATION SPEED: Increased duration from 0.8s to 1.2s */
+            transition: opacity 1.2s ease, transform 1.2s ease;
         }
 
         .feature-section .text-content h2 { font-size: 2.5rem; font-weight: 700; margin-bottom: 1rem; }
@@ -223,7 +238,6 @@
         .slide-in-from-left { transform: translateX(-50px); }
         .slide-in-from-right { transform: translateX(50px); }
         
-        /* ANIMATION FIX: When parent gets 'visible', children animate to final state */
         .feature-section.visible .text-content,
         .feature-section.visible .image-content {
             opacity: 1;
@@ -255,7 +269,7 @@
             </div>
             <div class="nav-actions">
                 <a href="#" class="nav-button add-chrome">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,8A4,4 0 0,1 16,12A4,4 0 0,1 12,16A4,4 0 0,1 8,12A4,4 0 0,1 12,8M12,10A2,2 0 0,0 10,12A2,2 0 0,0 12,14A2,2 0 0,0 14,12A2,2 0 0,0 12,10Z" /></svg>
+                    <img src="google-chrome-monochrome.png" alt="Chrome Logo">
                     Add to Chrome
                 </a>
 
@@ -295,12 +309,12 @@
                     <p>Activate the extension on any news article, blog, or social media post. Our AI instantly reads and analyzes the text to give you a clear, concise bias report.</p>
                 </div>
                 <div class="image-content slide-in-from-right">
-                    <img src="https://via.placeholder.com/500x350/E5E7EB/4F46E5?text=Real-Time+Scan" alt="Illustration of a real-time scan on a webpage">
+                    <img src="https://placehold.co/500x350/E5E7EB/4F46E5?text=Real-Time+Scan" alt="Illustration of a real-time scan on a webpage">
                 </div>
             </section>
             <section class="feature-section">
                 <div class="image-content slide-in-from-left">
-                    <img src="https://via.placeholder.com/500x350/E5E7EB/4F46E5?text=AI-Powered+Insights" alt="Illustration of AI algorithms processing data">
+                    <img src="https://placehold.co/500x350/E5E7EB/4F46E5?text=AI-Powered+Insights" alt="Illustration of AI algorithms processing data">
                 </div>
                 <div class="text-content slide-in-from-right">
                     <h2>Powered by Advanced AI</h2>
@@ -313,7 +327,7 @@
                     <p>The content is analyzed securely and is never stored or linked to your personal account. Browse with the confidence that your privacy is respected.</p>
                 </div>
                 <div class="image-content slide-in-from-right">
-                    <img src="https://via.placeholder.com/500x350/E5E7EB/4F46E5?text=Privacy+First" alt="Illustration of a privacy shield">
+                    <img src="https://placehold.co/500x350/E5E7EB/4F46E5?text=Privacy+First" alt="Illustration of a privacy shield">
                 </div>
             </section>
         </div>
@@ -321,7 +335,6 @@
     
     <script type="module" src="./firebase-init.js"></script>
     <script type="module">
-        // Import necessary functions from Firebase
         import { auth } from './firebase-init.js';
         import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
 
@@ -333,16 +346,22 @@
                         entry.target.classList.add('visible');
                     }
                 });
-            }, { threshold: 0.2 });
+            }, { 
+                // ANIMATION TRIGGER POINT: These values make the trigger area the center of the screen
+                rootMargin: "-40% 0px -40% 0px",
+                threshold: 0
+            });
 
             document.querySelectorAll('.feature-section').forEach(section => {
-                // Set initial animation states on children
-                section.querySelector('.text-content').classList.add('slide-in-from-left');
-                section.querySelector('.image-content').classList.add('slide-in-from-right');
-                // For flipped sections, swap the animation classes
-                if (section.querySelector('.image-content').classList.contains('slide-in-from-left')) {
-                    section.querySelector('.text-content').classList.remove('slide-in-from-left');
-                    section.querySelector('.text-content').classList.add('slide-in-from-right');
+                const textContent = section.querySelector('.text-content');
+                const imageContent = section.querySelector('.image-content');
+                
+                // Set initial animation states based on which side they should come from
+                if (imageContent.classList.contains('slide-in-from-left')) {
+                    textContent.classList.add('slide-in-from-right');
+                } else {
+                    textContent.classList.add('slide-in-from-left');
+                    imageContent.classList.add('slide-in-from-right');
                 }
                 observer.observe(section);
             });
@@ -355,22 +374,18 @@
 
             onAuthStateChanged(auth, (user) => {
                 if (user) {
-                    // User is signed in
                     loggedInView.style.display = 'flex';
                     loggedOutView.style.display = 'none';
                     userEmailSpan.textContent = user.email;
                 } else {
-                    // User is signed out
                     loggedInView.style.display = 'none';
                     loggedOutView.style.display = 'block';
                 }
             });
 
-            // Logout Button Functionality
             logoutButton.addEventListener('click', () => {
                 signOut(auth).then(() => {
-                    // Sign-out successful.
-                    window.location.reload(); // Reload the page to reflect the change
+                    window.location.reload();
                 }).catch((error) => {
                     console.error("Sign out error:", error);
                 });
