@@ -100,7 +100,6 @@
             gap: 0.5rem;
         }
         .nav-button.add-chrome:hover { background-color: #E5E7EB; }
-        /* Style for the new image icon */
         .nav-button.add-chrome img {
             width: 20px;
             height: 20px;
@@ -122,7 +121,6 @@
             background-color: transparent;
             color: var(--text-light);
         }
-        /* New hover state for logout button */
         .nav-button.logout:hover { 
             color: white;
             background-color: var(--destructive-color);
@@ -226,7 +224,6 @@
         .feature-section .text-content, .feature-section .image-content {
             flex: 1;
             opacity: 0;
-            /* ANIMATION SPEED: Increased duration from 0.8s to 1.2s */
             transition: opacity 1.2s ease, transform 1.2s ease;
         }
 
@@ -234,7 +231,6 @@
         .feature-section .text-content p { font-size: 1.125rem; color: var(--text-light); line-height: 1.75; }
         .feature-section .image-content img { max-width: 100%; border-radius: 1rem; box-shadow: 0 10px 30px -10px rgba(0,0,0,0.1); }
 
-        /* Animation Start States */
         .slide-in-from-left { transform: translateX(-50px); }
         .slide-in-from-right { transform: translateX(50px); }
         
@@ -304,29 +300,29 @@
 
         <div id="features">
             <section class="feature-section">
-                <div class="text-content slide-in-from-left">
+                <div class="text-content">
                     <h2>Instant Analysis on Any Page</h2>
                     <p>Activate the extension on any news article, blog, or social media post. Our AI instantly reads and analyzes the text to give you a clear, concise bias report.</p>
                 </div>
-                <div class="image-content slide-in-from-right">
+                <div class="image-content">
                     <img src="https://placehold.co/500x350/E5E7EB/4F46E5?text=Real-Time+Scan" alt="Illustration of a real-time scan on a webpage">
                 </div>
             </section>
             <section class="feature-section">
-                <div class="image-content slide-in-from-left">
+                <div class="image-content">
                     <img src="https://placehold.co/500x350/E5E7EB/4F46E5?text=AI-Powered+Insights" alt="Illustration of AI algorithms processing data">
                 </div>
-                <div class="text-content slide-in-from-right">
+                <div class="text-content">
                     <h2>Powered by Advanced AI</h2>
                     <p>Our model is trained on millions of diverse articles to understand the subtle nuances of language, detecting loaded words, emotional appeals, and more.</p>
                 </div>
             </section>
             <section class="feature-section">
-                <div class="text-content slide-in-from-left">
+                <div class="text-content">
                     <h2>Protect Your Privacy</h2>
                     <p>The content is analyzed securely and is never stored or linked to your personal account. Browse with the confidence that your privacy is respected.</p>
                 </div>
-                <div class="image-content slide-in-from-right">
+                <div class="image-content">
                     <img src="https://placehold.co/500x350/E5E7EB/4F46E5?text=Privacy+First" alt="Illustration of a privacy shield">
                 </div>
             </section>
@@ -342,26 +338,29 @@
             // --- Scroll Animation Logic ---
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
+                    // REVERSIBLE ANIMATION: Add or remove 'visible' class
                     if (entry.isIntersecting) {
                         entry.target.classList.add('visible');
+                    } else {
+                        entry.target.classList.remove('visible');
                     }
                 });
             }, { 
-                // ANIMATION TRIGGER POINT: These values make the trigger area the center of the screen
                 rootMargin: "-40% 0px -40% 0px",
                 threshold: 0
             });
 
-            document.querySelectorAll('.feature-section').forEach(section => {
+            document.querySelectorAll('.feature-section').forEach((section, index) => {
                 const textContent = section.querySelector('.text-content');
                 const imageContent = section.querySelector('.image-content');
                 
-                // Set initial animation states based on which side they should come from
-                if (imageContent.classList.contains('slide-in-from-left')) {
-                    textContent.classList.add('slide-in-from-right');
-                } else {
+                // Alternate animation directions based on section index (even/odd)
+                if (index % 2 === 0) {
                     textContent.classList.add('slide-in-from-left');
                     imageContent.classList.add('slide-in-from-right');
+                } else {
+                    imageContent.classList.add('slide-in-from-left');
+                    textContent.classList.add('slide-in-from-right');
                 }
                 observer.observe(section);
             });
@@ -371,6 +370,8 @@
             const loggedOutView = document.getElementById('logged-out-view');
             const userEmailSpan = document.getElementById('user-email');
             const logoutButton = document.getElementById('logout-button');
+            // This is the ID of your Chrome Extension
+            const EXTENSION_ID = "hajgbjgbdejejppmmikigepdcjdngamn";
 
             onAuthStateChanged(auth, (user) => {
                 if (user) {
@@ -383,13 +384,34 @@
                 }
             });
 
+            // Logout Button Functionality
             logoutButton.addEventListener('click', () => {
+                // Step 1: Send a message to the extension to log out there first
+                if (chrome && chrome.runtime) {
+                    chrome.runtime.sendMessage(EXTENSION_ID, { type: "LOGOUT_REQUEST" }, (response) => {
+                        if (chrome.runtime.lastError) {
+                            // This will happen if the extension isn't installed. We can ignore it.
+                            console.log("Could not send logout message to extension. It might not be installed.");
+                        } else {
+                            console.log("Logout message sent to extension.", response);
+                        }
+                        // Proceed with Firebase sign out regardless of the extension's response
+                        performFirebaseSignOut();
+                    });
+                } else {
+                    // If not in an extension environment, just sign out from Firebase
+                    performFirebaseSignOut();
+                }
+            });
+
+            function performFirebaseSignOut() {
                 signOut(auth).then(() => {
-                    window.location.reload();
+                    // Sign-out successful.
+                    window.location.reload(); // Reload the page
                 }).catch((error) => {
                     console.error("Sign out error:", error);
                 });
-            });
+            }
         });
     </script>
 
