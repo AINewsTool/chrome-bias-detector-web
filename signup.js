@@ -11,20 +11,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const emailInput = document.getElementById('emailInput');
     const passwordInput = document.getElementById('passwordInput');
     const errorContainer = document.getElementById('error-container');
-    const cardElement = document.querySelector('.card'); // Get the main card element
+    const cardElement = document.querySelector('.card');
 
-    // Get strength checker elements
     const lengthReq = document.getElementById('length-req');
     const numberReq = document.getElementById('number-req');
     const specialReq = document.getElementById('special-req');
 
     function showUserFriendlyError(message) {
-        // The function now just takes a string to be more flexible
         errorContainer.textContent = message;
         errorContainer.style.display = 'block';
     }
 
-    // Password strength checker logic
     passwordInput.addEventListener('input', () => {
         const password = passwordInput.value;
         const meetsLength = password.length >= 6;
@@ -51,18 +48,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 );
             }
         }
-
-        // --- NEW SUCCESS MESSAGE AND REDIRECT LOGIC ---
+        
         const message = isNewUser ? "Account Created!" : "Login Successful!";
         
-        // Replace the card's content with the success message and countdown
+        // This now uses the .success-box class
         cardElement.innerHTML = `
             <div class="card-header">
                 <h2>${message}</h2>
                 <p>You can now close this tab.</p>
-                <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--muted-foreground);">
-                    This page will now redirect to the homepage in <span id="countdown">5</span> seconds...
-                </p>
+            </div>
+            <div class="success-box">
+                This page will redirect to the homepage in <strong id="countdown">5</strong> seconds...
             </div>
         `;
 
@@ -74,7 +70,6 @@ document.addEventListener('DOMContentLoaded', () => {
             countdownElement.textContent = countdown;
             if (countdown <= 0) {
                 clearInterval(interval);
-                // Redirect to the main homepage
                 window.location.href = '../'; 
             }
         }, 1000);
@@ -84,7 +79,6 @@ document.addEventListener('DOMContentLoaded', () => {
     signupEmailBtn.addEventListener('click', async () => {
         errorContainer.style.display = 'none';
 
-        // Enforce password requirements before trying to create an account
         const isLengthValid = lengthReq.classList.contains('valid');
         const isNumberValid = numberReq.classList.contains('valid');
         const isSpecialValid = specialReq.classList.contains('valid');
@@ -98,7 +92,6 @@ document.addEventListener('DOMContentLoaded', () => {
             await createUserWithEmailAndPassword(auth, emailInput.value.trim(), passwordInput.value);
             await handleSuccessfulSignup(true);
         } catch (err) {
-            // Handle Firebase-specific errors
             let message = "An error occurred during sign up. Please try again.";
             if (err.code === 'auth/email-already-in-use') {
                 message = "An account with this email already exists. Please log in.";

@@ -18,13 +18,13 @@ document.addEventListener('DOMContentLoaded', () => {
         if (error.code) {
             switch (error.code) {
                 case 'auth/invalid-credential':
+                    // This message was updated in a previous step
                     message = "The email or password incorrect, please try again.";
                     break;
                 case 'auth/too-many-requests':
                     message = "Access to this account has been temporarily disabled due to many failed login attempts.";
                     break;
                 default:
-                    // A more generic message for other potential auth errors
                     message = "An error occurred during login. Please try again.";
             }
         }
@@ -32,6 +32,8 @@ document.addEventListener('DOMContentLoaded', () => {
         errorContainer.style.display = 'block';
     }
 
+    // --- CORRECTED FUNCTION ---
+    // This function now correctly shows the success message and starts the countdown.
     async function handleSuccessfulLogin(isNewUser = false) {
         const user = auth.currentUser;
         if (user) {
@@ -45,8 +47,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     { type: "LOGIN_SUCCESS", token: token, email: email }, 
                     (response) => {
                         if (chrome.runtime.lastError) {
-                            // This can happen if the extension is not installed/enabled.
-                            // We can proceed without breaking the flow.
                             console.log("Could not send login message to extension.");
                         }
                     }
@@ -54,7 +54,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-        // --- NEW SUCCESS MESSAGE AND REDIRECT LOGIC ---
         const message = isNewUser ? "Account Created!" : "Login Successful!";
         
         // Replace the card's content with the success message and countdown
