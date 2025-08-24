@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const emailInput = document.getElementById('emailInput');
     const passwordInput = document.getElementById('passwordInput');
     const errorContainer = document.getElementById('error-container');
+    const cardElement = document.querySelector('.card'); // Get the main card element
 
     // Get strength checker elements
     const lengthReq = document.getElementById('length-req');
@@ -51,8 +52,32 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
+        // --- NEW SUCCESS MESSAGE AND REDIRECT LOGIC ---
         const message = isNewUser ? "Account Created!" : "Login Successful!";
-        document.body.innerHTML = `<div class="card"><h2>${message}</h2><p>You can now close this tab.</p></div>`;
+        
+        // Replace the card's content with the success message and countdown
+        cardElement.innerHTML = `
+            <div class="card-header">
+                <h2>${message}</h2>
+                <p>You can now close this tab.</p>
+                <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--muted-foreground);">
+                    This page will now redirect to the homepage in <span id="countdown">5</span> seconds...
+                </p>
+            </div>
+        `;
+
+        let countdown = 5;
+        const countdownElement = document.getElementById('countdown');
+
+        const interval = setInterval(() => {
+            countdown--;
+            countdownElement.textContent = countdown;
+            if (countdown <= 0) {
+                clearInterval(interval);
+                // Redirect to the main homepage
+                window.location.href = '../'; 
+            }
+        }, 1000);
     }
 
     // Email/Password Sign Up

@@ -11,19 +11,21 @@ document.addEventListener('DOMContentLoaded', () => {
     const emailInput = document.getElementById('emailInput');
     const passwordInput = document.getElementById('passwordInput');
     const errorContainer = document.getElementById('error-container');
+    const cardElement = document.querySelector('.card'); // Get the main card element
 
     function showUserFriendlyError(error) {
         let message = "An unknown error occurred. Please try again.";
         if (error.code) {
             switch (error.code) {
                 case 'auth/invalid-credential':
-                    message = "Account not found or password incorrect. Please sign up if you don't have an account.";
+                    message = "The email or password incorrect, please try again.";
                     break;
                 case 'auth/too-many-requests':
                     message = "Access to this account has been temporarily disabled due to many failed login attempts.";
                     break;
                 default:
-                    message = "The email or password are incorrect, please try again.";
+                    // A more generic message for other potential auth errors
+                    message = "An error occurred during login. Please try again.";
             }
         }
         errorContainer.textContent = message;
@@ -36,18 +38,48 @@ document.addEventListener('DOMContentLoaded', () => {
             const token = await user.getIdToken();
             const email = user.email;
 
-            // Send the actual user data to the background script
+            // Send the user data to the background script
             if (chrome && chrome.runtime) {
                 chrome.runtime.sendMessage(
                     EXTENSION_ID, 
                     { type: "LOGIN_SUCCESS", token: token, email: email }, 
-                    () => {} // Empty callback to prevent console errors
+                    (response) => {
+                        if (chrome.runtime.lastError) {
+                            // This can happen if the extension is not installed/enabled.
+                            // We can proceed without breaking the flow.
+                            console.log("Could not send login message to extension.");
+                        }
+                    }
                 );
             }
         }
 
+        // --- NEW SUCCESS MESSAGE AND REDIRECT LOGIC ---
         const message = isNewUser ? "Account Created!" : "Login Successful!";
-        document.body.innerHTML = `<div class="card"><h2>${message}</h2><p>You can now close this tab.</p></div>`;
+        
+        // Replace the card's content with the success message and countdown
+        cardElement.innerHTML = `
+            <div class="card-header">
+                <h2>${message}</h2>
+                <p>You can now close this tab.</p>
+                <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--muted-foreground);">
+                    This page will now redirect to the homepage in <span id="countdown">5</span> seconds...
+                </p>
+            </div>
+        `;
+
+        let countdown = 5;
+        const countdownElement = document.getElementById('countdown');
+
+        const interval = setInterval(() => {
+            countdown--;
+            countdownElement.textContent = countdown;
+            if (countdown <= 0) {
+                clearInterval(interval);
+                // Redirect to the main homepage
+                window.location.href = '../'; 
+            }
+        }, 1000);
     }
 
     // Email/Password Login
