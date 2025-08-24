@@ -13,7 +13,7 @@
             --text-light: #6B7280;
             --background-light: #FFFFFF;
             --border-light: #E5E7EB;
-            --destructive-color: #EF4444;
+            --destructive-color: #EF4444; /* Red for logout hover */
         }
 
         body {
@@ -338,11 +338,14 @@
             // --- Scroll Animation Logic ---
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
-                    // REVERSIBLE ANIMATION: Add or remove 'visible' class
+                    // This now handles both fading in and fading out
                     if (entry.isIntersecting) {
                         entry.target.classList.add('visible');
                     } else {
-                        entry.target.classList.remove('visible');
+                        // Only remove the class if the element is not the first one
+                        if (entry.target !== document.querySelector('.feature-section')) {
+                            entry.target.classList.remove('visible');
+                        }
                     }
                 });
             }, { 
@@ -354,7 +357,6 @@
                 const textContent = section.querySelector('.text-content');
                 const imageContent = section.querySelector('.image-content');
                 
-                // Alternate animation directions based on section index (even/odd)
                 if (index % 2 === 0) {
                     textContent.classList.add('slide-in-from-left');
                     imageContent.classList.add('slide-in-from-right');
@@ -370,9 +372,7 @@
             const loggedOutView = document.getElementById('logged-out-view');
             const userEmailSpan = document.getElementById('user-email');
             const logoutButton = document.getElementById('logout-button');
-            // This is the ID of your Chrome Extension
-            const EXTENSION_ID = "hajgbjgbdejejppmmikigepdcjdngamn";
-
+            
             onAuthStateChanged(auth, (user) => {
                 if (user) {
                     loggedInView.style.display = 'flex';
@@ -384,34 +384,18 @@
                 }
             });
 
-            // Logout Button Functionality
+            // --- Corrected Logout Button Functionality ---
             logoutButton.addEventListener('click', () => {
-                // Step 1: Send a message to the extension to log out there first
-                if (chrome && chrome.runtime) {
-                    chrome.runtime.sendMessage(EXTENSION_ID, { type: "LOGOUT_REQUEST" }, (response) => {
-                        if (chrome.runtime.lastError) {
-                            // This will happen if the extension isn't installed. We can ignore it.
-                            console.log("Could not send logout message to extension. It might not be installed.");
-                        } else {
-                            console.log("Logout message sent to extension.", response);
-                        }
-                        // Proceed with Firebase sign out regardless of the extension's response
-                        performFirebaseSignOut();
-                    });
-                } else {
-                    // If not in an extension environment, just sign out from Firebase
-                    performFirebaseSignOut();
-                }
-            });
-
-            function performFirebaseSignOut() {
+                // The onAuthStateChanged listener in your background.js will automatically
+                // detect this sign-out event and clear the extension's storage.
+                // This is the correct and most reliable way to sync logout state.
                 signOut(auth).then(() => {
-                    // Sign-out successful.
-                    window.location.reload(); // Reload the page
+                    console.log("Firebase sign-out successful.");
+                    window.location.reload(); // Reload to reflect the signed-out state
                 }).catch((error) => {
                     console.error("Sign out error:", error);
                 });
-            }
+            });
         });
     </script>
 
