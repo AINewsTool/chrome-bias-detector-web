@@ -12,8 +12,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const passwordInput = document.getElementById('passwordInput');
     const errorContainer = document.getElementById('error-container');
     const cardElement = document.querySelector('.card');
-    // Get the back button
-    const backButton = document.getElementById('back-to-home-btn');
 
     function showUserFriendlyError(error) {
         let message = "An unknown error occurred. Please try again.";
@@ -52,14 +50,11 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-        // --- HIDE THE BACK BUTTON ---
-        if(backButton) {
-            backButton.style.display = 'none';
-        }
-
         const message = isNewUser ? "Account Created!" : "Login Successful!";
         
-        // --- CORRECTED HTML STRUCTURE FOR SUCCESS MESSAGE ---
+        // **FIX:** The entire content of the card is replaced here.
+        // This single step removes the form AND the "Back to Home" button,
+        // and inserts the new success message with the correct '.success-box' class.
         cardElement.innerHTML = `
             <div class="card-header">
                 <h2>${message}</h2>
@@ -75,7 +70,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const interval = setInterval(() => {
             countdown--;
-            countdownElement.textContent = countdown;
+            // Check if countdownElement exists before trying to update it
+            if (countdownElement) {
+                countdownElement.textContent = countdown;
+            }
             if (countdown <= 0) {
                 clearInterval(interval);
                 window.location.href = '../'; 

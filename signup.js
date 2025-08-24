@@ -12,6 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const passwordInput = document.getElementById('passwordInput');
     const errorContainer = document.getElementById('error-container');
     const cardElement = document.querySelector('.card');
+    const backButton = document.querySelector('.back-button');
 
     const lengthReq = document.getElementById('length-req');
     const numberReq = document.getElementById('number-req');
@@ -49,9 +50,14 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
         
+        // **FIX:** Hide the back button because it's outside the card
+        if (backButton) {
+            backButton.style.display = 'none';
+        }
+
         const message = isNewUser ? "Account Created!" : "Login Successful!";
         
-        // This now uses the .success-box class
+        // This correctly replaces the card content with the success message
         cardElement.innerHTML = `
             <div class="card-header">
                 <h2>${message}</h2>
@@ -67,7 +73,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const interval = setInterval(() => {
             countdown--;
-            countdownElement.textContent = countdown;
+            if (countdownElement) {
+                countdownElement.textContent = countdown;
+            }
             if (countdown <= 0) {
                 clearInterval(interval);
                 window.location.href = '../'; 
