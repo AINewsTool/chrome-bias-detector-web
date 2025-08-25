@@ -333,7 +333,7 @@
         import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
 
         document.addEventListener('DOMContentLoaded', () => {
-            // --- SCROLL ANIMATION LOGIC (UNCHANGED) ---
+            // ... (keep all the scroll animation code the same) ...
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
@@ -366,11 +366,18 @@
             const loggedOutView = document.getElementById('logged-out-view');
             const userEmailSpan = document.getElementById('user-email');
             const logoutButton = document.getElementById('logout-button');
-            
-            // This is your extension's ID. You can find it at chrome://extensions.
             const EXTENSION_ID = "hajgbjgbdejejppmmikigepdcjdngamn";
 
+            // FIX: Add a flag to prevent re-login during logout process
+            let isLoggingOut = false;
+
             onAuthStateChanged(auth, (user) => {
+                // If we get a valid user while we are in the process of logging out, ignore it.
+                if (user && isLoggingOut) {
+                    console.log("Ignoring auth state change during logout.");
+                    return;
+                }
+
                 if (user) {
                     loggedInView.style.display = 'flex';
                     loggedOutView.style.display = 'none';
@@ -379,39 +386,36 @@
                     loggedInView.style.display = 'none';
                     loggedOutView.style.display = 'block';
                 }
+                // Reset the flag after the auth state has settled
+                isLoggingOut = false;
             });
 
             logoutButton.addEventListener('click', () => {
-                // **FIX START: Tell the Chrome Extension to log out**
-                // 1. Check if the extension's runtime is available.
+                isLoggingOut = true; // Set the flag
+
+                // Tell the extension to log out
                 if (chrome && chrome.runtime) {
-                    // 2. Send the logout message using your extension's ID.
                     chrome.runtime.sendMessage(EXTENSION_ID, { type: 'LOGOUT_REQUEST' }, (response) => {
                         if (chrome.runtime.lastError) {
-                            console.log("Could not connect to the extension. It might not be installed or is inactive.");
-                        } else {
-                            console.log("Extension logout initiated. Response:", response);
+                            console.log("Could not connect to the extension.");
                         }
                     });
                 }
-                // **FIX END**
 
-                // This signs out the website itself.
-                signOut(auth).then(() => {
-                    console.log("Firebase sign-out successful from website.");
-                }).catch((error) => {
+                // Log out the website itself
+                signOut(auth).catch((error) => {
                     console.error("Website sign out error:", error);
+                    isLoggingOut = false; // Reset flag on error
                 });
             });
 
-            // This part is already correct. It listens for logout messages from the extension.
+            // This listener allows the EXTENSION to log out the WEBSITE
             window.addEventListener("message", (event) => {
-                if (event.source != window) {
-                    return;
-                }
+                if (event.source != window) return;
                 if (event.data.type && (event.data.type == "LOGOUT_REQUEST_FROM_EXTENSION")) {
-                    console.log("Logout message received from content script. Signing out webpage.");
-                    signOut(auth); // Sign out the webpage
+                    console.log("Logout message received from extension. Signing out webpage.");
+                    isLoggingOut = true; // Set the flag
+                    signOut(auth);
                 }
             }, false);
         });
