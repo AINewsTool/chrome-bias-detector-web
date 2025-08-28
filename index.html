@@ -389,35 +389,24 @@
                 // Reset the flag after the auth state has settled
                 isLoggingOut = false;
             });
-
             logoutButton.addEventListener('click', () => {
-                isLoggingOut = true; // Set the flag
-
-                // Tell the extension to log out
+                // 1. Tell the extension's background script to sign out
                 if (chrome && chrome.runtime) {
                     chrome.runtime.sendMessage(EXTENSION_ID, { type: 'LOGOUT_REQUEST' }, (response) => {
                         if (chrome.runtime.lastError) {
-                            console.log("Could not connect to the extension.");
+                            console.log("Could not connect to the extension to log it out.");
+                        } else {
+                            console.log("Logout message sent to extension.");
                         }
                     });
                 }
 
-                // Log out the website itself
+                // 2. Sign out the webpage itself. This will trigger the onAuthStateChanged
+                // listener above, which handles the UI update.
                 signOut(auth).catch((error) => {
                     console.error("Website sign out error:", error);
-                    isLoggingOut = false; // Reset flag on error
                 });
             });
-
-            // This listener allows the EXTENSION to log out the WEBSITE
-            window.addEventListener("message", (event) => {
-                if (event.source != window) return;
-                if (event.data.type && (event.data.type == "LOGOUT_REQUEST_FROM_EXTENSION")) {
-                    console.log("Logout message received from extension. Signing out webpage.");
-                    isLoggingOut = true; // Set the flag
-                    signOut(auth);
-                }
-            }, false);
         });
     </script>
 
