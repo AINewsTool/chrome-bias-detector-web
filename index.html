@@ -396,7 +396,15 @@
                 signOut(auth).catch((error) => {
                     console.error("Website sign out error:", error);
                 });
-            });    
+            });
+            if (chrome && chrome.runtime) {
+                chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+                    if (message.type === 'LOGOUT_REQUEST_FROM_EXTENSION') {
+                        console.log("Logout request received from extension. Signing out webpage.");
+                        signOut(auth);
+                    }
+                });
+            }   
         });
     </script>
 
