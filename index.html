@@ -333,7 +333,6 @@
         import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
 
         document.addEventListener('DOMContentLoaded', () => {
-            // ... (keep all the scroll animation code the same) ...
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
@@ -380,7 +379,7 @@
             });
 
             logoutButton.addEventListener('click', () => {
-                // 1. Tell the extension to log out
+                // 1. Tell the extension to log out. Note: This may fail if the extension isn't installed or reachable. It's also not being used now. 
                 if (chrome && chrome.runtime && EXTENSION_ID) {
                     chrome.runtime.sendMessage(EXTENSION_ID, { type: 'LOGOUT_REQUEST' }, (response) => {
                         if (chrome.runtime.lastError) {
