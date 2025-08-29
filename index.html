@@ -361,23 +361,14 @@
                 observer.observe(section);
             });
 
-            // --- AUTHENTICATION UI LOGIC (WITH FIXES) ---
+            // --- AUTHENTICATION UI LOGIC ---
             const loggedInView = document.getElementById('logged-in-view');
             const loggedOutView = document.getElementById('logged-out-view');
             const userEmailSpan = document.getElementById('user-email');
             const logoutButton = document.getElementById('logout-button');
-            const EXTENSION_ID = "hajgbjgbdejejppmmikigepdcjdngamn";
-
-            // FIX: Add a flag to prevent re-login during logout process
-            let isLoggingOut = false;
+            const EXTENSION_ID = "hajgbjgbdejejppmmikigepdcjdngamn"; // Make sure this is your extension's actual ID
 
             onAuthStateChanged(auth, (user) => {
-                // If we get a valid user while we are in the process of logging out, ignore it.
-                if (user && isLoggingOut) {
-                    console.log("Ignoring auth state change during logout.");
-                    return;
-                }
-
                 if (user) {
                     loggedInView.style.display = 'flex';
                     loggedOutView.style.display = 'none';
@@ -386,27 +377,26 @@
                     loggedInView.style.display = 'none';
                     loggedOutView.style.display = 'block';
                 }
-                // Reset the flag after the auth state has settled
-                isLoggingOut = false;
             });
+
             logoutButton.addEventListener('click', () => {
                 // 1. Tell the extension's background script to sign out
                 if (chrome && chrome.runtime) {
                     chrome.runtime.sendMessage(EXTENSION_ID, { type: 'LOGOUT_REQUEST' }, (response) => {
                         if (chrome.runtime.lastError) {
-                            console.log("Could not connect to the extension to log it out.");
+                            console.log("Could not connect to the extension to log it out. Is it installed?");
                         } else {
-                            console.log("Logout message sent to extension.");
+                            console.log("Logout message successfully sent to extension.");
                         }
                     });
                 }
 
-                // 2. Sign out the webpage itself. This will trigger the onAuthStateChanged
-                // listener above, which handles the UI update.
+                // 2. Sign out the webpage itself. This will trigger onAuthStateChanged
+                // for the webpage UI.
                 signOut(auth).catch((error) => {
                     console.error("Website sign out error:", error);
                 });
-            });
+            });    
         });
     </script>
 
