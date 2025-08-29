@@ -380,31 +380,23 @@
             });
 
             logoutButton.addEventListener('click', () => {
-                // 1. Tell the extension's background script to sign out
-                if (chrome && chrome.runtime) {
+                // 1. Tell the extension to log out
+                if (chrome && chrome.runtime && EXTENSION_ID) {
                     chrome.runtime.sendMessage(EXTENSION_ID, { type: 'LOGOUT_REQUEST' }, (response) => {
                         if (chrome.runtime.lastError) {
-                            console.log("Could not connect to the extension to log it out. Is it installed?");
+                            console.log("Could not send logout message to extension.");
                         } else {
-                            console.log("Logout message successfully sent to extension.");
+                            console.log("Logout message sent to extension.");
                         }
                     });
                 }
-
-                // 2. Sign out the webpage itself. This will trigger onAuthStateChanged
-                // for the webpage UI.
-                signOut(auth).catch((error) => {
-                    console.error("Website sign out error:", error);
-                });
+                // 2. Log out the website itself
+                signOut(auth);
             });
-            if (chrome && chrome.runtime) {
-                chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-                    if (message.type === 'LOGOUT_REQUEST_FROM_EXTENSION') {
-                        console.log("Logout request received from extension. Signing out webpage.");
-                        signOut(auth);
-                    }
-                });
-            }   
+            window.addEventListener('logout-event', () => {
+                console.log("Logout event received from content script. Signing out webpage.");
+                signOut(auth);
+            });
         });
     </script>
 
