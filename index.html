@@ -384,18 +384,16 @@
                 if (chrome && chrome.runtime && EXTENSION_ID) {
                     chrome.runtime.sendMessage(EXTENSION_ID, { type: 'LOGOUT_REQUEST' }, (response) => {
                         if (chrome.runtime.lastError) {
-                            console.log("Could not send logout message to extension.");
+                            console.log("Could not send logout message to extension:", chrome.runtime.lastError);
                         } else {
-                            console.log("Logout message sent to extension.");
+                            console.log("Logout message sent to extension, response:", response);
                         }
                     });
                 }
                 // 2. Log out the website itself
-                signOut(auth);
-            });
-            window.addEventListener('logout-event', () => {
-                console.log("Logout event received from content script. Signing out webpage.");
-                signOut(auth);
+                signOut(auth).catch(error => {
+                    console.error("Error signing out:", error);
+                });
             });
         });
     </script>
