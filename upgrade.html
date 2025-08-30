@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upgrade to Pro - TruScope</title>
+    <style>
+        /* --- Basic Reset & Font --- */
+        :root {
+            --primary-color: #2088ff;
+            --primary-hover: #00b0e1;
+            --text-dark: #111827;
+            --text-light: #6B7280;
+            --background-light: #FFFFFF;
+            --border-light: #E5E7EB;
+            --success-color: #10B981;
+            --error-color: #EF4444;
+            --destructive-color: #EF4444;
+        }
+
+        body {
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--background-light);
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
+
+        /* --- Header & Navigation --- */
+        .header {
+            position: fixed;
+            top: 1rem;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 0 1rem;
+        }
+        
+        .nav-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0.75rem 1.5rem;
+            background-color: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border-light);
+            border-radius: 9999px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .nav-links {
+            display: none;
+            gap: 2rem;
+        }
+        @media (min-width: 768px) {
+            .nav-links { display: flex; }
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
+        .nav-links a:hover { color: var(--primary-color); }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .nav-button {
+            padding: 0.6rem 1.2rem;
+            border: none;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s ease, color 0.2s ease;
+            text-decoration: none;
+            font-size: 0.9rem;
+            white-space: nowrap;
+        }
+        
+        .nav-button.add-chrome {
+            background-color: #F3F4F6;
+            color: var(--text-dark);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .nav-button.add-chrome:hover { background-color: #E5E7EB; }
+        .nav-button.add-chrome img {
+            width: 20px;
+            height: 20px;
+        }
+
+        .nav-button.signup {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        .nav-button.signup:hover { background-color: var(--primary-hover); }
+
+        .nav-button.login {
+            background-color: transparent;
+            color: var(--text-light);
+        }
+        .nav-button.login:hover { color: var(--text-dark); }
+        
+        .nav-button.logout {
+            background-color: transparent;
+            color: var(--text-light);
+        }
+        .nav-button.logout:hover { 
+            color: white;
+            background-color: var(--destructive-color);
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .user-email {
+            font-weight: 500;
+            color: var(--text-dark);
+            font-size: 0.9rem;
+        }
+
+        /* --- Upgrade Page Styles --- */
+        .upgrade-section {
+            min-height: 100vh;
+            padding: 8rem 1rem 4rem;
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+        }
+
+        @media (min-width: 768px) {
+            .upgrade-section {
+                padding: 10rem 1.5rem 6rem;
+            }
+        }
+
+        .upgrade-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .upgrade-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        @media (min-width: 768px) {
+            .upgrade-header {
+                margin-bottom: 4rem;
+            }
+        }
+
+        .upgrade-header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        @media (min-width: 768px) {
+            .upgrade-header h1 {
+                font-size: 3.5rem;
+            }
+        }
+
+        .upgrade-header p {
+            font-size: 1.125rem;
+            color: var(--text-light);
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* Adapted pricing card from extension to website layout */
+        .pricing-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .pricing-card {
+            position: relative;
+            padding: 3rem 2rem;
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            border-radius: 2rem;
+            border: 1px solid #334155;
+            color: white;
+            overflow: hidden;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+
+        .pricing-card::before {
+            content: '';
+            position: absolute;
+            top: -2rem;
+            right: -2rem;
+            width: 6rem;
+            height: 6rem;
+            background: #3b82f6;
+            border-radius: 50%;
+            opacity: 0.2;
+            filter: blur(2rem);
+        }
+
+        .pricing-header {
+            text-align: center;
+            position: relative;
+            z-index: 10;
+            margin-bottom: 2rem;
+        }
+
+        .pricing-header h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .pricing-header .subtitle {
+            font-size: 0.875rem;
+            color: #94a3b8;
+            margin-bottom: 2rem;
+        }
+
+        .price {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+        }
+
+        .price .currency {
+            font-size: 1.25rem;
+            font-weight: 500;
+            color: #94a3b8;
+        }
+
+        .features-list {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 2rem 0;
+        }
+
+        .features-list li {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            padding: 0.75rem 0;
+            font-size: 0.875rem;
+            color: #e2e8f0;
+        }
+
+        .features-list svg {
+            width: 1.25rem;
+            height: 1.25rem;
+            color: #60a5fa;
+            flex-shrink: 0;
+        }
+
+        .upgrade-button {
+            width: 100%;
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, #3b82f6 0%, #06b6d4 100%);
+            color: white;
+            border: none;
+            border-radius: 0.75rem;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 10px 15px -3px rgba(59, 130, 246, 0.3);
+        }
+
+        .upgrade-button:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+
+        .upgrade-button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Adapted support section from extension */
+        .support-section {
+            margin-top: 3rem;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .support-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 1.5rem;
+            border: 2px dashed #d1d5db;
+            text-align: center;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .support-card h4 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .support-card p {
+            font-size: 0.875rem;
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+        }
+
+        .donate-button {
+            width: 100%;
+            padding: 0.875rem 1.5rem;
+            background-color: #f3f4f6;
+            color: var(--text-dark);
+            border: none;
+            border-radius: 0.75rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        .donate-button:hover {
+            background-color: #e5e7eb;
+        }
+
+        /* Added comparison section for website */
+        .comparison-section {
+            margin-top: 4rem;
+            background: white;
+            border-radius: 1.5rem;
+            padding: 2rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .comparison-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .comparison-header h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .comparison-table {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        @media (max-width: 768px) {
+            .comparison-table {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+        }
+
+        .comparison-row {
+            display: contents;
+        }
+
+        @media (max-width: 768px) {
+            .comparison-row {
+                display: grid;
+                grid-template-columns: 2fr 1fr 1fr;
+                gap: 1rem;
+                padding: 1rem 0;
+                border-bottom: 1px solid var(--border-light);
+            }
+        }
+
+        .feature-name {
+            font-weight: 500;
+            color: var(--text-dark);
+            padding: 1rem 0;
+        }
+
+        .plan-header {
+            font-weight: 600;
+            color: var(--text-dark);
+            text-align: center;
+            padding: 1rem 0;
+            border-bottom: 2px solid var(--border-light);
+        }
+
+        .plan-feature {
+            text-align: center;
+            padding: 1rem 0;
+            color: var(--text-light);
+        }
+
+        .check-icon {
+            color: var(--success-color);
+        }
+
+        .x-icon {
+            color: var(--error-color);
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body>
+
+    <header class="header">
+        <nav class="nav-container">
+            <a href="/" class="logo">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="#4F46E5"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"></path></svg>
+                <span>TruScope</span>
+            </a>
+            
+            <div class="nav-links">
+                <a href="/">Home</a>
+                <a href="/#features">Features</a>
+                <a href="/#how-it-works">How It Works</a>
+                <a href="/#faq">FAQ</a>
+                <a href="/contact.html">Contact</a>
+            </div>
+            
+            <div class="nav-actions">
+                <a href="#" class="nav-button add-chrome">
+                    <img src="google-chrome-monochrome.png" alt="Chrome Logo">
+                    Add to Chrome
+                </a>
+                <div id="logged-out-view">
+                    <a href="./login/" class="nav-button login">Login</a>
+                    <a href="./signup/" class="nav-button signup">Sign Up</a>
+                </div>
+                <div id="logged-in-view" class="user-info" style="display: none;">
+                    <span id="user-email" class="user-email"></span>
+                    <button id="logout-button" class="nav-button logout">Log Out</button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="upgrade-section">
+            <div class="upgrade-container">
+                <div class="upgrade-header">
+                    <h1>Upgrade to Pro</h1>
+                    <p>Unlock premium features and get the most out of TruScope with advanced bias detection capabilities and priority support.</p>
+                </div>
+
+                <div class="pricing-container">
+                    <div class="pricing-card">
+                        <div class="pricing-header">
+                            <h3>TruScope Pro</h3>
+                            <p class="subtitle">Unlock premium features</p>
+                            <div class="price">
+                                $5<span class="currency">/mo</span>
+                            </div>
+                        </div>
+
+                        <ul class="features-list">
+                            <li>
+                                <svg fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                                </svg>
+                                <span>15 Detections per day</span>
+                            </li>
+                            <li>
+                                <svg fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                                </svg>
+                                <span>Early Access to Features</span>
+                            </li>
+                            <li>
+                                <svg fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                                </svg>
+                                <span>Priority Support</span>
+                            </li>
+                        </ul>
+
+                        <button class="upgrade-button" id="upgrade-btn">
+                            Coming September 2025
+                        </button>
+                    </div>
+                </div>
+
+                <div class="support-section">
+                    <div class="support-card">
+                        <h4>Support the Project</h4>
+                        <p>Help us keep the servers running and continue improving TruScope.</p>
+                        <button class="donate-button" id="donate-btn">
+                            Buy me a coffee ☕
+                        </button>
+                    </div>
+                </div>
+
+                <div class="comparison-section">
+                    <div class="comparison-header">
+                        <h3>Free vs Pro Comparison</h3>
+                        <p>See what you get with TruScope Pro</p>
+                    </div>
+                    
+                    <div class="comparison-table">
+                        <div class="feature-name"></div>
+                        <div class="plan-header">Free</div>
+                        <div class="plan-header">Pro</div>
+                        
+                        <div class="feature-name">Daily Detections</div>
+                        <div class="plan-feature">5 per day</div>
+                        <div class="plan-feature">15 per day</div>
+                        
+                        <div class="feature-name">Basic Bias Detection</div>
+                        <div class="plan-feature"><span class="check-icon">✓</span></div>
+                        <div class="plan-feature"><span class="check-icon">✓</span></div>
+                        
+                        <div class="feature-name">Advanced Analytics</div>
+                        <div class="plan-feature"><span class="x-icon">✗</span></div>
+                        <div class="plan-feature"><span class="check-icon">✓</span></div>
+                        
+                        <div class="feature-name">Early Access Features</div>
+                        <div class="plan-feature"><span class="x-icon">✗</span></div>
+                        <div class="plan-feature"><span class="check-icon">✓</span></div>
+                        
+                        <div class="feature-name">Priority Support</div>
+                        <div class="plan-feature"><span class="x-icon">✗</span></div>
+                        <div class="plan-feature"><span class="check-icon">✓</span></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script type="module" src="./firebase-init.js"></script>
+    <script type="module">
+        import { auth } from './firebase-init.js';
+        import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Authentication UI logic
+            const loggedInView = document.getElementById('logged-in-view');
+            const loggedOutView = document.getElementById('logged-out-view');
+            const userEmailSpan = document.getElementById('user-email');
+            const logoutButton = document.getElementById('logout-button');
+            const EXTENSION_ID = "hajgbjgbdejejppmmikigepdcjdngamn";
+
+            onAuthStateChanged(auth, (user) => {
+                if (user) {
+                    loggedInView.style.display = 'flex';
+                    loggedOutView.style.display = 'none';
+                    userEmailSpan.textContent = user.email;
+                } else {
+                    loggedInView.style.display = 'none';
+                    loggedOutView.style.display = 'block';
+                }
+            });
+
+            logoutButton.addEventListener('click', () => {
+                if (chrome && chrome.runtime && EXTENSION_ID) {
+                    chrome.runtime.sendMessage(EXTENSION_ID, { type: 'LOGOUT_REQUEST' }, (response) => {
+                        if (chrome.runtime.lastError) {
+                            console.log("Could not send logout message to extension:", chrome.runtime.lastError);
+                        } else {
+                            console.log("Logout message sent to extension, response:", response);
+                        }
+                    });
+                }
+                signOut(auth).catch(error => {
+                    console.error("Error signing out:", error);
+                });
+            });
+
+            // Upgrade button functionality
+            const upgradeBtn = document.getElementById('upgrade-btn');
+            const donateBtn = document.getElementById('donate-btn');
+
+            upgradeBtn.addEventListener('click', () => {
+                // Since it's coming in September 2025, show a message
+                alert('TruScope Pro will be available in September 2025. Stay tuned for updates!');
+            });
+
+            donateBtn.addEventListener('click', () => {
+                // Open donation link (replace with actual donation URL)
+                window.open('https://buymeacoffee.com/truscope', '_blank');
+            });
+        });
+    </script>
+
+</body>
+</html>

@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bias Detector - Uncover Media Bias in Real-Time</title>
+    <title>TruScope - Uncover Media Bias in Real-Time</title>
     <style>
         /* --- Basic Reset & Font --- */
         :root {
-            --primary-color: #4F46E5;
-            --primary-hover: #4338CA;
+            --primary-color: #2088ff;
+            --primary-hover: #00b0e1;
             --text-dark: #111827;
             --text-light: #6B7280;
             --background-light: #FFFFFF;
@@ -248,6 +248,8 @@
         @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes bounce { 0%, 20%, 50%, 80%, 100% { transform: translate(-50%, 0); } 40% { transform: translate(-50%, -10px); } 60% { transform: translate(-50%, -5px); } }
     </style>
+        <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
 </head>
 <body>
 
@@ -255,13 +257,14 @@
         <nav class="nav-container">
             <a href="/" class="logo">
                 <svg width="28" height="28" viewBox="0 0 24 24" fill="#4F46E5"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"></path></svg>
-                <span>Bias Detector</span>
+                <span>TruScope</span>
             </a>
             <div class="nav-links">
-                <a href="#upgrade">Upgrade</a>
-                <a href="#about">About Us</a>
-                <a href="./privacy-policy/">Privacy Policy</a>
-                <a href="./terms-of-service/">Terms of Service</a>
+                <a href="#features">Features</a>
+                <a href="#how-it-works">How It Works</a>
+                <a href="#faq">FAQ</a>
+                <a href="/upgrade.html">Upgrade</a>
+                <a href="/contact.html">Contact</a>
             </div>
             <div class="nav-actions">
                 <a href="#" class="nav-button add-chrome">
@@ -296,35 +299,223 @@
             </a>
         </section>
 
-        <div id="features">
-            <section class="feature-section">
-                <div class="text-content">
-                    <h2>Instant Analysis on Any Page</h2>
-                    <p>Activate the extension on any news article, blog, or social media post. Our AI instantly reads and analyzes the text to give you a clear, concise bias report.</p>
+        <!-- Features Section -->
+        <section id="features" class="bg-white py-16">
+            <div class="max-w-6xl mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Powerful Features</h2>
+                    <p class="text-lg text-gray-600 max-w-2xl mx-auto">Advanced AI technology that helps you navigate the complex media landscape with confidence.</p>
                 </div>
-                <div class="image-content">
-                    <img src="https://placehold.co/500x350/E5E7EB/4F46E5?text=Real-Time+Scan" alt="Illustration of a real-time scan on a webpage">
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Real-time Analysis -->
+                    <div class="bg-gray-50 rounded-lg p-6 hover:bg-gray-100 transition-colors duration-200">
+                        <div class="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center mb-4">
+                            <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-lg font-semibold text-gray-900 mb-2">Real-time Analysis</h3>
+                        <p class="text-gray-600 text-sm leading-relaxed">Instantly analyze any article or social media post as you browse.</p>
+                    </div>
+
+                    <!-- Multiple Bias Types -->
+                    <div class="bg-gray-50 rounded-lg p-6 hover:bg-gray-100 transition-colors duration-200">
+                        <div class="w-10 h-10 bg-purple-600 rounded-lg flex items-center justify-center mb-4">
+                            <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-lg font-semibold text-gray-900 mb-2">Multiple Bias Types</h3>
+                        <p class="text-gray-600 text-sm leading-relaxed">Detect political bias, clickbait, emotional language, and hate speech with precision.</p>
+                    </div>
+
+                    <!-- Privacy First -->
+                    <div class="bg-gray-50 rounded-lg p-6 hover:bg-gray-100 transition-colors duration-200">
+                        <div class="w-10 h-10 bg-green-600 rounded-lg flex items-center justify-center mb-4">
+                            <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-lg font-semibold text-gray-900 mb-2">Privacy First</h3>
+                        <p class="text-gray-600 text-sm leading-relaxed">Your data stays yours. Page content is analyzed securely and never stored or sold.</p>
+                    </div>
+
+                    <!-- Simple Trust Score -->
+                    <div class="bg-gray-50 rounded-lg p-6 hover:bg-gray-100 transition-colors duration-200">
+                        <div class="w-10 h-10 bg-orange-600 rounded-lg flex items-center justify-center mb-4">
+                            <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-lg font-semibold text-gray-900 mb-2">Simple Trust Score</h3>
+                        <p class="text-gray-600 text-sm leading-relaxed">Get an instant trust score from 0-100 that summarizes all bias signals into one metric.</p>
+                    </div>
+
+                    <!-- Works Everywhere -->
+                    <div class="bg-gray-50 rounded-lg p-6 hover:bg-gray-100 transition-colors duration-200">
+                        <div class="w-10 h-10 bg-red-600 rounded-lg flex items-center justify-center mb-4">
+                            <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9v-9m0-9v9"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-lg font-semibold text-gray-900 mb-2">Works Everywhere</h3>
+                        <p class="text-gray-600 text-sm leading-relaxed">Compatible with news sites, social media platforms, blogs, and any web content.</p>
+                    </div>
+
+                    <!-- Lightweight & Fast -->
+                    <div class="bg-gray-50 rounded-lg p-6 hover:bg-gray-100 transition-colors duration-200">
+                        <div class="w-10 h-10 bg-indigo-600 rounded-lg flex items-center justify-center mb-4">
+                            <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-lg font-semibold text-gray-900 mb-2">Lightweight & Fast</h3>
+                        <p class="text-gray-600 text-sm leading-relaxed">Optimized for performance with minimal impact on your browsing speed.</p>
+                    </div>
                 </div>
-            </section>
-            <section class="feature-section">
-                <div class="image-content">
-                    <img src="https://placehold.co/500x350/E5E7EB/4F46E5?text=AI-Powered+Insights" alt="Illustration of AI algorithms processing data">
+
+                
+            </div>
+        </section>
+
+        <!-- How It Works Section -->
+        <section id="how-it-works" class="max-w-6xl mx-auto px-6 py-16">
+            <h2 class="text-4xl md:text-5xl font-bold text-center mb-20 text-gray-900">How It Works</h2>
+
+            <!-- Bias Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-16">
+                <div class="p-6 bg-white rounded-xl border border-gray-200 shadow-sm">
+                    <p class="font-semibold text-gray-900 text-lg">Political Bias</p>
+                    <p class="text-sm text-gray-500 mt-1">Leaning detected</p>
+                    <span class="mt-4 inline-block px-4 py-1 text-sm font-medium rounded-full bg-orange-100 text-orange-700">Moderate</span>
                 </div>
-                <div class="text-content">
-                    <h2>Powered by Advanced AI</h2>
-                    <p>Our model is trained on millions of diverse articles to understand the subtle nuances of language, detecting loaded words, emotional appeals, and more.</p>
+                <div class="p-6 bg-white rounded-xl border border-gray-200 shadow-sm">
+                    <p class="font-semibold text-gray-900 text-lg">Clickbait</p>
+                    <p class="text-sm text-gray-500 mt-1">Exaggeration spotted</p>
+                    <span class="mt-4 inline-block px-4 py-1 text-sm font-medium rounded-full bg-red-100 text-red-700">Extreme</span>
                 </div>
-            </section>
-            <section class="feature-section">
-                <div class="text-content">
-                    <h2>Protect Your Privacy</h2>
-                    <p>The content is analyzed securely and is never stored or linked to your personal account. Browse with the confidence that your privacy is respected.</p>
+                <div class="p-6 bg-white rounded-xl border border-gray-200 shadow-sm">
+                    <p class="font-semibold text-gray-900 text-lg">Emotional Appeal</p>
+                    <p class="text-sm text-gray-500 mt-1">Subjective tone</p>
+                    <span class="mt-4 inline-block px-4 py-1 text-sm font-medium rounded-full bg-orange-100 text-orange-700">Moderate</span>
                 </div>
-                <div class="image-content">
-                    <img src="https://placehold.co/500x350/E5E7EB/4F46E5?text=Privacy+First" alt="Illustration of a privacy shield">
+                <div class="p-6 bg-white rounded-xl border border-gray-200 shadow-sm">
+                    <p class="font-semibold text-gray-900 text-lg">Hate Speech</p>
+                    <p class="text-sm text-gray-500 mt-1">Offensive Language</p>
+                    <span class="mt-4 inline-block px-4 py-1 text-sm font-medium rounded-full bg-yellow-100 text-yellow-700">Low</span>
                 </div>
-            </section>
-        </div>
+            </div>
+
+            <!-- Single Down Arrow -->
+            <div class="flex justify-center mb-16">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-12 h-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                </svg>
+            </div>
+
+            <!-- Trust Score + Side Text -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-16 items-center">
+                <!-- Left Text -->
+                <div class="text-right md:pr-10">
+                    <h3 class="font-semibold text-gray-900 text-xl mb-2">Bias Signals</h3>
+                    <p class="text-gray-600 text-base leading-relaxed">
+                        Each bias card highlights a different signal. Together, they provide 
+                        a fuller picture of how the content might be shaping perception.
+                    </p>
+                </div>
+
+                <!-- Trust Score -->
+                <div class="flex flex-col items-center space-y-6">
+                    <div class="flex items-center space-x-1.5">
+                        <p class="font-semibold text-gray-800 text-lg">Overall Trust Score</p>
+                    </div>
+                    <div class="relative w-44 h-44">
+                        <svg class="w-full h-full" viewBox="0 0 100 100">
+                            <circle class="text-gray-200" stroke-width="10" stroke="currentColor" fill="transparent" r="45" cx="50" cy="50"/>
+                            <circle class="text-orange-500" stroke-width="10" stroke-dasharray="283" stroke-dashoffset="70"
+                                stroke-linecap="round" stroke="currentColor" fill="transparent" r="45" cx="50" cy="50"
+                                transform="rotate(-90 50 50)"/>
+                        </svg>
+                        <span class="absolute inset-0 flex items-center justify-center text-4xl font-bold text-orange-500">60</span>
+                    </div>
+                </div>
+
+                <!-- Right Text -->
+                <div class="md:pl-10">
+                    <h3 class="font-semibold text-gray-900 text-xl mb-2">Trust Score</h3>
+                    <p class="text-gray-600 text-base leading-relaxed">
+                        All bias signals funnel into one simple score, so you can instantly 
+                        gauge how reliable the content is — without needing deep analysis.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section id="faq" class="max-w-4xl mx-auto px-6 py-28">
+            <h2 class="text-4xl md:text-5xl font-bold text-center mb-16 text-gray-900">FAQs</h2>
+            
+            <div class="space-y-6">
+                <details class="p-5 border border-gray-200 rounded-xl bg-white shadow-sm">
+                    <summary class="font-semibold text-gray-800 cursor-pointer">
+                        How does the extension detect bias?
+                    </summary>
+                    <p class="mt-3 text-gray-600 text-base leading-relaxed">
+                        Our model is trained on over a million peer-reviewed articles and uses advanced NLP techniques to identify linguistic patterns associated with various types of bias. 
+                    </p>
+                </details>
+
+                <details class="p-5 border border-gray-200 rounded-xl bg-white shadow-sm">
+                    <summary class="font-semibold text-gray-800 cursor-pointer">
+                        Does the extension store my browsing data?
+                    </summary>
+                    <p class="mt-3 text-gray-600 text-base leading-relaxed">
+                        No. We never store or share your personal browsing data.
+                    </p>
+                </details>
+
+                <details class="p-5 border border-gray-200 rounded-xl bg-white shadow-sm">
+                    <summary class="font-semibold text-gray-800 cursor-pointer">
+                        Will it slow down my browser?
+                    </summary>
+                    <p class="mt-3 text-gray-600 text-base leading-relaxed">
+                        Not at all. The extension is lightweight and optimized to run quickly in the background without affecting performance.
+                    </p>
+                </details>
+
+                <details class="p-5 border border-gray-200 rounded-xl bg-white shadow-sm">
+                    <summary class="font-semibold text-gray-800 cursor-pointer">
+                        Is it free to use?
+                    </summary>
+                    <p class="mt-3 text-gray-600 text-base leading-relaxed">
+                        Yes! We offer a free tier with 10 analyses per week. Coming soon is our premium plan with higher access and advanced features.
+                    </p>
+                </details>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="bg-gray-50 border-t border-gray-200 mt-20">
+            <div class="max-w-6xl mx-auto px-6 py-10 flex flex-col md:flex-row items-center justify-between gap-6">
+                <a href="/" class="flex items-center gap-2 text-gray-800 font-semibold text-lg">
+                    <svg width="24" height="24" fill="#4F46E5" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 
+                    10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 
+                    15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                    TruScope
+                </a>
+
+                <div class="flex gap-6 text-sm text-gray-600">
+                    <a href="#features" class="hover:text-blue-600">Features</a>
+                    <a href="#how-it-works" class="hover:text-blue-600">How It Works</a>
+                    <a href="#faq" class="hover:text-blue-600">FAQs</a>
+                    <a href="./privacy-policy/" class="hover:text-blue-600">Privacy Policy</a>
+                    <a href="./terms-of-service/" class="hover:text-blue-600">Terms</a>
+                </div>
+
+                <p class="text-gray-500 text-sm">&copy; 2025 TruScope. All rights reserved.</p>
+            </div>
+        </footer>
     </main>
     
     <script type="module" src="./firebase-init.js"></script>
@@ -360,7 +551,7 @@
                 observer.observe(section);
             });
 
-            // --- AUTHENTICATION UI LOGIC ---
+            // --- AUTHENTICATION UI LOGIC --- 
             const loggedInView = document.getElementById('logged-in-view');
             const loggedOutView = document.getElementById('logged-out-view');
             const userEmailSpan = document.getElementById('user-email');
@@ -399,3 +590,4 @@
 
 </body>
 </html>
+

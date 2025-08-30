@@ -177,3 +177,48 @@ p.footer-link a:hover {
   text-align: left;
   display: none; /* Hidden by default */
 }
+
+/* Modern Benefits Layout */
+.benefits-list {
+  max-width: 800px;
+  margin: 6rem auto;
+  padding: 0 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+.benefit-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.5rem;
+}
+
+.benefit-icon {
+  flex-shrink: 0;
+  color: var(--primary-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.benefit-text h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: var(--text-dark);
+}
+
+.benefit-text p {
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: var(--text-light);
+}
+
+@media (max-width: 640px) {
+  .benefit-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
