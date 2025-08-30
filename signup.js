@@ -40,11 +40,12 @@ document.addEventListener('DOMContentLoaded', () => {
         if (user) {
             const token = await user.getIdToken();
             const email = user.email;
+            const providerId = user.providerData[0]?.providerId;
 
             if (chrome && chrome.runtime) {
                 chrome.runtime.sendMessage(
                     EXTENSION_ID, 
-                    { type: "LOGIN_SUCCESS", token: token, email: email }, 
+                    { type: "LOGIN_SUCCESS", token: token, email: email, providerId: providerId }, 
                     () => {}
                 );
             }
