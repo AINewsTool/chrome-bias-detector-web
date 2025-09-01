@@ -5,10 +5,8 @@ import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.23.0/fi
 document.addEventListener('DOMContentLoaded', () => {
   const form = document.getElementById("contact-form");
   const submitBtn = document.getElementById("submit-btn");
-  const formMessage = document.getElementById("form-message");
   const emailInput = document.getElementById("email");
-  const contactSection = document.querySelector(".contact-section");
-  const contactContainer = document.querySelector(".contact-container");
+  const contactContainer = document.getElementById("contact-container");
 
   // Check for logged in user and pre-fill email
   onAuthStateChanged(auth, (user) => {
@@ -16,12 +14,6 @@ document.addEventListener('DOMContentLoaded', () => {
       emailInput.value = user.email;
     }
   });
-
-  function showMessage(text, type) {
-    formMessage.textContent = text;
-    formMessage.className = `message ${type} show`;
-    setTimeout(() => formMessage.classList.remove("show"), 5000);
-  }
 
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
@@ -46,20 +38,26 @@ document.addEventListener('DOMContentLoaded', () => {
       if (res.ok) {
         // Replace the form with a success message
         contactContainer.innerHTML = `
-                <div class="contact-header">
-                    <h1>Message Sent!</h1>
-                    <p>Thank you for reaching out. We will get back to you within 48 hours.</p>
-                </div>
+            <div class="card-header">
+                <h2>Message Sent!</h2>
+            </div>
+            <div class="success-box">
+                <p>Thank you for reaching out. We will get back to you within 48 hours.</p>
+            </div>
+            <a href="../" class="back-button">
+                <svg style="width: 20px; height: 20px; margin-right: 0.5rem;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                Back to Home
+            </a>
         `;
       } else {
         const { error } = await res.json();
-        showMessage("Error sending message: " + error, "error");
+        alert("Error sending message: " + error);
         submitBtn.disabled = false;
         submitBtn.textContent = "Send Message";
       }
     } catch (err) {
       console.error(err);
-      showMessage("Network error, please try again later.", "error");
+      alert("Network error, please try again later.");
       submitBtn.disabled = false;
       submitBtn.textContent = "Send Message";
     }
