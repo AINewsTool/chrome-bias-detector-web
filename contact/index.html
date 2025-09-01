@@ -16,7 +16,6 @@
             --success-color: #10B981;
             --error-color: #EF4444;
             --destructive-color: #EF4444;
-            /* Added from login page for button consistency */
             --input-border: #E5E7EB;
             --input-background: #F3F4F6;
             --muted-foreground: #6B7280;
@@ -34,24 +33,18 @@
         /* --- Header & Navigation --- */
         .header {
             position: fixed;
-            top: 1rem;
-            left: 0;
-            width: 100%;
+            top: 1.5rem; /* Adjusted for better placement */
+            left: 1.5rem; /* Adjusted for better placement */
             z-index: 1000;
-            padding: 0 1rem;
         }
         
         /* --- Contact Form Styles (Original) --- */
         .contact-section {
             min-height: 100vh;
-            padding: 8rem 1rem 4rem;
+            /* --- CHANGE ADDED: Reduced top padding to fix spacing issue --- */
+            padding: 6rem 1rem 4rem;
             background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
-        }
-
-        @media (min-width: 768px) {
-            .contact-section {
-                padding: 10rem 1.5rem 6rem;
-            }
+            box-sizing: border-box;
         }
 
         .contact-container {
@@ -62,12 +55,6 @@
         .contact-header {
             text-align: center;
             margin-bottom: 3rem;
-        }
-
-        @media (min-width: 768px) {
-            .contact-header {
-                margin-bottom: 4rem;
-            }
         }
 
         .contact-header h1 {
@@ -188,14 +175,15 @@
           align-items: center; 
           justify-content: center;
           width: auto; 
-          padding: 0.5rem 1rem;
+          /* --- CHANGE ADDED: Made button bigger --- */
+          padding: 0.75rem 1.5rem;
+          font-size: 1rem;
           background: transparent; 
           border: 1px solid var(--input-border);
           color: var(--muted-foreground);
           text-decoration: none;
           border-radius: var(--radius);
           font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-          font-size: 14px;
         }
         .back-button:hover { 
             background: var(--input-background); 
@@ -205,9 +193,10 @@
             color: #15803d; 
             background-color: #f0fdf4; 
             border: 1px solid #bbf7d0;
-            padding: 1rem; 
+            /* --- CHANGE ADDED: Made confirmation box bigger --- */
+            padding: 1.5rem; 
             border-radius: var(--radius); 
-            font-size: 0.9rem;
+            font-size: 1rem;
             text-align: center;
         }
     </style>

@@ -44,16 +44,13 @@ document.addEventListener('DOMContentLoaded', () => {
       });
 
       if (res.ok) {
-        // --- EXECUTES THE REQUESTED CHANGES ---
-        // 1. Remove the top-left back button
         if (topLeftBackButton) {
             topLeftBackButton.remove();
         }
 
-        // 2. Replace the form with the new confirmation message
         contactContainer.innerHTML = `
             <div class="success-box">
-                <h2 style="font-size: 1.25rem; font-weight: 600; margin: 0 0 0.5rem 0;">Message Sent!</h2>
+                <h2 style="font-size: 1.5rem; font-weight: 600; margin: 0 0 0.5rem 0;">Message Sent!</h2>
                 <p style="margin: 0;">Thank you for your message! We'll get back to you within 48 hours.</p>
             </div>
             <div style="text-align: center; margin-top: 1.5rem;">
@@ -63,6 +60,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 </a>
             </div>
         `;
+        
+        // --- CHANGE ADDED ---
+        // Automatically scroll to the top of the page to show the confirmation
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+
       } else {
         const { error } = await res.json();
         showMessage("Error sending message: " + error, "error");
