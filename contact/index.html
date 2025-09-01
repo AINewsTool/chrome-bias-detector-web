@@ -30,18 +30,15 @@
             overflow-x: hidden;
         }
 
-        /* --- Header & Navigation --- */
         .header {
             position: fixed;
-            top: 1.5rem; /* Adjusted for better placement */
-            left: 1.5rem; /* Adjusted for better placement */
+            top: 1.5rem;
+            left: 1.5rem;
             z-index: 1000;
         }
         
-        /* --- Contact Form Styles (Original) --- */
         .contact-section {
             min-height: 100vh;
-            /* --- CHANGE ADDED: Reduced top padding to fix spacing issue --- */
             padding: 6rem 1rem 4rem;
             background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
             box-sizing: border-box;
@@ -60,17 +57,10 @@
         .contact-header h1 {
             font-size: 2.5rem;
             font-weight: 700;
-            color: var(--text-dark);
-            margin-bottom: 1rem;
             line-height: 1.2;
+            margin-bottom: 1rem;
         }
         
-        @media (min-width: 768px) {
-            .contact-header h1 {
-                font-size: 3.5rem;
-            }
-        }
-
         .contact-header p {
             font-size: 1.125rem;
             color: var(--text-light);
@@ -119,12 +109,12 @@
             background-color: #fafafa;
             box-sizing: border-box;
         }
-
+        
         .form-group textarea {
             resize: vertical;
             min-height: 120px;
         }
-
+        
         .form-grid {
             display: grid;
             grid-template-columns: 1fr;
@@ -149,24 +139,9 @@
             cursor: pointer;
             transition: all 0.2s ease;
             margin-top: 1rem;
-        }
-
-        .message {
-            padding: 1rem;
-            border-radius: 0.75rem;
-            margin-bottom: 1.5rem;
-            font-weight: 500;
-            display: none;
-        }
-
-        .message.error {
-            background-color: #fef2f2;
-            color: var(--error-color);
-            border: 1px solid #fecaca;
-        }
-
-        .message.show {
-            display: block;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         /* --- STYLES ADDED FOR NEW FUNCTIONALITY --- */
@@ -175,7 +150,6 @@
           align-items: center; 
           justify-content: center;
           width: auto; 
-          /* --- CHANGE ADDED: Made button bigger --- */
           padding: 0.75rem 1.5rem;
           font-size: 1rem;
           background: transparent; 
@@ -183,7 +157,6 @@
           color: var(--muted-foreground);
           text-decoration: none;
           border-radius: var(--radius);
-          font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
         }
         .back-button:hover { 
             background: var(--input-background); 
@@ -193,12 +166,45 @@
             color: #15803d; 
             background-color: #f0fdf4; 
             border: 1px solid #bbf7d0;
-            /* --- CHANGE ADDED: Made confirmation box bigger --- */
             padding: 1.5rem; 
             border-radius: var(--radius); 
             font-size: 1rem;
             text-align: center;
         }
+        
+        /* IMPROVEMENT 1 & 4: Live validation error message styling */
+        .error-message-live {
+            color: var(--error-color);
+            font-size: 0.8rem;
+            margin-top: 0.25rem;
+            display: none; /* Hidden by default */
+        }
+        
+        input[aria-invalid="true"], select[aria-invalid="true"], textarea[aria-invalid="true"] {
+            border-color: var(--error-color);
+        }
+        
+        /* IMPROVEMENT 2: Spinner styling */
+        .spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-top-color: #fff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            display: none; /* Hidden by default */
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* IMPROVEMENT 3: Honeypot field styling */
+        .honeypot-field {
+            position: absolute;
+            left: -5000px;
+            visibility: hidden;
+        }
+
     </style>
 </head>
 <body>
@@ -217,21 +223,27 @@
                     <h1>Get in Touch</h1>
                     <p>Have a question, found a bug, or want to share feedback? We'd love to hear from you. Send us a message and we'll respond as soon as possible.</p>
                 </div>
-                <form class="contact-form" id="contact-form">
-                    <div class="message error" id="form-message"></div>
+                <form class="contact-form" id="contact-form" novalidate>
+                    <div class="honeypot-field">
+                        <label for="honeypot">Do not fill this out</label>
+                        <input type="text" id="honeypot" name="honeypot">
+                    </div>
+
                     <div class="form-grid">
                         <div class="form-group">
                             <label for="name">Full Name</label>
-                            <input type="text" id="name" name="name" required>
+                            <input type="text" id="name" name="name" required aria-describedby="name-error">
+                            <span id="name-error" class="error-message-live" role="alert"></span>
                         </div>
                         <div class="form-group">
                             <label for="email">Email Address</label>
-                            <input type="email" id="email" name="email" required>
+                            <input type="email" id="email" name="email" required aria-describedby="email-error">
+                            <span id="email-error" class="error-message-live" role="alert"></span>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="reason">Reason for Contact</label>
-                        <select id="reason" name="reason" required>
+                        <select id="reason" name="reason" required aria-describedby="reason-error">
                             <option value="">Select a reason...</option>
                             <option value="account">Account Issues</option>
                             <option value="bug">Bug Report</option>
@@ -241,13 +253,16 @@
                             <option value="business">Business Inquiry</option>
                             <option value="other">Other</option>
                         </select>
+                        <span id="reason-error" class="error-message-live" role="alert"></span>
                     </div>
                     <div class="form-group">
                         <label for="message">Message</label>
-                        <textarea id="message" name="message" placeholder="Please provide as much detail as possible..." required></textarea>
+                        <textarea id="message" name="message" placeholder="Please provide as much detail as possible..." required aria-describedby="message-error"></textarea>
+                        <span id="message-error" class="error-message-live" role="alert"></span>
                     </div>
                     <button type="submit" class="submit-button" id="submit-btn">
-                        Send Message
+                        <span class="button-text">Send Message</span>
+                        <div class="spinner"></div>
                     </button>
                 </form>
             </div>
