@@ -1,8 +1,21 @@
 // contact.js
+import { auth } from '../firebase-init.js';
+import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
+
 document.addEventListener('DOMContentLoaded', () => {
   const form = document.getElementById("contact-form");
   const submitBtn = document.getElementById("submit-btn");
   const formMessage = document.getElementById("form-message");
+  const emailInput = document.getElementById("email");
+  const contactSection = document.querySelector(".contact-section");
+  const contactContainer = document.querySelector(".contact-container");
+
+  // Check for logged in user and pre-fill email
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      emailInput.value = user.email;
+    }
+  });
 
   function showMessage(text, type) {
     formMessage.textContent = text;
@@ -31,16 +44,22 @@ document.addEventListener('DOMContentLoaded', () => {
       });
 
       if (res.ok) {
-        showMessage("Thank you for your message! We'll get back to you soon.", "success");
-        form.reset();
+        // Replace the form with a success message
+        contactContainer.innerHTML = `
+                <div class="contact-header">
+                    <h1>Message Sent!</h1>
+                    <p>Thank you for reaching out. We will get back to you within 48 hours.</p>
+                </div>
+        `;
       } else {
         const { error } = await res.json();
         showMessage("Error sending message: " + error, "error");
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Send Message";
       }
     } catch (err) {
       console.error(err);
       showMessage("Network error, please try again later.", "error");
-    } finally {
       submitBtn.disabled = false;
       submitBtn.textContent = "Send Message";
     }
