@@ -15,11 +15,12 @@
             --border-light: #E5E7EB;
             --success-color: #10B981;
             --error-color: #EF4444;
-            --destructive-color: #EF4444; /* Red for logout hover */
-            --input-border: #E5E7EB; /* Added for back button */
-            --input-background: #F3F4F6; /* Added for back button hover */
-            --muted-foreground: #6B7280; /* Added for back button text */
-            --radius: 0.75rem; /* Added for back button */
+            --destructive-color: #EF4444;
+            /* Added from login page for button consistency */
+            --input-border: #E5E7EB;
+            --input-background: #F3F4F6;
+            --muted-foreground: #6B7280;
+            --radius: 0.75rem;
         }
 
         body {
@@ -40,111 +41,7 @@
             padding: 0 1rem;
         }
         
-        .nav-container {
-            max-width: 1280px;
-            margin: 0 auto;
-            padding: 0.75rem 1.5rem;
-            background-color: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(10px);
-            border: 1px solid var(--border-light);
-            border-radius: 9999px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            text-decoration: none;
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: var(--text-dark);
-        }
-
-        .nav-links {
-            display: none;
-            gap: 2rem;
-        }
-        @media (min-width: 768px) {
-            .nav-links { display: flex; }
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: var(--text-dark);
-            font-weight: 500;
-            transition: color 0.2s ease;
-        }
-        .nav-links a:hover { color: var(--primary-color); }
-
-        .nav-actions {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .nav-button {
-            padding: 0.6rem 1.2rem;
-            border: none;
-            border-radius: 0.5rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background-color 0.2s ease, color 0.2s ease;
-            text-decoration: none;
-            font-size: 0.9rem;
-            white-space: nowrap;
-        }
-        
-        .nav-button.add-chrome {
-            background-color: #F3F4F6;
-            color: var(--text-dark);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        .nav-button.add-chrome:hover { background-color: #E5E7EB; }
-        .nav-button.add-chrome img {
-            width: 20px;
-            height: 20px;
-        }
-
-        .nav-button.signup {
-            background-color: var(--primary-color);
-            color: white;
-        }
-        .nav-button.signup:hover { background-color: var(--primary-hover); }
-
-        .nav-button.login {
-            background-color: transparent;
-            color: var(--text-light);
-        }
-        .nav-button.login:hover { color: var(--text-dark); }
-        
-        .nav-button.logout {
-            background-color: transparent;
-            color: var(--text-light);
-        }
-        .nav-button.logout:hover { 
-            color: white;
-            background-color: var(--destructive-color);
-        }
-
-        .user-info {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-        
-        .user-email {
-            font-weight: 500;
-            color: var(--text-dark);
-            font-size: 0.9rem;
-        }
-
-        /* --- Contact Form Styles --- */
+        /* --- Contact Form Styles (Original) --- */
         .contact-section {
             min-height: 100vh;
             padding: 8rem 1rem 4rem;
@@ -181,12 +78,6 @@
             line-height: 1.2;
         }
         
-        .contact-header h2 {
-            font-size: 1.75rem;
-            font-weight: 600;
-            margin: 0;
-        }
-
         @media (min-width: 768px) {
             .contact-header h1 {
                 font-size: 3.5rem;
@@ -242,15 +133,6 @@
             box-sizing: border-box;
         }
 
-        .form-group input:focus,
-        .form-group select:focus,
-        .form-group textarea:focus {
-            outline: none;
-            border-color: var(--primary-color);
-            background-color: white;
-            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
-        }
-
         .form-group textarea {
             resize: vertical;
             min-height: 120px;
@@ -282,35 +164,12 @@
             margin-top: 1rem;
         }
 
-        .submit-button:hover {
-            background-color: var(--primary-hover);
-            transform: translateY(-1px);
-            box-shadow: 0 10px 15px -3px rgba(79, 70, 229, 0.3);
-        }
-
-        .submit-button:active {
-            transform: translateY(0);
-        }
-
-        .submit-button:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        /* Success/Error Messages */
         .message {
             padding: 1rem;
             border-radius: 0.75rem;
             margin-bottom: 1.5rem;
             font-weight: 500;
             display: none;
-        }
-
-        .message.success {
-            background-color: #ecfdf5;
-            color: var(--success-color);
-            border: 1px solid #a7f3d0;
         }
 
         .message.error {
@@ -322,35 +181,8 @@
         .message.show {
             display: block;
         }
-        
-        .back-btn-header {
-            display: inline-block;
-            margin-bottom: 1rem;
-            padding: 0.5rem 1rem;
-            font-size: 0.9rem;
-            font-weight: 500;
-            background: var(--primary-color);
-            color: #fff;
-            border-radius: 6px;
-            text-decoration: none;
-            transition: background 0.2s ease;
-        }
-        .back-btn-header:hover {
-            background: var(--primary-hover, #2563eb);
-        }
 
-        /* --- STYLES ADDED FOR CONFIRMATION MESSAGE --- */
-        /* These styles are copied from your login page to ensure a perfect match */
-        .success-box {
-          color: #15803d; 
-          background-color: #f0fdf4; 
-          border: 1px solid #bbf7d0;
-          padding: 1rem;
-          border-radius: var(--radius);
-          font-size: 0.9rem;
-          text-align: center;
-        }
-        
+        /* --- STYLES ADDED FOR NEW FUNCTIONALITY --- */
         .back-button {
           display: inline-flex; 
           align-items: center; 
@@ -362,26 +194,42 @@
           color: var(--muted-foreground);
           text-decoration: none;
           border-radius: var(--radius);
+          font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+          font-size: 14px;
         }
         .back-button:hover { 
             background: var(--input-background); 
         }
+
+        .success-box {
+            color: #15803d; 
+            background-color: #f0fdf4; 
+            border: 1px solid #bbf7d0;
+            padding: 1rem; 
+            border-radius: var(--radius); 
+            font-size: 0.9rem;
+            text-align: center;
+        }
     </style>
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
 <body>
+
     <header class="header">
-         <a href="../" class="back-btn-header">← Back to Home</a>
+         <a href="../" id="top-left-back-button" class="back-button">
+            <svg style="width: 20px; height: 20px; margin-right: 0.5rem;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+            Back to Home
+        </a>
     </header>
+
     <main>
         <section class="contact-section">
-            <div class="contact-container">
+            <div class="contact-container" id="contact-container">
                 <div class="contact-header">
                     <h1>Get in Touch</h1>
                     <p>Have a question, found a bug, or want to share feedback? We'd love to hear from you. Send us a message and we'll respond as soon as possible.</p>
                 </div>
                 <form class="contact-form" id="contact-form">
-                    <div class="message" id="form-message"></div>
+                    <div class="message error" id="form-message"></div>
                     <div class="form-grid">
                         <div class="form-group">
                             <label for="name">Full Name</label>

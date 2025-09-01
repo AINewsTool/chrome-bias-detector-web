@@ -7,7 +7,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const submitBtn = document.getElementById("submit-btn");
   const formMessage = document.getElementById("form-message");
   const emailInput = document.getElementById("email");
-  const contactContainer = document.querySelector(".contact-container"); // The main container to replace
+  const contactContainer = document.getElementById("contact-container");
+  const topLeftBackButton = document.getElementById("top-left-back-button");
 
   // Pre-fill email for logged-in users
   onAuthStateChanged(auth, (user) => {
@@ -18,14 +19,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function showMessage(text, type) {
     formMessage.textContent = text;
-    formMessage.className = `message ${type} show`;
-    formMessage.style.display = 'block'; // Ensure it's visible
+    formMessage.style.display = 'block';
   }
 
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
     submitBtn.disabled = true;
     submitBtn.textContent = "Sending...";
+    formMessage.style.display = 'none'; // Hide previous messages
 
     const formData = new FormData(form);
     const payload = {
@@ -43,13 +44,17 @@ document.addEventListener('DOMContentLoaded', () => {
       });
 
       if (res.ok) {
-        // On success, replace the entire container with the new confirmation message
+        // --- EXECUTES THE REQUESTED CHANGES ---
+        // 1. Remove the top-left back button
+        if (topLeftBackButton) {
+            topLeftBackButton.remove();
+        }
+
+        // 2. Replace the form with the new confirmation message
         contactContainer.innerHTML = `
-            <div class="card-header" style="text-align: center;">
-                <h2>Message Sent!</h2>
-            </div>
             <div class="success-box">
-                Thank you for your message! We'll get back to you within 48 hours.
+                <h2 style="font-size: 1.25rem; font-weight: 600; margin: 0 0 0.5rem 0;">Message Sent!</h2>
+                <p style="margin: 0;">Thank you for your message! We'll get back to you within 48 hours.</p>
             </div>
             <div style="text-align: center; margin-top: 1.5rem;">
                 <a href="../" class="back-button">
