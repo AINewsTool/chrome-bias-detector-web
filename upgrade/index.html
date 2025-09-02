@@ -448,7 +448,7 @@
             
             <div class="nav-actions">
                 <a href="#" class="nav-button add-chrome">
-                    <img src="./google-chrome-monochrome.png" alt="Chrome Logo">
+                    <img src="../google-chrome-monochrome.png" alt="Chrome Logo">
                     Add to Chrome
                 </a>
                 <div id="logged-out-view">
@@ -554,9 +554,9 @@
         </section>
     </main>
 
-    <script type="module" src="./firebase-init.js"></script>
+    <script type="module" src="../firebase-init.js"></script>
     <script type="module">
-        import { auth } from './firebase-init.js';
+        import { auth } from '../firebase-init.js';
         import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
 
         document.addEventListener('DOMContentLoaded', () => {
@@ -603,7 +603,7 @@
             });
 
             donateBtn.addEventListener('click', () => {
-                // Open donation link (replace with actual donation URL)
+                // Open donation link
                 window.open('https://buymeacoffee.com/truscope', '_blank');
             });
         });
