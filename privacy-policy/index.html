@@ -24,20 +24,21 @@
         h2 { font-size: 1.5rem; margin-top: 2rem; margin-bottom: 1rem; border-bottom: 1px solid var(--card-border); padding-bottom: 0.5rem;}
         p, li { color: var(--muted-foreground); line-height: 1.6; }
         a { color: var(--primary); }
-        .back-btn {
-            display: inline-block;
-            margin-bottom: 1rem;
-            padding: 0.5rem 1rem;
-            font-size: 0.9rem;
-            font-weight: 500;
-            background: var(--primary-color);
-            color: #fff;
-            border-radius: 6px;
-            text-decoration: none;
-            transition: background 0.2s ease;
+        .back-button {
+          display: inline-flex; 
+          align-items: center; 
+          justify-content: center;
+          width: auto; 
+          padding: 0.75rem 1.5rem;
+          font-size: 1rem;
+          background: transparent; 
+          border: 1px solid var(--input-border);
+          color: var(--muted-foreground);
+          text-decoration: none;
+          border-radius: var(--radius);
         }
-        .back-btn:hover {
-            background: var(--primary-hover, #2563eb);
+        .back-button:hover { 
+            background: var(--input-background); 
         }
     </style>
 </head>
