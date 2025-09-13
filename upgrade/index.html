@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Upgrade to Pro - TruScope</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
         /* --- Basic Reset & Font --- */
         :root {
@@ -24,120 +25,6 @@
             background-color: var(--background-light);
             color: var(--text-dark);
             overflow-x: hidden;
-        }
-
-        /* --- Header & Navigation --- */
-        .header {
-            position: fixed;
-            top: 1rem;
-            left: 0;
-            width: 100%;
-            z-index: 1000;
-            padding: 0 1rem;
-        }
-        
-        .nav-container {
-            max-width: 1280px;
-            margin: 0 auto;
-            padding: 0.75rem 1.5rem;
-            background-color: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(10px);
-            border: 1px solid var(--border-light);
-            border-radius: 9999px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            text-decoration: none;
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: var(--text-dark);
-        }
-
-        .nav-links {
-            display: none;
-            gap: 2rem;
-        }
-        @media (min-width: 768px) {
-            .nav-links { display: flex; }
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: var(--text-dark);
-            font-weight: 500;
-            transition: color 0.2s ease;
-        }
-        .nav-links a:hover { color: var(--primary-color); }
-
-        .nav-actions {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .nav-button {
-            padding: 0.6rem 1.2rem;
-            border: none;
-            border-radius: 0.5rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background-color 0.2s ease, color 0.2s ease;
-            text-decoration: none;
-            font-size: 0.9rem;
-            white-space: nowrap;
-        }
-        
-        .nav-button.add-chrome {
-            background-color: #F3F4F6;
-            color: var(--text-dark);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        .nav-button.add-chrome:hover { background-color: #E5E7EB; }
-        .nav-button.add-chrome img {
-            width: 20px;
-            height: 20px;
-        }
-
-        .nav-button.signup {
-            background-color: var(--primary-color);
-            color: white;
-        }
-        .nav-button.signup:hover { background-color: var(--primary-hover); }
-
-        .nav-button.login {
-            background-color: transparent;
-            color: var(--text-light);
-        }
-        .nav-button.login:hover { color: var(--text-dark); }
-        
-        .nav-button.logout {
-            background-color: transparent;
-            color: var(--text-light);
-        }
-        .nav-button.logout:hover { 
-            color: white;
-            background-color: var(--destructive-color);
-        }
-
-        .user-info {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-        
-        .user-email {
-            font-weight: 500;
-            color: var(--text-dark);
-            font-size: 0.9rem;
         }
 
         /* --- Upgrade Page Styles --- */
@@ -427,40 +314,74 @@
             color: var(--error-color);
         }
     </style>
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
 <body>
 
-    <header class="header">
-        <nav class="nav-container">
-            <a href="/" class="logo">
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="#4F46E5"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"></path></svg>
-                <span>TruScope</span>
-            </a>
-            
-            <div class="nav-links">
-                <a href="/">Home</a>
-                <a href="/#features">Features</a>
-                <a href="/#how-it-works">How It Works</a>
-                <a href="/#faq">FAQ</a>
-                <a href="./contact/">Contact</a>
-            </div>
-            
-            <div class="nav-actions">
-                <a href="#" class="nav-button add-chrome">
-                    <img src="../google-chrome-monochrome.png" alt="Chrome Logo">
-                    Add to Chrome
+    <header class="fixed top-0 left-0 w-full z-50 p-4">
+        <div class="max-w-6xl mx-auto">
+            <nav class="w-full flex justify-between items-center bg-white/90 backdrop-blur-sm border border-gray-200 rounded-full shadow-lg p-3">
+                <!-- Logo -->
+                <a href="../" class="flex-shrink-0 flex items-center gap-3 font-semibold text-xl text-gray-800 pl-4">
+                    <img src="../icon128.png" alt="TruScope Logo" class="w-11 h-11">
+                    <span>TruScope</span>
                 </a>
-                <div id="logged-out-view">
-                    <a href="./login/" class="nav-button login">Login</a>
-                    <a href="./signup/" class="nav-button signup">Sign Up</a>
+
+                <!-- Desktop Links -->
+                <div class="hidden md:flex items-center gap-8 text-base font-medium text-gray-700">
+                    <a href="../#features" class="hover:text-blue-600 transition-colors">Features</a>
+                    <a href="../#how-it-works" class="hover:text-blue-600 transition-colors">How It Works</a>
+                    <a href="../#faq" class="hover:text-blue-600 transition-colors">FAQ</a>
+                    <a href="./" class="hover:text-blue-600 transition-colors">Upgrade</a>
+                    <a href="../contact/" class="hover:text-blue-600 transition-colors">Contact</a>
                 </div>
-                <div id="logged-in-view" class="user-info" style="display: none;">
-                    <span id="user-email" class="user-email"></span>
-                    <button id="logout-button" class="nav-button logout">Log Out</button>
+
+                <!-- Desktop Actions -->
+                <div class="hidden md:flex items-center gap-2">
+                     <a href="#" class="flex items-center gap-2 text-base font-semibold bg-gray-100 text-gray-800 px-5 py-2.5 rounded-full hover:bg-gray-200 transition-colors">
+                        <img src="../google-chrome-monochrome.png" alt="Chrome Logo" class="w-6 h-6">
+                        Add to Chrome
+                    </a>
+                    <div id="logged-out-view-desktop">
+                        <a href="../login/" class="text-base font-semibold text-gray-600 px-5 py-2.5 rounded-full hover:bg-gray-100 transition-colors">Login</a>
+                        <a href="../signup/" class="text-base font-semibold bg-blue-600 text-white px-5 py-2.5 rounded-full hover:bg-blue-700 transition-colors">Sign Up</a>
+                    </div>
+                    <div id="logged-in-view-desktop" class="items-center gap-2" style="display: none;">
+                        <span id="user-email-desktop" class="text-base font-medium text-gray-800"></span>
+                        <button id="logout-button-desktop" class="text-base font-semibold text-gray-600 px-5 py-2.5 rounded-full hover:bg-red-500 hover:text-white transition-colors">Log Out</button>
+                    </div>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="p-2 rounded-md text-gray-600 hover:text-gray-900 hover:bg-gray-100 focus:outline-none">
+                        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                    </button>
+                </div>
+            </nav>
+
+            <!-- Mobile Menu -->
+            <div id="mobile-menu" class="hidden md:hidden mt-2 bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden">
+                <div class="flex flex-col space-y-1 p-4">
+                    <a href="../#features" class="block px-4 py-3 text-lg font-medium text-gray-700 rounded-lg hover:bg-gray-100">Features</a>
+                    <a href="../#how-it-works" class="block px-4 py-3 text-lg font-medium text-gray-700 rounded-lg hover:bg-gray-100">How It Works</a>
+                    <a href="../#faq" class="block px-4 py-3 text-lg font-medium text-gray-700 rounded-lg hover:bg-gray-100">FAQ</a>
+                    <a href="./" class="block px-4 py-3 text-lg font-medium text-gray-700 rounded-lg hover:bg-gray-100">Upgrade</a>
+                    <a href="../contact/" class="block px-4 py-3 text-lg font-medium text-gray-700 rounded-lg hover:bg-gray-100">Contact</a>
+                    
+                    <div class="border-t border-gray-200 my-2"></div>
+
+                    <div id="logged-out-view-mobile" class="flex flex-col space-y-2">
+                        <a href="../login/" class="block text-center w-full px-4 py-3 font-semibold text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200">Login</a>
+                        <a href="../signup/" class="block text-center w-full px-4 py-3 font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700">Sign Up</a>
+                    </div>
+                    <div id="logged-in-view-mobile" class="flex flex-col items-center space-y-3" style="display: none;">
+                        <span id="user-email-mobile" class="text-base font-medium text-gray-800"></span>
+                        <button id="logout-button-mobile" class="w-full text-center px-4 py-3 font-semibold text-white bg-red-500 rounded-lg hover:bg-red-600">Log Out</button>
+                    </div>
+
                 </div>
             </div>
-        </nav>
+        </div>
     </header>
 
     <main>
@@ -560,25 +481,47 @@
         import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
 
         document.addEventListener('DOMContentLoaded', () => {
-            // Authentication UI logic
-            const loggedInView = document.getElementById('logged-in-view');
-            const loggedOutView = document.getElementById('logged-out-view');
-            const userEmailSpan = document.getElementById('user-email');
-            const logoutButton = document.getElementById('logout-button');
+            // --- MOBILE MENU TOGGLE ---
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+
+            // --- AUTHENTICATION UI LOGIC --- 
             const EXTENSION_ID = "hajgbjgbdejejppmmikigepdcjdngamn";
+
+            // Desktop view elements
+            const loggedInViewDesktop = document.getElementById('logged-in-view-desktop');
+            const loggedOutViewDesktop = document.getElementById('logged-out-view-desktop');
+            const userEmailSpanDesktop = document.getElementById('user-email-desktop');
+            const logoutButtonDesktop = document.getElementById('logout-button-desktop');
+
+            // Mobile view elements
+            const loggedInViewMobile = document.getElementById('logged-in-view-mobile');
+            const loggedOutViewMobile = document.getElementById('logged-out-view-mobile');
+            const userEmailSpanMobile = document.getElementById('user-email-mobile');
+            const logoutButtonMobile = document.getElementById('logout-button-mobile');
 
             onAuthStateChanged(auth, (user) => {
                 if (user) {
-                    loggedInView.style.display = 'flex';
-                    loggedOutView.style.display = 'none';
-                    userEmailSpan.textContent = user.email;
+                    loggedInViewDesktop.style.display = 'flex';
+                    loggedOutViewDesktop.style.display = 'none';
+                    userEmailSpanDesktop.textContent = user.email;
+
+                    loggedInViewMobile.style.display = 'flex';
+                    loggedOutViewMobile.style.display = 'none';
+                    userEmailSpanMobile.textContent = user.email;
                 } else {
-                    loggedInView.style.display = 'none';
-                    loggedOutView.style.display = 'block';
+                    loggedInViewDesktop.style.display = 'none';
+                    loggedOutViewDesktop.style.display = 'flex';
+                    
+                    loggedInViewMobile.style.display = 'none';
+                    loggedOutViewMobile.style.display = 'flex';
                 }
             });
 
-            logoutButton.addEventListener('click', () => {
+            const handleSignOut = () => {
                 if (chrome && chrome.runtime && EXTENSION_ID) {
                     chrome.runtime.sendMessage(EXTENSION_ID, { type: 'LOGOUT_REQUEST' }, (response) => {
                         if (chrome.runtime.lastError) {
@@ -591,7 +534,11 @@
                 signOut(auth).catch(error => {
                     console.error("Error signing out:", error);
                 });
-            });
+            };
+
+            logoutButtonDesktop.addEventListener('click', handleSignOut);
+            logoutButtonMobile.addEventListener('click', handleSignOut);
+
 
             // Upgrade button functionality
             const upgradeBtn = document.getElementById('upgrade-btn');
