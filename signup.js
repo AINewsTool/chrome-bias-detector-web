@@ -2,6 +2,7 @@
 import { auth, provider } from './firebase-init.js';
 import { createUserWithEmailAndPassword, getAdditionalUserInfo, signInWithPopup } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
 
+const CLOUD_FUNCTION_URL = "https://us-central1-biasdetectorextension.cloudfunctions.net/createCustomToken";
 // IMPORTANT: You must replace this with your actual extension ID.
 // const EXTENSION_ID = "pncjbinbmlfgkgedabggpfgafomgjamn"; // For production
 const EXTENSION_ID = "hajgbjgbdejejppmmikigepdcjdngamn"; // For testing with Bias Detector
@@ -39,16 +40,40 @@ document.addEventListener('DOMContentLoaded', () => {
     async function handleSuccessfulSignup(isNewUser = true) {
         const user = auth.currentUser;
         if (user) {
-            const token = await user.getIdToken();
-            const email = user.email;
-            const providerId = user.providerData[0]?.providerId;
+            try {
+                const idToken = await user.getIdToken();
 
-            if (chrome && chrome.runtime) {
-                chrome.runtime.sendMessage(
-                    EXTENSION_ID, 
-                    { type: "LOGIN_SUCCESS", token: token, email: email, providerId: providerId }, 
-                    () => {}
-                );
+                // 1. Call your new Cloud Function to get a custom token
+                const response = await fetch(CLOUD_FUNCTION_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ idToken: idToken })
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.error || 'Failed to get custom token.');
+                }
+                
+                const data = await response.json();
+                const customToken = data.customToken;
+
+                // 2. Send the custom token to the extension
+                if (chrome && chrome.runtime && customToken) {
+                    chrome.runtime.sendMessage(
+                        EXTENSION_ID,
+                        { action: "signInWithCustomToken", token: customToken },
+                        (response) => {
+                            if (chrome.runtime.lastError || response?.status !== "success") {
+                            console.error("Failed to sign in extension:", chrome.runtime.lastError?.message || response?.message);
+                            }
+                        }
+                    );
+                }
+            } catch (error) {
+                console.error("Error exchanging token:", error);
+                showUserFriendlyError("Could not complete extension sign-in.");
+                return; 
             }
         }
         
