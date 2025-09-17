@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,263 +13,234 @@
     <script src="https://kit.fontawesome.com/675928436b.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="output.css">
     <link rel="stylesheet" href="globals.css">
-    
-     <style>
+    <style>
         #features-heading span {
             display: inline-block;
             transform-origin: bottom left;
         }
     </style>
-
 </head>
+
 <body>
-<header class="fixed top-0 left-0 w-full z-50 p-4">
-    <div class="max-w-6xl mx-auto">
-        <nav class="w-full flex justify-between items-center bg-white/90 backdrop-blur-sm border border-border-light rounded-full shadow-lg p-3">
-            <a href="/" class="flex-shrink-0 flex items-center gap-3 font-semibold text-xl text-text-dark pl-4">
-                <img src="icon128.png" alt="TruScope Logo" class="w-11 h-11">
-                <span>TruScope</span>
-            </a>
-
-            <div class="hidden lg:flex items-center gap-8 text-base font-medium text-text-light">
-                <a href="#features" class="hover:text-primary transition-colors">Features</a>
-                <a href="#how-it-works" class="hover:text-primary transition-colors">How It Works</a>
-                <a href="#faq" class="hover:text-primary transition-colors">FAQ</a>
-                <a href="./upgrade/" class="hover:text-primary transition-colors">Upgrade</a>
-                <a href="./contact/" class="hover:text-primary transition-colors">Contact</a>
-            </div>
-
-            <div class="hidden lg:flex items-center gap-2">
-                 <a href="#" class="flex items-center gap-2 text-base font-semibold bg-gray-100 text-text-dark px-4 py-2.5 rounded-full hover:bg-gray-200 transition-colors">
-                    <img src="google-chrome-monochrome.png" alt="Chrome Logo" class="w-4 h-4">
-                    Add to Chrome
+    <header class="fixed top-0 left-0 w-full z-50 p-4">
+        <div class="max-w-6xl mx-auto">
+            <nav class="w-full flex justify-between items-center bg-white/90 backdrop-blur-sm border border-border-light rounded-full shadow-lg p-3">
+                <a href="/" class="flex-shrink-0 flex items-center gap-3 font-semibold text-xl text-text-dark pl-4">
+                    <img src="icon128.png" alt="TruScope Logo" class="w-11 h-11">
+                    <span>TruScope</span>
                 </a>
-                <div id="logged-out-view-desktop">
-                    <a href="./login/" class="text-base font-semibold text-text-light px-4 py-2.5 rounded-full hover:bg-gray-100 transition-colors">Login</a>
-                    <a href="./signup/" class="text-base font-semibold bg-primary-dark text-white px-4 py-2.5 rounded-full hover:bg-blue-700 transition-colors">Sign Up</a>
+                <div class="hidden lg:flex items-center gap-6 text-sm font-medium text-text-light">
+                    <a href="#features" class="hover:text-primary transition-colors">Features</a>
+                    <a href="#how-it-works" class="hover:text-primary transition-colors">How It Works</a>
+                    <a href="#faq" class="hover:text-primary transition-colors">FAQ</a>
+                    <a href="./upgrade/" class="hover:text-primary transition-colors">Upgrade</a>
+                    <a href="./contact/" class="hover:text-primary transition-colors">Contact</a>
                 </div>
-                <div id="logged-in-view-desktop" class="items-center gap-2" style="display: none;">
-                    <span id="user-email-desktop" class="text-base font-medium text-text-dark"></span>
-                    <button id="logout-button-desktop" class="text-base font-semibold text-text-light px-4 py-2.5 rounded-full hover:bg-error hover:text-white transition-colors">Log Out</button>
-                </div>
-            </div>
-
-            <div class="lg:hidden">
-                <button id="mobile-menu-button" class="p-2 rounded-md text-text-light hover:text-text-dark hover:bg-gray-100 focus:outline-none">
-                    <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
-                </button>
-            </div>
-        </nav>
-
-        <div id="mobile-menu" class="hidden lg:hidden mt-2 bg-white rounded-2xl shadow-lg border border-border-light overflow-hidden">
-           <div class="flex flex-col space-y-1 p-4">
-                <a href="#features" class="block px-4 py-3 text-lg font-medium text-text-light rounded-lg hover:bg-gray-100">Features</a>
-                <a href="#how-it-works" class="block px-4 py-3 text-lg font-medium text-text-light rounded-lg hover:bg-gray-100">How It Works</a>
-                <a href="#faq" class="block px-4 py-3 text-lg font-medium text-text-light rounded-lg hover:bg-gray-100">FAQ</a>
-                <a href="./upgrade/" class="block px-4 py-3 text-lg font-medium text-text-light rounded-lg hover:bg-gray-100">Upgrade</a>
-                <a href="./contact/" class="block px-4 py-3 text-lg font-medium text-text-light rounded-lg hover:bg-gray-100">Contact</a>
-                <div class="border-t border-border-light my-2"></div>
-                <div id="logged-out-view-mobile" class="flex flex-col space-y-2">
-                    <a href="./login/" class="block text-center w-full px-4 py-3 font-semibold text-text-light bg-gray-100 rounded-lg hover:bg-gray-200">Login</a>
-                    <a href="./signup/" class="block text-center w-full px-4 py-3 font-semibold text-white bg-primary-dark rounded-lg hover:bg-blue-700">Sign Up</a>
-                </div>
-                <div id="logged-in-view-mobile" class="flex flex-col items-center space-y-3" style="display: none;">
-                    <span id="user-email-mobile" class="text-base font-medium text-text-dark"></span>
-                    <button id="logout-button-mobile" class="w-full text-center px-4 py-3 font-semibold text-white bg-error rounded-lg hover:bg-red-600">Log Out</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</header>
-
-
-<main>
-    <section class="relative w-full flex items-center overflow-hidden pt-20 pb-16 md:pt-28 md:pb-20 bg-background-light">
-        <div class="absolute top-0 left-0 w-full h-full">
-            <div class="absolute top-1/4 left-1/4 w-72 h-72 bg-primary-hover rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob"></div>
-            <div class="absolute bottom-1/4 right-1/4 w-72 h-72 bg-primary rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-2000"></div>
-        </div>
-
-        <div class="container mx-auto px-6 z-10">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-x-12 gap-y-16 items-center">
-                
-                <div class="text-center lg:text-left">
-                    <h1 class="text-4xl md:text-5xl font-extrabold text-text-dark leading-tight mb-6">
-                        Uncover Media Bias in Real-Time
-                    </h1>
-                    <p class="text-lg text-text-light mb-8 max-w-xl mx-auto lg:mx-0">
-                        TruScope's AI-powered browser extension helps you analyze articles and social media for bias, so you can think more critically about the information you consume.
-                    </p>
-                    <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                        <a href="#" class="text-lg font-semibold bg-gradient-to-r from-primary to-primary-hover text-white px-8 py-4 rounded-full shadow-md hover:shadow-xl transform hover:scale-105 transition-all duration-300 ease-in-out">
-                            Add to Chrome 
-                        </a>
-                        <a href="#features" class="text-lg font-semibold text-text-dark bg-white px-8 py-4 rounded-full shadow-md hover:shadow-xl transform hover:scale-105 transition-all duration-300 ease-in-out">
-                            See How It Works
-                        </a>
+                <div class="hidden lg:flex items-center gap-2">
+                    <a href="#" class="flex items-center gap-2 text-base font-semibold bg-gray-100 text-text-dark px-4 py-2.5 rounded-full hover:bg-gray-200 transition-colors">
+                        <img src="google-chrome-monochrome.png" alt="Chrome Logo" class="w-4 h-4">
+                        Add to Chrome
+                    </a>
+                    <div id="logged-out-view-desktop">
+                        <a href="./login/" class="text-base font-semibold text-text-light px-4 py-2.5 rounded-full hover:bg-gray-100 transition-colors">Login</a>
+                        <a href="./signup/" class="text-base font-semibold bg-primary-dark text-white px-4 py-2.5 rounded-full hover:bg-blue-700 transition-colors">Sign Up</a>
+                    </div>
+                    <div id="logged-in-view-desktop" class="items-center gap-2" style="display: none;">
+                        <span id="user-email-desktop" class="text-base font-medium text-text-dark"></span>
+                        <button id="logout-button-desktop" class="text-base font-semibold text-text-light px-4 py-2.5 rounded-full hover:bg-error hover:text-white transition-colors">Log Out</button>
                     </div>
                 </div>
-
-                <div class="w-full max-w-[280px] sm:max-w-xs mx-auto">
-                    <div class="p-3 bg-white/60 backdrop-blur-sm rounded-3xl shadow-2xl border border-border-light">
-                        <img src="https://placehold.co/400x600/E2E8F0/475569?text=Vertical+UI+Visual" alt="TruScope Extension Screenshot" class="rounded-2xl w-full">
-                     </div>
+                <div class="lg:hidden">
+                    <button id="mobile-menu-button" class="p-2 rounded-md text-text-light hover:text-text-dark hover:bg-gray-100 focus:outline-none">
+                        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                    </button>
                 </div>
-
-            </div>
-        </div>
-    </section>
-
-
-<section id="features" class="py-16 md:py-24 bg-background-light">
-    <div class="container mx-auto px-6 max-w-6xl">
-        <div class="mb-16">
-            <h2 class="font-heading text-4xl md:text-5xl font-extrabold text-text-dark leading-tight" id="features-heading" data-aos="fade-right">
-                Powerful Features, Simple Interface
-            </h2>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-
-            <div class="flex flex-col items-center text-center p-8 bg-primary/10 border border-primary/20 rounded-lg shadow-sm">
-                <i class="fa-solid fa-shield-halved text-primary-dark text-4xl mb-6"></i>
-                <h3 class="font-heading text-xl font-semibold text-text-dark mb-2">At-a-Glance Trust Score</h3>
-                <p class="text-text-light text-base">Get an instant read on content reliability with a simple 0-100 score.</p>
-            </div>
-
-            <div class="flex flex-col items-center text-center p-8 bg-primary/10 border border-primary/20 rounded-lg shadow-sm">
-                <i class="fa-solid fa-sitemap text-primary-dark text-4xl mb-6"></i>
-                <h3 class="font-heading text-xl font-semibold text-text-dark mb-2">Multi-Bias Detection</h3>
-                <p class="text-text-light text-base">Our AI detects sensationalism, loaded language, and emotional manipulation.</p>
-            </div>
-
-            <div class="flex flex-col items-center text-center p-8 bg-primary/10 border border-primary/20 rounded-lg shadow-sm">
-                <i class="fa-solid fa-magnifying-glass text-primary-dark text-4xl mb-6"></i>
-                <h3 class="font-heading text-xl font-semibold text-text-dark mb-2">Precise Highlighting</h3>
-                <p class="text-text-light text-base">Pinpoint the exact words and phrases influencing the narrative.</p>
-            </div>
-
-            <div class="flex flex-col items-center text-center p-8 bg-primary/10 border border-primary/20 rounded-lg shadow-sm">
-                <i class="fa-solid fa-bolt-lightning text-primary-dark text-4xl mb-6"></i>
-                <h3 class="font-heading text-xl font-semibold text-text-dark mb-2">Quick Results</h3>
-                <p class="text-text-light text-base">Get a comprehensive breakdown and trust score in seconds, not minutes.</p>
-            </div>
-
-            <div class="flex flex-col items-center text-center p-8 bg-primary/10 border border-primary/20 rounded-lg shadow-sm">
-                <i class="fa-solid fa-lock text-primary-dark text-4xl mb-6"></i>
-                <h3 class="font-heading text-xl font-semibold text-text-dark mb-2">Privacy First</h3>
-                <p class="text-text-light text-base">We analyze content securely and never store or sell your personal information.</p>
-            </div>
-
-            <div class="flex flex-col items-center text-center p-8 bg-primary/10 border border-primary/20 rounded-lg shadow-sm">
-                <i class="fa-solid fa-lightbulb text-primary-dark text-4xl mb-6"></i>
-                <h3 class="font-heading text-xl font-semibold text-text-dark mb-2">Clear Explanations</h3>
-                <p class="text-text-light text-base">Understand why text is flagged, helping you learn to spot bias on your own.</p>
-            </div>
-
-        </div>
-    </div>
-</section>
-
-<section class="cta-section hidden lg:block bg-background-light full-bleed">
-    <div class="cta-container mx-auto h-[80vh] bg-text-dark text-white flex flex-col justify-center items-center text-center p-8 sm:p-16 overflow-hidden">
-        
-        <div id="cta-content" class="w-full">
-            <h2 id="cta-heading" class="font-heading text-4xl sm:text-5xl lg:text-6xl font-bold mb-8">Ready to think about what you <br> read?</h2>
-            <a href="#" id="cta-button" class="inline-block text-lg font-semibold bg-primary text-white px-10 py-4 rounded-full shadow-md hover:bg-primary-hover transform hover:scale-105 transition-all duration-300 ease-in-out">
-                Add to Chrome — It's Free
-            </a>
-        </div>
-
-    </div>
-</section>
-<section id="how-it-works" class="max-w-6xl mx-auto px-6 py-16 lg:py-24">
-    <div class="text-center">
-        <h2 class="font-heading text-4xl md:text-5xl font-bold text-text-dark">How It Works</h2>
-        <p class="mt-4 max-w-3xl mx-auto text-lg text-text-light">
-            TruScope deconstructs every article by checking for multiple bias signals. We process these complex data points and distill them into a single, easy-to-understand Trust Score.
-        </p>
-    </div>
-
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 mt-16 mb-10 md:mb-12">
-        <div class="bias-card p-4 sm:p-6 bg-white rounded-xl border border-border-light shadow-sm">
-            <p class="font-heading font-semibold text-text-dark text-lg">Political Bias</p>
-            <p class="text-sm text-text-light mt-1">Leaning detected</p>
-            <span class="mt-4 inline-block px-4 py-1 text-sm font-medium rounded-full bg-orange-100 text-orange-700">Moderate</span>
-        </div>
-        <div class="bias-card p-4 sm:p-6 bg-white rounded-xl border border-border-light shadow-sm">
-            <p class="font-heading font-semibold text-text-dark text-lg">Clickbait</p>
-            <p class="text-sm text-text-light mt-1">Exaggeration spotted</p>
-            <span class="mt-4 inline-block px-4 py-1 text-sm font-medium rounded-full bg-red-100 text-red-700">Extreme</span>
-        </div>
-        <div class="bias-card p-4 sm:p-6 bg-white rounded-xl border border-border-light shadow-sm">
-            <p class="font-heading font-semibold text-text-dark text-lg">Emotional Appeal</p>
-            <p class="text-sm text-text-light mt-1">Loaded Language</p>
-            <span class="mt-4 inline-block px-4 py-1 text-sm font-medium rounded-full bg-orange-100 text-orange-700">Moderate</span>
-        </div>
-        <div class="bias-card p-4 sm:p-6 bg-white rounded-xl border border-border-light shadow-sm">
-            <p class="font-heading font-semibold text-text-dark text-lg">Hate Speech</p>
-            <p class="text-sm text-text-light mt-1">Offensive Text</p>
-            <span class="mt-4 inline-block px-4 py-1 text-sm font-medium rounded-full bg-yellow-100 text-yellow-700">Low</span>
-        </div>
-    </div>
-
-    <div id="hiw-arrow" class="flex justify-center mb-10 md:mb-12">
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-12 h-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-        </svg>
-    </div>
-
-    <div class="flex flex-col items-center space-y-6">
-        <p class="font-heading font-semibold text-text-dark text-lg">Overall Trust Score</p>
-        <div class="relative w-44 h-44">
-            <svg class="w-full h-full" viewBox="0 0 100 100">
-                <circle class="text-border-light" stroke-width="10" stroke="currentColor" fill="transparent" r="45" cx="50" cy="50"/>
-                <circle id="hiw-score-circle" class="text-orange-500" stroke-width="10" stroke-dasharray="283" stroke-dashoffset="113" stroke-linecap="round" stroke="currentColor" fill="transparent" r="45" cx="50" cy="50" transform="rotate(-90 50 50)"/>
-            </svg>
-            <span id="hiw-score-number" class="absolute inset-0 flex items-center justify-center font-heading text-4xl font-bold text-orange-500">60</span>
-        </div>
-    </div>
-</section>
-<section class="cta-section hidden lg:block bg-background-light full-bleed">
-    <div class="cta-container mx-auto h-[80vh] bg-text-dark text-white flex flex-col justify-center items-center text-center p-8 sm:p-16 overflow-hidden">
-        
-        <div id="cta-content" class="w-full">
-            <h2 id="cta-heading" class="font-heading text-4xl sm:text-5xl lg:text-6xl font-bold mb-8">Shape The Future Of<br> Critical Thinking</h2>
-            
-           <div class="flex flex-col sm:flex-row items-center justify-center ">
-                <div>
-                    <a href="#" class="inline-block text-lg font-semibold bg-primary text-white px-10 py-4 rounded-full shadow-md hover:bg-primary-hover transform hover:scale-105 transition-all duration-300 ease-in-out">
-                        Become a Supporter
-                    </a>
-                    <a href="#" class="text-lg font-semibold text-text-dark bg-white px-8 py-4 rounded-full shadow-md hover:shadow-xl transform hover:scale-105 transition-all duration-300 ease-in-out">
-                            Roadmap & Features
-                    </a>
+            </nav>
+            <div id="mobile-menu" class="hidden lg:hidden mt-2 bg-white rounded-2xl shadow-lg border border-border-light overflow-hidden">
+                <div class="flex flex-col space-y-1 p-4">
+                    <a href="#features" class="block px-4 py-3 text-lg font-medium text-text-light rounded-lg hover:bg-gray-100">Features</a>
+                    <a href="#how-it-works" class="block px-4 py-3 text-lg font-medium text-text-light rounded-lg hover:bg-gray-100">How It Works</a>
+                    <a href="#faq" class="block px-4 py-3 text-lg font-medium text-text-light rounded-lg hover:bg-gray-100">FAQ</a>
+                    <a href="./upgrade/" class="block px-4 py-3 text-lg font-medium text-text-light rounded-lg hover:bg-gray-100">Upgrade</a>
+                    <a href="./contact/" class="block px-4 py-3 text-lg font-medium text-text-light rounded-lg hover:bg-gray-100">Contact</a>
+                    <div class="border-t border-border-light my-2"></div>
+                    <div id="logged-out-view-mobile" class="flex flex-col space-y-2">
+                        <a href="./login/" class="block text-center w-full px-4 py-3 font-semibold text-text-light bg-gray-100 rounded-lg hover:bg-gray-200">Login</a>
+                        <a href="./signup/" class="block text-center w-full px-4 py-3 font-semibold text-white bg-primary-dark rounded-lg hover:bg-blue-700">Sign Up</a>
+                    </div>
+                    <div id="logged-in-view-mobile" class="flex flex-col items-center space-y-3" style="display: none;">
+                        <span id="user-email-mobile" class="text-base font-medium text-text-dark"></span>
+                        <button id="logout-button-mobile" class="w-full text-center px-4 py-3 font-semibold text-white bg-error rounded-lg hover:bg-red-600">Log Out</button>
+                    </div>
                 </div>
             </div>
         </div>
+    </header>
 
-    </div>
-</section>
-        <!-- FAQ Section -->
+    <main>
+        <section class="relative w-full flex items-center overflow-hidden pt-20 pb-16 md:pt-28 md:pb-20 bg-background-light">
+            <div class="absolute top-0 left-0 w-full h-full">
+                <div class="absolute top-1/4 left-1/4 w-72 h-72 bg-primary-hover rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob"></div>
+                <div class="absolute bottom-1/4 right-1/4 w-72 h-72 bg-primary rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-2000"></div>
+            </div>
+            <div class="container mx-auto px-6 z-10">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-x-12 gap-y-16 items-center">
+                    <div class="text-center lg:text-left">
+                        <h1 class="text-4xl md:text-5xl font-extrabold text-text-dark leading-tight mb-6">
+                            Uncover Media Bias in Real-Time
+                        </h1>
+                        <p class="text-lg text-text-light mb-8 max-w-xl mx-auto lg:mx-0">
+                            TruScope's AI-powered browser extension helps you analyze articles and social media for bias, so you can think more critically about the information you consume.
+                        </p>
+                        <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                            <a href="#" class="text-lg font-semibold bg-gradient-to-r from-primary to-primary-hover text-white px-8 py-4 rounded-full shadow-md hover:shadow-xl transform hover:scale-105 transition-all duration-300 ease-in-out">
+                                Add to Chrome
+                            </a>
+                            <a href="#features" class="text-lg font-semibold text-text-dark bg-white px-8 py-4 rounded-full shadow-md hover:shadow-xl transform hover:scale-105 transition-all duration-300 ease-in-out">
+                                See How It Works
+                            </a>
+                        </div>
+                    </div>
+                    <div class="w-full max-w-[280px] sm:max-w-xs mx-auto">
+                        <div class="p-3 bg-white/60 backdrop-blur-sm rounded-3xl shadow-2xl border border-border-light">
+                            <img src="ui_visual.png" alt="TruScope Extension Screenshot" class="rounded-2xl w-full">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="features" class="py-16 md:py-24 bg-background-light">
+            <div class="container mx-auto px-6 max-w-6xl">
+                <div class="mb-16">
+                    <h2 class="font-heading text-4xl md:text-5xl font-extrabold text-text-dark leading-tight" id="features-heading" data-aos="fade-right">
+                        Powerful Features, Simple Interface
+                    </h2>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="flex flex-col items-center text-center p-8 bg-primary/10 border border-primary/20 rounded-lg shadow-sm">
+                        <i class="fa-solid fa-shield-halved text-primary-dark text-4xl mb-6"></i>
+                        <h3 class="font-heading text-xl font-semibold text-text-dark mb-2">At-a-Glance Trust Score</h3>
+                        <p class="text-text-light text-base">Get an instant read on content reliability with a simple 0-100 score.</p>
+                    </div>
+                    <div class="flex flex-col items-center text-center p-8 bg-primary/10 border border-primary/20 rounded-lg shadow-sm">
+                        <i class="fa-solid fa-sitemap text-primary-dark text-4xl mb-6"></i>
+                        <h3 class="font-heading text-xl font-semibold text-text-dark mb-2">Multi-Bias Detection</h3>
+                        <p class="text-text-light text-base">Our AI detects sensationalism, loaded language, and emotional manipulation.</p>
+                    </div>
+                    <div class="flex flex-col items-center text-center p-8 bg-primary/10 border border-primary/20 rounded-lg shadow-sm">
+                        <i class="fa-solid fa-magnifying-glass text-primary-dark text-4xl mb-6"></i>
+                        <h3 class="font-heading text-xl font-semibold text-text-dark mb-2">Precise Highlighting</h3>
+                        <p class="text-text-light text-base">Pinpoint the exact words and phrases influencing the narrative.</p>
+                    </div>
+                    <div class="flex flex-col items-center text-center p-8 bg-primary/10 border border-primary/20 rounded-lg shadow-sm">
+                        <i class="fa-solid fa-bolt-lightning text-primary-dark text-4xl mb-6"></i>
+                        <h3 class="font-heading text-xl font-semibold text-text-dark mb-2">Quick Results</h3>
+                        <p class="text-text-light text-base">Get a comprehensive breakdown and trust score in seconds, not minutes.</p>
+                    </div>
+                    <div class="flex flex-col items-center text-center p-8 bg-primary/10 border border-primary/20 rounded-lg shadow-sm">
+                        <i class="fa-solid fa-lock text-primary-dark text-4xl mb-6"></i>
+                        <h3 class="font-heading text-xl font-semibold text-text-dark mb-2">Privacy First</h3>
+                        <p class="text-text-light text-base">We analyze content securely and never store or sell your personal information.</p>
+                    </div>
+                    <div class="flex flex-col items-center text-center p-8 bg-primary/10 border border-primary/20 rounded-lg shadow-sm">
+                        <i class="fa-solid fa-lightbulb text-primary-dark text-4xl mb-6"></i>
+                        <h3 class="font-heading text-xl font-semibold text-text-dark mb-2">Clear Explanations</h3>
+                        <p class="text-text-light text-base">Understand why text is flagged, helping you learn to spot bias on your own.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="cta-section hidden lg:block bg-background-light full-bleed">
+            <div class="cta-container mx-auto h-[80vh] bg-text-dark text-white flex flex-col justify-center items-center text-center p-8 sm:p-16 overflow-hidden">
+                <div id="cta-content" class="w-full">
+                    <h2 id="cta-heading" class="font-heading text-4xl sm:text-5xl lg:text-6xl font-bold mb-8">Ready to think about what you <br> read?</h2>
+                    <a href="#" id="cta-button" class="inline-block text-lg font-semibold bg-primary text-white px-10 py-4 rounded-full shadow-md hover:bg-primary-hover transform hover:scale-105 transition-all duration-300 ease-in-out">
+                        Add to Chrome — It's Free
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section id="how-it-works" class="max-w-6xl mx-auto px-6 py-16 lg:py-24">
+            <div class="text-center">
+                <h2 class="font-heading text-4xl md:text-5xl font-bold text-text-dark">How It Works</h2>
+                <p class="mt-4 max-w-3xl mx-auto text-lg text-text-light">
+                    TruScope deconstructs every article by checking for multiple bias signals. We process these complex data points and distill them into a single, easy-to-understand Trust Score.
+                </p>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 mt-16 mb-10 md:mb-12">
+                <div class="bias-card p-4 sm:p-6 bg-white rounded-xl border border-border-light shadow-sm">
+                    <p class="font-heading font-semibold text-text-dark text-lg">Political Bias</p>
+                    <p class="text-sm text-text-light mt-1">Leaning detected</p>
+                    <span class="mt-4 inline-block px-4 py-1 text-sm font-medium rounded-full bg-orange-100 text-orange-700">Moderate</span>
+                </div>
+                <div class="bias-card p-4 sm:p-6 bg-white rounded-xl border border-border-light shadow-sm">
+                    <p class="font-heading font-semibold text-text-dark text-lg">Clickbait</p>
+                    <p class="text-sm text-text-light mt-1">Exaggeration spotted</p>
+                    <span class="mt-4 inline-block px-4 py-1 text-sm font-medium rounded-full bg-red-100 text-red-700">Extreme</span>
+                </div>
+                <div class="bias-card p-4 sm:p-6 bg-white rounded-xl border border-border-light shadow-sm">
+                    <p class="font-heading font-semibold text-text-dark text-lg">Emotional Appeal</p>
+                    <p class="text-sm text-text-light mt-1">Loaded Language</p>
+                    <span class="mt-4 inline-block px-4 py-1 text-sm font-medium rounded-full bg-orange-100 text-orange-700">Moderate</span>
+                </div>
+                <div class="bias-card p-4 sm:p-6 bg-white rounded-xl border border-border-light shadow-sm">
+                    <p class="font-heading font-semibold text-text-dark text-lg">Hate Speech</p>
+                    <p class="text-sm text-text-light mt-1">Offensive Text</p>
+                    <span class="mt-4 inline-block px-4 py-1 text-sm font-medium rounded-full bg-yellow-100 text-yellow-700">Low</span>
+                </div>
+            </div>
+            <div id="hiw-arrow" class="flex justify-center mb-10 md:mb-12">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-12 h-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+            </div>
+            <div class="flex flex-col items-center space-y-6">
+                <p class="font-heading font-semibold text-text-dark text-lg">Overall Trust Score</p>
+                <div class="relative w-44 h-44">
+                    <svg class="w-full h-full" viewBox="0 0 100 100">
+                        <circle class="text-border-light" stroke-width="10" stroke="currentColor" fill="transparent" r="45" cx="50" cy="50"></circle>
+                        <circle id="hiw-score-circle" class="text-orange-500" stroke-width="10" stroke-dasharray="283" stroke-dashoffset="113" stroke-linecap="round" stroke="currentColor" fill="transparent" r="45" cx="50" cy="50" transform="rotate(-90 50 50)"></circle>
+                    </svg>
+                    <span id="hiw-score-number" class="absolute inset-0 flex items-center justify-center font-heading text-4xl font-bold text-orange-500">60</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="cta-section hidden lg:block bg-background-light full-bleed">
+            <div class="cta-container mx-auto h-[80vh] bg-text-dark text-white flex flex-col justify-center items-center text-center p-8 sm:p-16 overflow-hidden">
+                <div id="cta-content" class="w-full">
+                    <h2 id="cta-heading" class="font-heading text-4xl sm:text-5xl lg:text-6xl font-bold mb-8">Shape The Future Of<br> Critical Thinking</h2>
+                    <div class="flex flex-col sm:flex-row items-center justify-center gap-6">
+                        <div>
+                            <a href="https://buymeacoffee.com/truscope" target="_blank" class="inline-block text-lg font-semibold bg-primary text-white px-10 py-4 rounded-full shadow-md hover:bg-primary-hover transform hover:scale-105 transition-all duration-300 ease-in-out">
+                                Support Us
+                            </a>
+                            <a href="#" class="text-lg font-semibold text-text-dark bg-white px-8 py-4 rounded-full shadow-md hover:shadow-xl transform hover:scale-105 transition-all duration-300 ease-in-out">
+                                Roadmap & Features
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <section id="faq" class="max-w-4xl mx-auto px-6 py-28">
-          <div class="text-center mb-16">
-            <h2 class="font-heading text-4xl md:text-5xl font-bold text-text-dark">Frequently Asked Questions</h2>
-            <p class="mt-4 max-w-2xl mx-auto text-lg text-text-light">
-                Have questions? We've got answers. If you can't find what you're looking for, feel free to contact us.
-            </p>
-        </div>
-            
+            <div class="text-center mb-16">
+                <h2 class="font-heading text-4xl md:text-5xl font-bold text-text-dark">Frequently Asked Questions</h2>
+                <p class="mt-4 max-w-2xl mx-auto text-lg text-text-light">
+                    Have questions? We've got answers. If you can't find what you're looking for, feel free to contact us.
+                </p>
+            </div>
             <div class="space-y-6">
                 <details class="p-5 border border-gray-200 rounded-xl bg-white shadow-sm">
                     <summary class="font-semibold text-gray-800 cursor-pointer">
                         How does the extension detect bias?
                     </summary>
                     <p class="mt-3 text-gray-600 text-base leading-relaxed">
-                        Our model is trained on over a million peer-reviewed articles and uses advanced NLP techniques to identify linguistic patterns associated with various types of bias. 
+                        Our model is trained on over a million peer-reviewed articles and uses advanced NLP techniques to identify linguistic patterns associated with various types of bias.
                     </p>
                 </details>
-
                 <details class="p-5 border border-gray-200 rounded-xl bg-white shadow-sm">
                     <summary class="font-semibold text-gray-800 cursor-pointer">
                         Does the extension store my browsing data?
@@ -277,7 +249,6 @@
                         No. We never store or share your personal browsing data.
                     </p>
                 </details>
-
                 <details class="p-5 border border-gray-200 rounded-xl bg-white shadow-sm">
                     <summary class="font-semibold text-gray-800 cursor-pointer">
                         Will it slow down my browser?
@@ -286,7 +257,6 @@
                         Not at all. The extension is lightweight and optimized to run quickly in the background without affecting performance.
                     </p>
                 </details>
-
                 <details class="p-5 border border-gray-200 rounded-xl bg-white shadow-sm">
                     <summary class="font-semibold text-gray-800 cursor-pointer">
                         Is it free to use?
@@ -298,14 +268,12 @@
             </div>
         </section>
 
-        <!-- Footer -->
         <footer class="bg-gray-50 border-t border-gray-200 mt-20">
             <div class="max-w-6xl mx-auto px-6 py-10 flex flex-col md:flex-row items-center justify-between gap-6">
                 <a href="/" class="flex items-center gap-2 text-gray-800 font-semibold text-lg">
                     <img src="icon128.png" alt="TruScope Logo" class="w-8 h-8">
                     TruScope
                 </a>
-
                 <div class="flex gap-6 text-sm text-gray-600">
                     <a href="#features" class="hover:text-blue-600">Features</a>
                     <a href="#how-it-works" class="hover:text-blue-600">How It Works</a>
@@ -313,7 +281,6 @@
                     <a href="./privacy-policy/" class="hover:text-blue-600">Privacy Policy</a>
                     <a href="./terms-of-service/" class="hover:text-blue-600">Terms</a>
                 </div>
-
                 <p class="text-gray-500 text-sm">&copy; 2025 TruScope. All rights reserved.</p>
             </div>
         </footer>
