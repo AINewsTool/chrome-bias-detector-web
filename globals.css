@@ -1,37 +1,41 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 :root {
   --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   --radius: 0.75rem;
-  --background: oklch(0.98 0.005 264); /* Light grey background */
-  --foreground: oklch(0.15 0.01 264);
   
-  /* Card */
+  /* --- UNCHANGED: Original oklch values --- */
+  --background: oklch(0.98 0.005 264);
+  --foreground: oklch(0.15 0.01 264);
   --card: oklch(1 0 0);
   --card-foreground: var(--foreground);
   --card-border: oklch(0.93 0.005 264);
-
-  /* Primary Button */
-  --primary: oklch(0.45 0.23 265); /* Vibrant purple/blue */
-  --primary-foreground: oklch(0.98 0.005 264);
-  --primary-hover: oklch(0.5 0.23 265);
-  
-  /* Muted */
   --muted-foreground: oklch(0.45 0.01 264);
-
-  /* Destructive */
-  --destructive: oklch(0.6 0.22 15); /* Softer red */
-
-  /* Input */
   --input-background: oklch(0.96 0.005 264);
   --input-border: oklch(0.9 0.005 264);
+  
+  /* --- UPDATED: New colors from the landing page --- */
+  --primary: #2088ff;
+  --primary-hover: #00b0e1;
+  --destructive: #EF4444;
+  
+  /* --- UNCHANGED: Logic remains the same --- */
+  --primary-foreground: oklch(0.98 0.005 264);
   --input-focus-border: var(--primary);
 }
 
-/* Basic reset */
+@layer base {
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Sora', sans-serif;
+  }
+}
+/* --- UPDATED: Body styles to match landing page, but keeping centering --- */
 body {
-  font-family: var(--font-sans);
-  font-size: 16px;
-  background: var(--background);
-  color: var(--foreground);
+  font-family: 'Inter',  -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background-color: #FFFFFF;
+  color: #111827;
   margin: 0;
   padding: 1rem;
   display: flex;
@@ -39,7 +43,10 @@ body {
   align-items: center;
   min-height: 100vh;
   box-sizing: border-box;
+  overflow-x: hidden;
 }
+
+/* --- All styles below are unchanged --- */
 
 /* Card container */
 .card {
@@ -129,7 +136,6 @@ button.google {
 button.google:hover {
     background-color: var(--input-background);
 }
-
 /* Divider */
 .divider {
   margin: 1.5rem 0;
@@ -177,48 +183,60 @@ p.footer-link a:hover {
   text-align: left;
   display: none; /* Hidden by default */
 }
-
-/* Modern Benefits Layout */
-.benefits-list {
-  max-width: 800px;
-  margin: 6rem auto;
-  padding: 0 1.5rem;
-  display: flex;
-  flex-direction: column;
-  gap: 3rem;
-}
-
-.benefit-item {
-  display: flex;
-  align-items: flex-start;
-  gap: 1.5rem;
-}
-
-.benefit-icon {
-  flex-shrink: 0;
-  color: var(--primary-color);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.benefit-text h3 {
-  font-size: 1.5rem;
-  font-weight: 600;
-  margin-bottom: 0.5rem;
-  color: var(--text-dark);
-}
-
-.benefit-text p {
-  font-size: 1.05rem;
-  line-height: 1.6;
-  color: var(--text-light);
-}
-
-@media (max-width: 640px) {
-  .benefit-item {
-    flex-direction: column;
-    align-items: flex-start;
+.full-bleed {
+    width: 100vw;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+/* --- CSS for "How It Works" animation (Desktop Only) --- */
+@media (min-width: 1024px) {
+  /* This selects the elements we want to animate, but only on desktop */
+  .bias-card, #hiw-arrow, #hiw-score-circle, #hiw-score-number {
+    opacity: 0;
+    visibility: hidden;
   }
 }
+ /* Hide the default browser marker (e.g., the triangle) */
+    summary::-webkit-details-marker {
+        display: none;
+    }
+
+    /* This is the container for our custom + / - icon */
+    .faq-icon-simple {
+        position: relative;
+        width: 1rem; /* 16px */
+        height: 1rem; /* 16px */
+        flex-shrink: 0;
+        margin-left: 1rem; /* 16px */
+    }
+
+    /* Create the horizontal and vertical bars for the icon */
+    .faq-icon-simple::before,
+    .faq-icon-simple::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background-color: var(--text-light);
+        border-radius: 9999px;
+        transition: transform 0.2s ease-in-out;
+    }
+
+    /* The vertical bar (created by rotating the ::before pseudo-element) */
+    .faq-icon-simple::before {
+        transform: translateY(-50%) rotate(90deg);
+    }
+    
+    /* The horizontal bar */
+    .faq-icon-simple::after {
+        transform: translateY(-50%);
+    }
+
+    /* When the details element is open, rotate the vertical bar to form a minus (-) sign */
+    details[open] > summary .faq-icon-simple::before {
+        transform: translateY(-50%) rotate(0deg);
+    }
 

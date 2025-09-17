@@ -1,0 +1,19 @@
+{
+  "name": "chrome-bias-detector-web",
+  "version": "1.0.0",
+  "description": "Auth and information for bias extension",
+  "main": "change-password.js",
+  "devDependencies": {
+    "tailwindcss": "^3.4.17"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "npx tailwindcss -i ./globals.css -o ./output.css --watch"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "gsap": "^3.13.0"
+  }
+}
