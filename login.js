@@ -37,10 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const user = auth.currentUser;
         if (user) {
             try {
-                console.log("✅ 1. Login successful on website. Getting ID Token...");
                 const idToken = await user.getIdToken();
-                console.log("✅ 2. Got ID Token. Sending to Cloud Function to be converted...");
-
                 const response = await fetch(CLOUD_FUNCTION_URL, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -55,10 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const data = await response.json();
                 const customToken = data.customToken;
                 
-                console.log("✅ 3. Received converted Custom Token from Cloud Function.");
-
                 if (chrome && chrome.runtime && customToken) {
-                    console.log("✅ 4. Sending Custom Token to the Chrome Extension...");
                     chrome.runtime.sendMessage(
                         EXTENSION_ID,
                         { action: "signInWithCustomToken", token: customToken },
@@ -66,13 +60,11 @@ document.addEventListener('DOMContentLoaded', () => {
                             if (chrome.runtime.lastError || response?.status !== "success") {
                             console.error("❌ 5. Extension failed to sign in:", chrome.runtime.lastError?.message || response?.message);
                             } else {
-                            console.log("✅ 5. Extension acknowledged successful sign-in!");
                             }
                         }
                     );
                 }
             } catch (error) {
-                console.error("❌ Error during token exchange process:", error);
                 showUserFriendlyError({ code: 'custom-token-error', message: error.message });
                 return; 
             }
