@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     message = "Access to this account has been temporarily disabled due to many failed login attempts.";
                     break;
                 default:
-                    message = "An error occurred during login. Please try again.";
+                    message = "The email or password incorrect, please try again.";
             }
         }
         errorContainer.textContent = message;
