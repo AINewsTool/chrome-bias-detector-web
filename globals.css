@@ -78,7 +78,8 @@ body {
 
 /* Input fields */
 input[type="email"],
-input[type="password"] {
+input[type="password"],
+input[type="text"] {
   width: 100%;
   padding: 0.8rem 1rem;
   margin-bottom: 1rem;
@@ -91,8 +92,29 @@ input[type="password"] {
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
+.password-wrapper {
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+.password-wrapper input {
+  margin-bottom: 0;
+}
+
+.toggle-password-icon {
+  position: absolute;
+  top: 50%;
+  right: 1rem;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: var(--muted-foreground);
+  width: 20px;
+  height: 20px;
+}
+
 input[type="email"]:focus,
-input[type="password"]:focus {
+input[type="password"]:focus,
+input[type="text"]:focus {
   outline: none;
   border-color: var(--input-focus-border);
   box-shadow: 0 0 0 3px oklch(from var(--primary) l / 15%);
@@ -109,6 +131,10 @@ button {
   font-size: 1rem;
   margin-top: 0.5rem;
   transition: background-color 0.2s ease, transform 0.1s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.75rem;
 }
 
 button:active {
@@ -128,13 +154,13 @@ button.google {
   background: transparent;
   color: var(--foreground);
   border: 1px solid var(--input-border);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 0.75rem;
 }
 button.google:hover {
     background-color: var(--input-background);
+}
+.google-icon {
+  width: 1.25rem;
+  height: 1.25rem;
 }
 /* Divider */
 .divider {

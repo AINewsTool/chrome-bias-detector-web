@@ -14,6 +14,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const passwordInput = document.getElementById('passwordInput');
     const errorContainer = document.getElementById('error-container');
     const cardElement = document.querySelector('.card');
+    const togglePassword = document.getElementById('togglePassword');
+    const eyeOpen = document.getElementById('eye-open');
+    const eyeClosed = document.getElementById('eye-closed');
 
     function showUserFriendlyError(error) {
         let message = "An unknown error occurred. Please try again.";
@@ -130,6 +133,18 @@ document.addEventListener('DOMContentLoaded', () => {
             await handleSuccessfulLogin(additionalUserInfo.isNewUser);
         } catch (err) {
             showUserFriendlyError(err);
+        }
+    });
+
+    togglePassword.addEventListener('click', () => {
+        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordInput.setAttribute('type', type);
+        if (type === 'password') {
+            eyeOpen.style.display = 'block';
+            eyeClosed.style.display = 'none';
+        } else {
+            eyeOpen.style.display = 'none';
+            eyeClosed.style.display = 'block';
         }
     });
 });
