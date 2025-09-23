@@ -23,13 +23,13 @@ document.addEventListener('DOMContentLoaded', () => {
         if (error.code) {
             switch (error.code) {
                 case 'auth/invalid-credential':
-                    message = "The email or password incorrect, please try again.";
+                    message = "Incorrect email or password, please try again.";
                     break;
                 case 'auth/too-many-requests':
                     message = "Access to this account has been temporarily disabled due to many failed login attempts.";
                     break;
                 default:
-                    message = "The email or password incorrect, please try again.";
+                    message = "Incorrect email or password, please try again.";
             }
         }
         errorContainer.textContent = message;
