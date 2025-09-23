@@ -18,7 +18,20 @@ document.addEventListener('DOMContentLoaded', () => {
     const eyeOpen = document.getElementById('eye-open');
     const eyeClosed = document.getElementById('eye-closed');
 
-    function showUserFriendlyError(message) {
+    function showUserFriendlyError(error) {
+        let message = "An unknown error occurred. Please try again.";
+        if (error.code) {
+            switch (error.code) {
+                case 'auth/invalid-credential':
+                    message = "The email or password incorrect, please try again.";
+                    break;
+                case 'auth/too-many-requests':
+                    message = "Access to this account has been temporarily disabled due to many failed login attempts.";
+                    break;
+                default:
+                    message = "An error occurred during login. Please try again.";
+            }
+        }
         errorContainer.textContent = message;
         errorContainer.style.display = 'block';
     }
@@ -55,7 +68,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     );
                 }
             } catch (error) {
-                showUserFriendlyError("Error during token exchange process.");
+                showUserFriendlyError({ message: "Error during token exchange process." });
                 return; 
             }
         }
@@ -97,15 +110,7 @@ document.addEventListener('DOMContentLoaded', () => {
             await signInWithEmailAndPassword(auth, emailInput.value.trim(), passwordInput.value);
             await handleSuccessfulLogin(false);
         } catch (err) {
-            let message = "An error occurred during login. Please try again.";
-            if (err.code === 'auth/invalid-credential') {
-                message = "The email or password incorrect, please try again.";
-            } else if (err.code === 'auth/too-many-requests') {
-                message = "Access to this account has been temporarily disabled due to many failed login attempts.";
-            }
-            
-            showUserFriendlyError(message);
-
+            showUserFriendlyError(err);
             loginEmailBtn.disabled = false;
             loginEmailBtn.querySelector('.button-text').style.display = 'inline';
             loginEmailBtn.querySelector('.spinner').style.display = 'none';
@@ -127,7 +132,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const additionalUserInfo = getAdditionalUserInfo(result);
             await handleSuccessfulLogin(additionalUserInfo.isNewUser);
         } catch (err) {
-            showUserFriendlyError("An error occurred with Google Sign-In. Please try again.");
+            showUserFriendlyError(err);
         }
     });
 
