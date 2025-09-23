@@ -72,9 +72,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const message = isNewUser ? "Account Created!" : "Login Successful!";
         
-        // **FIX:** The entire content of the card is replaced here.
-        // This single step removes the form AND the "Back to Home" button,
-        // and inserts the new success message with the correct '.success-box' class.
         cardElement.innerHTML = `
             <div class="card-header">
                 <h2>${message}</h2>
@@ -90,7 +87,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const interval = setInterval(() => {
             countdown--;
-            // Check if countdownElement exists before trying to update it
             if (countdownElement) {
                 countdownElement.textContent = countdown;
             }
@@ -101,18 +97,31 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 1000);
     }
 
-    // Email/Password Login
-    loginEmailBtn.addEventListener('click', async () => {
+    async function loginWithEmail() {
         errorContainer.style.display = 'none';
+        loginEmailBtn.disabled = true;
+        loginEmailBtn.querySelector('.button-text').style.display = 'none';
+        loginEmailBtn.querySelector('.spinner').style.display = 'inline-block';
+
         try {
             await signInWithEmailAndPassword(auth, emailInput.value.trim(), passwordInput.value);
             await handleSuccessfulLogin(false);
         } catch (err) {
             showUserFriendlyError(err);
+            loginEmailBtn.disabled = false;
+            loginEmailBtn.querySelector('.button-text').style.display = 'inline';
+            loginEmailBtn.querySelector('.spinner').style.display = 'none';
+        }
+    }
+
+    loginEmailBtn.addEventListener('click', loginWithEmail);
+
+    passwordInput.addEventListener('keypress', (event) => {
+        if (event.key === 'Enter') {
+            loginWithEmail();
         }
     });
 
-    // Google Login
     loginGoogleBtn.addEventListener('click', async () => {
         errorContainer.style.display = 'none';
         try {

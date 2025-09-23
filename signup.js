@@ -77,14 +77,12 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
         
-        // **FIX:** Hide the back button because it's outside the card
         if (backButton) {
             backButton.style.display = 'none';
         }
 
         const message = isNewUser ? "Account Created!" : "Login Successful!";
         
-        // This correctly replaces the card content with the success message
         cardElement.innerHTML = `
             <div class="card-header">
                 <h2>${message}</h2>
@@ -110,8 +108,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 1000);
     }
 
-    // Email/Password Sign Up
-    signupEmailBtn.addEventListener('click', async () => {
+    async function signUpWithEmail() {
         errorContainer.style.display = 'none';
 
         const isLengthValid = lengthReq.classList.contains('valid');
@@ -122,6 +119,10 @@ document.addEventListener('DOMContentLoaded', () => {
             showUserFriendlyError("Your password does not meet all the requirements.");
             return;
         }
+
+        signupEmailBtn.disabled = true;
+        signupEmailBtn.querySelector('.button-text').style.display = 'none';
+        signupEmailBtn.querySelector('.spinner').style.display = 'inline-block';
 
         try {
             await createUserWithEmailAndPassword(auth, emailInput.value.trim(), passwordInput.value);
@@ -134,10 +135,20 @@ document.addEventListener('DOMContentLoaded', () => {
                 message = "Password is too weak. Please meet all the requirements.";
             }
             showUserFriendlyError(message);
+            signupEmailBtn.disabled = false;
+            signupEmailBtn.querySelector('.button-text').style.display = 'inline';
+            signupEmailBtn.querySelector('.spinner').style.display = 'none';
+        }
+    }
+
+    signupEmailBtn.addEventListener('click', signUpWithEmail);
+
+    passwordInput.addEventListener('keypress', (event) => {
+        if (event.key === 'Enter') {
+            signUpWithEmail();
         }
     });
 
-    // Google Sign Up
     signupGoogleBtn.addEventListener('click', async () => {
         errorContainer.style.display = 'none';
         try {
