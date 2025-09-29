@@ -130,11 +130,8 @@ document.addEventListener('DOMContentLoaded', () => {
         
         // Show loading state
         loginGoogleBtn.disabled = true;
-        const originalContent = loginGoogleBtn.innerHTML;
-        loginGoogleBtn.innerHTML = `
-            <div class="spinner" style="display: inline-block;"></div>
-            <span style="margin-left: 0.5rem;">Signing in...</span>
-        `;
+        loginGoogleBtn.querySelector('.button-content').style.display = 'none';
+        loginGoogleBtn.querySelector('.spinner').style.display = 'inline-block';
         
         try {
             const result = await signInWithPopup(auth, provider);
@@ -144,7 +141,8 @@ document.addEventListener('DOMContentLoaded', () => {
             showUserFriendlyError(err);
             // Reset button state on error
             loginGoogleBtn.disabled = false;
-            loginGoogleBtn.innerHTML = originalContent;
+            loginGoogleBtn.querySelector('.button-content').style.display = 'flex';
+            loginGoogleBtn.querySelector('.spinner').style.display = 'none';
         }
     });
 

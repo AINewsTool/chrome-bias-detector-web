@@ -157,11 +157,8 @@ document.addEventListener('DOMContentLoaded', () => {
         
         // Show loading state
         signupGoogleBtn.disabled = true;
-        const originalContent = signupGoogleBtn.innerHTML;
-        signupGoogleBtn.innerHTML = `
-            <div class="spinner" style="display: inline-block;"></div>
-            <span style="margin-left: 0.5rem;">Signing up...</span>
-        `;
+        signupGoogleBtn.querySelector('.button-content').style.display = 'none';
+        signupGoogleBtn.querySelector('.spinner').style.display = 'inline-block';
         
         try {
             const result = await signInWithPopup(auth, provider);
@@ -171,7 +168,8 @@ document.addEventListener('DOMContentLoaded', () => {
             showUserFriendlyError("An error occurred with Google Sign-Up. Please try again.");
             // Reset button state on error
             signupGoogleBtn.disabled = false;
-            signupGoogleBtn.innerHTML = originalContent;
+            signupGoogleBtn.querySelector('.button-content').style.display = 'flex';
+            signupGoogleBtn.querySelector('.spinner').style.display = 'none';
         }
     });
 
