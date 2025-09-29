@@ -127,12 +127,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
     loginGoogleBtn.addEventListener('click', async () => {
         errorContainer.style.display = 'none';
+        
+        // Show loading state
+        loginGoogleBtn.disabled = true;
+        const originalContent = loginGoogleBtn.innerHTML;
+        loginGoogleBtn.innerHTML = `
+            <div class="spinner" style="display: inline-block;"></div>
+            <span style="margin-left: 0.5rem;">Signing in...</span>
+        `;
+        
         try {
             const result = await signInWithPopup(auth, provider);
             const additionalUserInfo = getAdditionalUserInfo(result);
             await handleSuccessfulLogin(additionalUserInfo.isNewUser);
         } catch (err) {
             showUserFriendlyError(err);
+            // Reset button state on error
+            loginGoogleBtn.disabled = false;
+            loginGoogleBtn.innerHTML = originalContent;
         }
     });
 
