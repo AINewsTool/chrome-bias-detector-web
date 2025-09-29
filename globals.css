@@ -151,12 +151,12 @@ button.primary:hover {
 
 /* Google button */
 button.google {
-  background: var(--primary);
-  color: var(--primary-foreground);
-  border: 1px solid var(--primary);
+  background: transparent;
+  color: var(--foreground);
+  border: 1px solid var(--input-border);
 }
 button.google:hover {
-  background: var(--primary-hover);
+    background-color: var(--input-background);
 }
 .google-icon {
   width: 1.25rem;
@@ -166,6 +166,10 @@ button.google:hover {
   display: flex;
   align-items: center;
   gap: 0.75rem;
+}
+button.google .spinner {
+  border: 2px solid rgba(0, 0, 0, 0.1);
+  border-top-color: #000;
 }
 /* Divider */
 .divider {
