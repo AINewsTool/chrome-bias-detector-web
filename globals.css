@@ -151,12 +151,12 @@ button.primary:hover {
 
 /* Google button */
 button.google {
-  background: transparent;
-  color: var(--foreground);
-  border: 1px solid var(--input-border);
+  background: var(--primary);
+  color: var(--primary-foreground);
+  border: 1px solid var(--primary);
 }
 button.google:hover {
-    background-color: var(--input-background);
+  background: var(--primary-hover);
 }
 .google-icon {
   width: 1.25rem;
