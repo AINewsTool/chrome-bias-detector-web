@@ -17,6 +17,10 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 
+// Initialize Analytics
+const analytics = getAnalytics(app);
+console.log("Firebase Analytics Object:", analytics);
+
 // Auth instance
 export const auth = getAuth(app);
 export const provider = new GoogleAuthProvider();
