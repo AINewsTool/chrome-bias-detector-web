@@ -11,7 +11,7 @@ const firebaseConfig = {
   storageBucket: "biasdetectorextension.firebasestorage.app",
   messagingSenderId: "664962798895",
   appId: "1:664962798895:web:81f296bfec93bb7c603dda",
-  measurementId: "G-L7JM0N01MM"
+  measurementId: "G-ZK7XV5948Y"
 };
 
 // Initialize Firebase
