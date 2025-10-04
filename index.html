@@ -40,7 +40,7 @@
                     <a href="./contact/" class="hover:text-primary transition-colors">Contact</a>
                 </div>
                 <div class="hidden lg:flex items-center gap-2">
-                    <a href="https://chromewebstore.google.com/detail/truscope/pncjbinbmlfgkgedabggpfgafomgjamn" target="_blank" class="flex items-center gap-2 text-base font-semibold bg-gray-100 text-text-dark px-4 py-2.5 rounded-full hover:bg-gray-200 transition-colors">
+                    <a href="https://chromewebstore.google.com/detail/truscope/pncjbinbmlfgkgedabggpfgafomgjamn" target="_blank" class="cta-add-to-chrome flex items-center gap-2 text-base font-semibold bg-gray-100 text-text-dark px-4 py-2.5 rounded-full hover:bg-gray-200 transition-colors">
                         <img src="google-chrome-monochrome.png" alt="Chrome Logo" class="w-4 h-4">
                         Add to Chrome
                     </a>
@@ -96,7 +96,7 @@
                             TruScope's AI-powered browser extension helps you analyze articles and social media for bias, so you can think more critically about the information you consume.
                         </p>
                         <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                            <a href="#" class="text-lg font-semibold bg-gradient-to-r from-primary to-primary-hover text-white px-8 py-4 rounded-full shadow-md hover:shadow-xl transform hover:scale-105 transition-all duration-300 ease-in-out">
+                            <a href="https://chromewebstore.google.com/detail/truscope/pncjbinbmlfgkgedabggpfgafomgjamn" target="_blank" class="cta-add-to-chrome text-lg font-semibold bg-gradient-to-r from-primary to-primary-hover text-white px-8 py-4 rounded-full shadow-md hover:shadow-xl transform hover:scale-105 transition-all duration-300 ease-in-out">
                                 Add to Chrome
                             </a>
                             <a href="#features" class="text-lg font-semibold text-text-dark bg-white px-8 py-4 rounded-full shadow-md hover:shadow-xl transform hover:scale-105 transition-all duration-300 ease-in-out">
@@ -160,7 +160,7 @@
                 <h2 id="cta-heading" class="font-heading text-4xl sm:text-5xl lg:text-6xl font-bold mb-8">
                     Ready to think about what you <br> read?
                 </h2>
-                <a href="https://chromewebstore.google.com/detail/truscope/pncjbinbmlfgkgedabggpfgafomgjamn" target="_blank" class="inline-block text-lg font-semibold bg-white text-primary-dark px-10 py-4 rounded-full shadow-lg hover:opacity-90 transition-opacity">
+                <a href="https://chromewebstore.google.com/detail/truscope/pncjbinbmlfgkgedabggpfgafomgjamn" target="_blank" class="cta-add-to-chrome inline-block text-lg font-semibold bg-white text-primary-dark px-10 py-4 rounded-full shadow-lg hover:opacity-90 transition-opacity">
                     Add To Chrome
                 </a>
             </div>
@@ -318,7 +318,7 @@
             });
 
             // --- AUTHENTICATION UI LOGIC --- 
-            const EXTENSION_ID = "hajgbjgbdejejppmmikigepdcjdngamn"; // Make sure this is your extension's actual ID
+            const EXTENSION_ID = "pncjbinbmlfgkgedabggpfgafomgjamn"; // Make sure this is your extension's actual ID
 
             // Desktop view elements
             const loggedInViewDesktop = document.getElementById('logged-in-view-desktop');
@@ -372,6 +372,24 @@
 
             logoutButtonDesktop.addEventListener('click', handleSignOut);
             logoutButtonMobile.addEventListener('click', handleSignOut);
+        });
+    </script>
+    <script type="module">
+        // Import the functions you exported from firebase-init.js
+        import { analytics, logEvent } from './firebase-init.js';
+
+        // Find all the "Add to Chrome" buttons using the new class
+        const addToChromeButtons = document.querySelectorAll('.cta-add-to-chrome');
+
+        // Add a click listener to each button
+        addToChromeButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Log a custom event to Google Analytics
+                logEvent(analytics, 'add_to_chrome_click', {
+                    // You can add more data here if you want, like which button was clicked
+                    button_location: 'landing_page'
+                });
+            });
         });
     </script>
 </body>
