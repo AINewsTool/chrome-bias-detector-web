@@ -30,8 +30,12 @@
             <nav class="w-full flex justify-between items-center bg-white/90 backdrop-blur-sm border border-border-light rounded-full shadow-lg p-3">
                 <a href="/" class="flex-shrink-0 flex items-center gap-3 font-semibold text-xl text-text-dark pl-4">
                     <img src="icon128.png" alt="TruScope Logo" class="w-11 h-11">
-                    <span>TruScope</span>
+                    <span class="relative inline-block">
+                    TruScope
+                    
+                    </span>
                 </a>
+
                 <div class="hidden lg:flex items-center gap-6 text-sm font-medium text-text-light">
                     <a href="#features" class="hover:text-primary transition-colors">Features</a>
                     <a href="#how-it-works" class="hover:text-primary transition-colors">How It Works</a>
@@ -79,6 +83,8 @@
             </div>
         </div>
     </header>
+
+    
 
     <main>
         <section class="relative w-full flex items-center overflow-hidden pt-20 pb-16 md:pt-28 md:pb-20 bg-background-light">
@@ -264,12 +270,13 @@
             </div>
         </section>
 
-        <footer class="bg-gray-50 border-t border-gray-200 mt-20">
+<footer class="bg-gray-50 border-t border-gray-200 mt-20">
             <div class="max-w-6xl mx-auto px-6 py-10 flex flex-col md:flex-row items-center justify-between gap-6">
                 <a href="/" class="flex items-center gap-2 text-gray-800 font-semibold text-lg">
-                    <img src="icon128.png" alt="TruScope Logo" class="w-8 h-8">
+                    <img src="../icon128.png" alt="TruScope Logo" class="w-8 h-8">
                     TruScope
                 </a>
+
                 <div class="flex gap-6 text-sm text-gray-600">
                     <a href="#features" class="hover:text-blue-600">Features</a>
                     <a href="#how-it-works" class="hover:text-blue-600">How It Works</a>
@@ -277,9 +284,20 @@
                     <a href="./privacy-policy/" class="hover:text-blue-600">Privacy Policy</a>
                     <a href="./terms-of-service/" class="hover:text-blue-600">Terms</a>
                 </div>
+
                 <p class="text-gray-500 text-sm">&copy; 2025 TruScope. All rights reserved.</p>
+                
             </div>
-        </footer>
+                <div class="w-full  text-gray-800 text-center text-sm py-2">
+                <span class="mr-2">📦 Version <span class="font-semibold">1.2.6</span> is out!</span>
+                <a href="/patch-notes" class="underline hover:text-blue-400">Read the patch notes →</a>
+            </div>
+</footer>
+
+
+
+        
+    
     </main>
     
     <script type="module" src="/firebase-init.js"></script>
@@ -392,6 +410,41 @@
             });
         });
     </script>
+<!-- Beta Toast -->
+<div 
+  id="beta-toast" 
+  class="fixed bottom-5 right-5 z-50 rounded-lg bg-gray-900 px-4 py-3 text-sm text-white shadow-2xl 
+         transition-all duration-500 opacity-0 translate-x-10"
+>
+  🚀 TruScope is now in <span class="font-bold text-cyan-400">Open Beta</span>
+</div>
+
+<script>
+  const toast = document.getElementById("beta-toast");
+  const lastShown = localStorage.getItem("betaToastLastShown");
+  const now = Date.now();
+  const oneWeek = 7 * 24 * 60 * 60 * 1000; // 7 days in ms
+
+  if (!lastShown || now - parseInt(lastShown, 10) > oneWeek) {
+    window.addEventListener("load", () => {
+      // Slide in + fade in
+      setTimeout(() => {
+        toast.classList.remove("opacity-0", "translate-x-10");
+      }, 300);
+
+      // Slide out + fade out after 5s
+      setTimeout(() => {
+        toast.classList.add("opacity-0", "translate-x-10");
+        localStorage.setItem("betaToastLastShown", now.toString());
+      }, 5300);
+    });
+  } else {
+    toast.style.display = "none"; // hide if within 7 days
+  }
+</script>
+
+
+
 </body>
 </html>
 

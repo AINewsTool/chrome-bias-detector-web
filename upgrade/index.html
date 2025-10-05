@@ -307,66 +307,58 @@
 
     <header class="fixed top-0 left-0 w-full z-50 p-4">
         <div class="max-w-6xl mx-auto">
-            <nav class="w-full flex justify-between items-center bg-white/90 backdrop-blur-sm border border-gray-200 rounded-full shadow-lg p-3">
-                <!-- Logo -->
-                <a href="../" class="flex-shrink-0 flex items-center gap-3 font-semibold text-xl text-gray-800 pl-4">
+            <nav class="w-full flex justify-between items-center bg-white/90 backdrop-blur-sm border border-border-light rounded-full shadow-lg p-3">
+                <a href="/" class="flex-shrink-0 flex items-center gap-3 font-semibold text-xl text-text-dark pl-4">
                     <img src="../icon128.png" alt="TruScope Logo" class="w-11 h-11">
-                    <span>TruScope</span>
+                    <span class="relative inline-block">
+                    TruScope
+                    
+                    </span>
                 </a>
 
-                <!-- Desktop Links -->
-                <div class="hidden md:flex items-center gap-6 text-base font-medium text-gray-700">
-                    <a href="../#features" class="hover:text-blue-600 transition-colors">Features</a>
-                    <a href="../#how-it-works" class="hover:text-blue-600 transition-colors">How It Works</a>
-                    <a href="../#faq" class="hover:text-blue-600 transition-colors">FAQ</a>
-                    <a href="./" class="hover:text-blue-600 transition-colors">Upgrade</a>
-                    <a href="../contact/" class="hover:text-blue-600 transition-colors">Contact</a>
+                <div class="hidden lg:flex items-center gap-6 text-sm font-medium text-text-light">
+                    <a href="/index.html#features" class="hover:text-primary transition-colors">Features</a>
+                    <a href="/index.html#how-it-works" class="hover:text-primary transition-colors">How It Works</a>
+                    <a href="/index.html#faq" class="hover:text-primary transition-colors">FAQ</a>
+                    <a href="/upgrade/" class="hover:text-primary transition-colors">Upgrade</a>
+                    <a href="/contact/" class="hover:text-primary transition-colors">Contact</a>
                 </div>
-
-                <!-- Desktop Actions -->
-                <div class="hidden md:flex items-center gap-2">
-                     <a href="https://chromewebstore.google.com/detail/truscope/pncjbinbmlfgkgedabggpfgafomgjamn" target="_blank" class="flex items-center gap-2 text-base font-semibold bg-gray-100 text-gray-800 px-5 py-2.5 rounded-full hover:bg-gray-200 transition-colors">
-                        <img src="../google-chrome-monochrome.png" alt="Chrome Logo" class="w-6 h-6">
+                <div class="hidden lg:flex items-center gap-2">
+                    <a href="https://chromewebstore.google.com/detail/truscope/pncjbinbmlfgkgedabggpfgafomgjamn" target="_blank" class="cta-add-to-chrome flex items-center gap-2 text-base font-semibold bg-gray-100 text-text-dark px-4 py-2.5 rounded-full hover:bg-gray-200 transition-colors">
+                        <img src="../google-chrome-monochrome.png" alt="Chrome Logo" class="w-4 h-4">
                         Add to Chrome
                     </a>
                     <div id="logged-out-view-desktop">
-                        <a href="../login/" class="text-base font-semibold text-gray-600 px-5 py-2.5 rounded-full hover:bg-gray-100 transition-colors">Login</a>
-                        <a href="../signup/" class="text-base font-semibold bg-blue-600 text-white px-5 py-2.5 rounded-full hover:bg-blue-700 transition-colors">Sign Up</a>
+                        <a href="./login/" class="text-base font-semibold text-text-light px-4 py-2.5 rounded-full hover:bg-gray-100 transition-colors">Login</a>
+                        <a href="./signup/" class="text-base font-semibold bg-primary-dark text-white px-4 py-2.5 rounded-full hover:bg-blue-700 transition-colors">Sign Up</a>
                     </div>
                     <div id="logged-in-view-desktop" class="items-center gap-2" style="display: none;">
-                        <span id="user-email-desktop" class="text-base font-medium text-gray-800"></span>
-                        <button id="logout-button-desktop" class="text-base font-semibold text-gray-600 px-5 py-2.5 rounded-full hover:bg-red-500 hover:text-white transition-colors">Log Out</button>
+                        <span id="user-email-desktop" class="text-base font-medium text-text-dark"></span>
+                        <button id="logout-button-desktop" class="text-base font-semibold text-text-light px-4 py-2.5 rounded-full hover:bg-error hover:text-white transition-colors">Log Out</button>
                     </div>
                 </div>
-
-                <!-- Mobile Menu Button -->
-                <div class="md:hidden">
-                    <button id="mobile-menu-button" class="p-2 rounded-md text-gray-600 hover:text-gray-900 hover:bg-gray-100 focus:outline-none">
+                <div class="lg:hidden">
+                    <button id="mobile-menu-button" class="p-2 rounded-md text-text-light hover:text-text-dark hover:bg-gray-100 focus:outline-none">
                         <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
                     </button>
                 </div>
             </nav>
-
-            <!-- Mobile Menu -->
-            <div id="mobile-menu" class="hidden md:hidden mt-2 bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden">
+            <div id="mobile-menu" class="hidden lg:hidden mt-2 bg-white rounded-2xl shadow-lg border border-border-light overflow-hidden">
                 <div class="flex flex-col space-y-1 p-4">
-                    <a href="../#features" class="block px-4 py-3 text-lg font-medium text-gray-700 rounded-lg hover:bg-gray-100">Features</a>
-                    <a href="../#how-it-works" class="block px-4 py-3 text-lg font-medium text-gray-700 rounded-lg hover:bg-gray-100">How It Works</a>
-                    <a href="../#faq" class="block px-4 py-3 text-lg font-medium text-gray-700 rounded-lg hover:bg-gray-100">FAQ</a>
-                    <a href="./" class="block px-4 py-3 text-lg font-medium text-gray-700 rounded-lg hover:bg-gray-100">Upgrade</a>
-                    <a href="../contact/" class="block px-4 py-3 text-lg font-medium text-gray-700 rounded-lg hover:bg-gray-100">Contact</a>
-                    
-                    <div class="border-t border-gray-200 my-2"></div>
-
+                    <a href="/index.html#features" class="block px-4 py-3 text-lg font-medium text-text-light rounded-lg hover:bg-gray-100">Features</a>
+                    <a href="/index.html#how-it-works" class="block px-4 py-3 text-lg font-medium text-text-light rounded-lg hover:bg-gray-100">How It Works</a>
+                    <a href="/index.html#faq" class="block px-4 py-3 text-lg font-medium text-text-light rounded-lg hover:bg-gray-100">FAQ</a>
+                    <a href="/upgrade/" class="block px-4 py-3 text-lg font-medium text-text-light rounded-lg hover:bg-gray-100">Upgrade</a>
+                    <a href="/contact/" class="block px-4 py-3 text-lg font-medium text-text-light rounded-lg hover:bg-gray-100">Contact</a>
+                    <div class="border-t border-border-light my-2"></div>
                     <div id="logged-out-view-mobile" class="flex flex-col space-y-2">
-                        <a href="../login/" class="block text-center w-full px-4 py-3 font-semibold text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200">Login</a>
-                        <a href="../signup/" class="block text-center w-full px-4 py-3 font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700">Sign Up</a>
+                        <a href="./login/" class="block text-center w-full px-4 py-3 font-semibold text-text-light bg-gray-100 rounded-lg hover:bg-gray-200">Login</a>
+                        <a href="./signup/" class="block text-center w-full px-4 py-3 font-semibold text-white bg-primary-dark rounded-lg hover:bg-blue-700">Sign Up</a>
                     </div>
                     <div id="logged-in-view-mobile" class="flex flex-col items-center space-y-3" style="display: none;">
-                        <span id="user-email-mobile" class="text-base font-medium text-gray-800"></span>
-                        <button id="logout-button-mobile" class="w-full text-center px-4 py-3 font-semibold text-white bg-red-500 rounded-lg hover:bg-red-600">Log Out</button>
+                        <span id="user-email-mobile" class="text-base font-medium text-text-dark"></span>
+                        <button id="logout-button-mobile" class="w-full text-center px-4 py-3 font-semibold text-white bg-error rounded-lg hover:bg-red-600">Log Out</button>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -461,25 +453,31 @@
                 </div>
             </div>
         </section>
+       
          <!-- Footer -->
-        <footer class="bg-gray-50 border-t border-gray-200 mt-20">
+       <footer class="bg-gray-50 border-t border-gray-200 mt-20 full-bleed">
             <div class="max-w-6xl mx-auto px-6 py-10 flex flex-col md:flex-row items-center justify-between gap-6">
                 <a href="/" class="flex items-center gap-2 text-gray-800 font-semibold text-lg">
-                    <img src="icon128.png" alt="TruScope Logo" class="w-8 h-8">
+                    <img src="../icon128.png" alt="TruScope Logo" class="w-8 h-8">
                     TruScope
                 </a>
 
                 <div class="flex gap-6 text-sm text-gray-600">
-                    <a href="#features" class="hover:text-blue-600">Features</a>
-                    <a href="#how-it-works" class="hover:text-blue-600">How It Works</a>
-                    <a href="#faq" class="hover:text-blue-600">FAQs</a>
-                    <a href="./privacy-policy/" class="hover:text-blue-600">Privacy Policy</a>
-                    <a href="./terms-of-service/" class="hover:text-blue-600">Terms</a>
+                    <a href="/index.html#features" class="hover:text-blue-600">Features</a>
+                    <a href="/index.html#how-it-works" class="hover:text-blue-600">How It Works</a>
+                    <a href="/index.html#faq" class="hover:text-blue-600">FAQs</a>
+                    <a href="/privacy-policy/" class="hover:text-blue-600">Privacy Policy</a>
+                    <a href="/terms-of-service/" class="hover:text-blue-600">Terms</a>
                 </div>
 
                 <p class="text-gray-500 text-sm">&copy; 2025 TruScope. All rights reserved.</p>
+                
             </div>
-        </footer>
+                <div class="w-full  text-gray-800 text-center text-sm py-2">
+                <span class="mr-2">📦 Version <span class="font-semibold">1.2</span> is out!</span>
+                <a href="/patch-notes" class="underline hover:text-blue-400">Read the patch notes →</a>
+            </div>
+</footer>
     </main>
 
     <script type="module" src="../firebase-init.js"></script>
